@@ -4,10 +4,9 @@
 #' @param wt numeric; Water temperature.
 #' @param gas character; Gas to calculate SN for. See 'Details'.
 #'
-#' @return
+#' @return test
 #' @export
 #'
-#' @examples
 calc.SN <- function(wt, gas = "co2") {
     switch(tolower(gas), co2 = {
         SN <- 1923.6 + (-125.06 * wt) + (4.3773 * wt^2) + (-0.085681 * wt^3) + (0.00070284 * wt^4)
@@ -22,17 +21,21 @@ calc.u10 <- function(ws) {
     return(u10)
 }
 
-#' calc.kW
+#' Calculate Gas transfer coefficient
 #'
 #' @param ws numeric; windspeed m/s
 #' @param wt numeric; water temperature °C
 #' @param gas character; one of 'CO2', 'CH4'
-#' @param model character; model to calculate
+#' @param model character; model to calculate kW. See 'Details'
+#'
+#' @details Currently these models are supported:
+#'
+#'   WANN14: Wanninkhof (2014)
 #'
 #' @return kW for the given parameters
+#' @references Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351
 #' @export
 #'
-#' @examples
 calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
     switch(tolower(model), wann14 = {
         kW <- switch(tolower(gas), co2 = {

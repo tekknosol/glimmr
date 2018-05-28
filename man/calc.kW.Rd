@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{calc.kW}
 \alias{calc.kW}
-\title{calc.kW}
+\title{Calculate Gas transfer coefficient}
 \usage{
 calc.kW(ws, wt, gas = "co2", model = "wann14")
 }
@@ -13,11 +13,19 @@ calc.kW(ws, wt, gas = "co2", model = "wann14")
 
 \item{gas}{character; one of 'CO2', 'CH4'}
 
-\item{model}{character; model to calculate}
+\item{model}{character; model to calculate kW. See 'Details'}
 }
 \value{
 kW for the given parameters
 }
 \description{
-calc.kW
+Calculate Gas transfer coefficient
+}
+\details{
+Currently these models are supported:
+
+  WANN14: Wanninkhof (2014)
+}
+\references{
+Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351
 }

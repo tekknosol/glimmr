@@ -11,6 +11,9 @@ calc.SN(wt, gas = "co2")
 
 \item{gas}{character; Gas to calculate SN for. See 'Details'.}
 }
+\value{
+test
+}
 \description{
 Calculate Schmidt Number
 }

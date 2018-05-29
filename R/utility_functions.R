@@ -38,6 +38,19 @@ calc.u10 <- function(ws) {
   return(u10)
 }
 
+#' Calculate k600
+#'
+#' @param ws numeric; Windspeed m/s
+#'
+#' @return k600 based on windspeed
+calc_k600 <- function(ws){
+  #cole98
+  k600 <- 0.215 * calc_u10(ws)^1.7 + 2.07
+  # #wann92
+  # k600 <- 0.228 * calc.u10(ws)^2.2 + 0.168
+  return(k600)
+}
+
 #' Calculate Gas transfer coefficient
 #'
 #' @param ws numeric; windspeed m/s
@@ -49,8 +62,12 @@ calc.u10 <- function(ws) {
 #'
 #'   WANN14: Wanninkhof (2014)
 #'
+#'   COLE98: Cole and Caraco (1998)
+#'
 #' @return kW for the given parameters
 #' @references Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351
+#'
+#'   Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in a low-wind oligotrophic lake measured by the addition of SF6. Limnology and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
 #' @export
 #'
 calc_kW <- function(ws, wt, gas = "co2", model = "wann14") {
@@ -60,6 +77,14 @@ calc_kW <- function(ws, wt, gas = "co2", model = "wann14") {
         }, ch4 = {
             0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
         })
+    }, cole98 = {
+      ifelse(is.na(ws),return(NA),n<-0.67)
+      ifelse(ws>3,n <- 0.5, n <- 0.67)
+      kW <- switch(tolower(gas), co2 = {
+          calc_k600(ws)*(600/calc_SN(wt, gas))^n
+      }, ch4 = {
+          calc_k600(ws)*(600/calc_SN(wt, gas))^n
+      })
     })
     return(kW)
 }
@@ -71,6 +96,14 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
       0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
     }, ch4 = {
       0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
+    })
+  }, cole98 = {
+    ifelse(is.na(ws),return(NA),n<-0.67)
+    ifelse(ws>3,n <- 0.5, n <- 0.67)
+    kW <- switch(tolower(gas), co2 = {
+      calc_k600(ws)*(600/calc_SN(wt, gas))^n
+    }, ch4 = {
+      calc_k600(ws)*(600/calc_SN(wt, gas))^n
     })
   })
   return(kW)

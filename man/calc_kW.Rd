@@ -25,7 +25,11 @@ Calculate Gas transfer coefficient
 Currently these models are supported:
 
   WANN14: Wanninkhof (2014)
+
+  COLE98: Cole and Caraco (1998)
 }
 \references{
 Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351
+
+  Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in a low-wind oligotrophic lake measured by the addition of SF6. Limnology and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
 }

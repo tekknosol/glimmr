@@ -2,4 +2,6 @@
 
 export(calc_SN)
 export(calc_kW)
+export(day2sec)
 export(kH)
+export(sec2day)

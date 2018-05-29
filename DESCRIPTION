@@ -1,12 +1,13 @@
 Package: tregata
 Type: Package
-Title: What the Package Does (Title Case)
+Title: (Meta-)Package for the TregaTa project
 Version: 0.1.0
 Author: Philipp Keller
 Maintainer: Philipp Keller <philipp.keller@ufz.de>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: (Meta-)Package for the TregaTa project.
+    Bundles water and flux related functions.
+License: GPL-3
 Encoding: UTF-8
+URL: https://github.com/tekknosol/tregata
 LazyData: true
 RoxygenNote: 6.0.1

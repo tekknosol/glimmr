@@ -2,7 +2,7 @@
 % Please edit documentation in R/devices.R
 \name{preprocess_gasmet}
 \alias{preprocess_gasmet}
-\title{Preprocess GASMET data for flux calculation}
+\title{Preprocess GASMET data for flux calculations}
 \usage{
 preprocess_gasmet(gasmet, meta, V = 0.01461, A = 0.098)
 }
@@ -11,10 +11,17 @@ preprocess_gasmet(gasmet, meta, V = 0.01461, A = 0.098)
 
 \item{meta}{data frame; Metainformations, see 'Details'.}
 
-\item{V}{numeric; Chamber Volume.}
+\item{V}{numeric; Chamber Volume. Default to 0.01461.}
 
-\item{A}{numeric; Chamber Area.}
+\item{A}{numeric; Chamber Area. Default to 0.098.}
+}
+\value{
+dataframe which can be used as input of the gasfluxes function
 }
 \description{
-Preprocess GASMET data for flux calculation
+Preprocess GASMET data for flux calculations
+}
+\examples{
+# create dataframe for usage with `gasfluxes` package
+flux_raw <- preprocess_gasmet(gasmet, meta)
 }

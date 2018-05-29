@@ -10,6 +10,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "README-"
 )
+library(tregata)
+library(dplyr)
 ```
 
 # TregaTa
@@ -25,4 +27,12 @@ It is initially designed for the TregaTa Project and may include some project re
 # Development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("tekknosol/tregata")
+```
+
+## Usage
+
+```{r, eval = TRUE}
+data("gasmet", "meta")
+flux_raw <- preprocess_gasmet(gasmet, meta)
+glimpse(flux_raw)
 ```

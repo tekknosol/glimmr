@@ -7,8 +7,8 @@
 #'
 axis.flux.co2 <- function(time){
   axis <- switch(time,
-                 "sec" = ylab(expression(CO[2]~Flux~µmol~m^-2~s^-1)),
-                 "day" = ylab(expression(CO[2]~Flux~mmol~m^-2~d^-1))
+                 "sec" = ggplot2::ylab(expression(CO[2]~Flux~µmol~m^-2~s^-1)),
+                 "day" = ggplot2::ylab(expression(CO[2]~Flux~mmol~m^-2~d^-1))
   )
 }
 
@@ -17,8 +17,8 @@ axis.flux.co2 <- function(time){
 #' @inheritParams axis.flux.co2
 axis.flux.gas <- function(time){
   axis <- switch(time,
-                 "sec" = ylab(expression(Gas~Flux~µmol~m^-2~s^-1)),
-                 "day" = ylab(expression(Gas~Flux~mmol~m^-2~d^-1))
+                 "sec" = ggplot2::ylab(expression(Gas~Flux~µmol~m^-2~s^-1)),
+                 "day" = ggplot2::ylab(expression(Gas~Flux~mmol~m^-2~d^-1))
   )
 }
 
@@ -28,7 +28,7 @@ axis.flux.gas <- function(time){
 #' @inheritParams axis.flux.co2
 axis.flux.ch4 <- function(time){
   axis <- switch(time,
-                 "sec" = ylab(expression(CH[4]~Flux~µmol~m^-2~s^-1)),
-                 "day" = ylab(expression(CH[4]~Flux~mmol~m^-2~d^-1))
+                 "sec" = ggplot2::ylab(expression(CH[4]~Flux~µmol~m^-2~s^-1)),
+                 "day" = ggplot2::ylab(expression(CH[4]~Flux~mmol~m^-2~d^-1))
   )
 }

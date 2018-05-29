@@ -60,9 +60,11 @@ calc_k600 <- function(ws){
 #'
 #' @details Currently these models are supported:
 #'
-#'   WANN14: Wanninkhof (2014)
+#'  \itemize{
+#'    \item WANN14: Wanninkhof (2014)
+#'    \item COLE98: Cole and Caraco (1998)
+#'  }
 #'
-#'   COLE98: Cole and Caraco (1998)
 #'
 #' @return kW for the given parameters
 #' @references Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351
@@ -113,6 +115,13 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
 #'
 #' @param t numeric; temperature °C
 #' @param gas character; Gas to calculate kH for. See 'Details'.
+#'
+#' @details Currently these gases are supported:
+#'
+#'  \itemize{
+#'    \item CO_2
+#'    \item CH_4
+#'  }
 #'
 #' @return Henry's constant
 #' @export

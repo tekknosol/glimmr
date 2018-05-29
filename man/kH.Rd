@@ -17,3 +17,11 @@ Henry's constant
 \description{
 Calculate Henry's constant
 }
+\details{
+Currently these gases are supported:
+
+ \itemize{
+   \item CO_2
+   \item CH_4
+ }
+}

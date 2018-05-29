@@ -15,6 +15,7 @@ axis.flux.co2 <- function(time){
 #' Label axis for arbitrary gases according to flux scale.
 #'
 #' @inheritParams axis.flux.co2
+#' @export
 axis.flux.gas <- function(time){
   axis <- switch(time,
                  "sec" = ggplot2::ylab(expression(Gas~Flux~µmol~m^-2~s^-1)),
@@ -26,6 +27,7 @@ axis.flux.gas <- function(time){
 #' Label axis for CH4 according to flux scale.
 #'
 #' @inheritParams axis.flux.co2
+#' @export
 axis.flux.ch4 <- function(time){
   axis <- switch(time,
                  "sec" = ggplot2::ylab(expression(CH[4]~Flux~µmol~m^-2~s^-1)),

@@ -24,9 +24,10 @@ Calculate Gas transfer coefficient
 \details{
 Currently these models are supported:
 
-  WANN14: Wanninkhof (2014)
-
-  COLE98: Cole and Caraco (1998)
+ \itemize{
+   \item WANN14: Wanninkhof (2014)
+   \item COLE98: Cole and Caraco (1998)
+ }
 }
 \references{
 Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351

@@ -8,6 +8,9 @@
 #' @export
 #'
 calc_SN <- function(wt, gas = "co2") {
+    supportedGases <- c("co2", "ch4")
+    gas <- tolower(gas)
+    if(!gas %in% supportedGases){stop("gas not supported")}
     switch(tolower(gas), co2 = {
         SN <- 1923.6 + (-125.06 * wt) + (4.3773 * wt^2) + (-0.085681 * wt^3) + (0.00070284 * wt^4)
     }, ch4 = {
@@ -73,6 +76,12 @@ calc_k600 <- function(ws){
 #' @export
 #'
 calc_kW <- function(ws, wt, gas = "co2", model = "wann14") {
+  gas <- tolower(gas)
+  model <- tolower(model)
+  supportedGases <- c("co2", "ch4")
+  supportedModels <- c("wann14", "cole98")
+  if(!gas %in% supportedGases){stop("gas not supported")}
+  if(!model %in% supportedModels){stop("model not supported")}
     switch(tolower(model), wann14 = {
         kW <- switch(tolower(gas), co2 = {
             0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
@@ -127,10 +136,14 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
 #' @export
 #'
 kH <- function(t, gas="co2"){
+  supportedGases <- c("co2", "ch4")
+  gas <- tolower(gas)
+  if(!gas %in% supportedGases){stop("gas not supported")}
   kH <- switch(tolower(gas),
                "co2" = 0.034 *  exp(2400*(1/(t+273.15)-1/298.15)),
                "ch4" = 0.0013 * exp(1600*(1/(t+273.15)-1/298.15))
   )
+  return(kH)
 }
 
 #' Convert mmol m⁻² d⁻¹ to µMol m⁻² d⁻¹

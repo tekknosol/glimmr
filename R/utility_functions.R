@@ -114,10 +114,9 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
 #' @param t numeric; temperature °C
 #' @param gas character; Gas to calculate kH for. See 'Details'.
 #'
-#' @return
+#' @return Henry's constant
 #' @export
 #'
-#' @examples
 kH <- function(t, gas="co2"){
   kH <- switch(tolower(gas),
                "co2" = 0.034 *  exp(2400*(1/(t+273.15)-1/298.15)),

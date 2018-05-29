@@ -123,3 +123,25 @@ kH <- function(t, gas="co2"){
                "ch4" = 0.0013 * exp(1600*(1/(t+273.15)-1/298.15))
   )
 }
+
+#' Convert mmol m⁻² d⁻¹ to µMol m⁻² d⁻¹
+#'
+#' @param flux numeric; Flux value in mmol m⁻² d⁻¹
+#'
+#' @return Flux in µMol m⁻² d⁻¹
+#' @export
+#'
+day2sec <- function(flux){
+  return(flux*1000/86400)
+}
+
+#' Converts µMol m⁻² d⁻¹ to mmol m⁻² d⁻¹
+#'
+#' @param flux numeric; Flux value in µMol m⁻² d⁻¹
+#'
+#' @return Flux in mmol m⁻² d⁻¹
+#' @export
+#'
+sec2day <- function(flux){
+  return(flux*86400/1000)
+}

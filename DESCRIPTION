@@ -1,7 +1,7 @@
 Package: tregata
 Type: Package
 Title: (Meta-)Package for the TregaTa project
-Version: 0.1.0
+Version: 0.1.0.9000
 Author: Philipp Keller
 Maintainer: Philipp Keller <philipp.keller@ufz.de>
 Description: (Meta-)Package for the TregaTa project.

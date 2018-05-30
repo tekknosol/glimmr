@@ -11,6 +11,7 @@
 #' @examples
 #' flux_raw <- preprocess_gasmet(gasmet, meta)
 preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
+    gases <- c("co2", "ch4")
     hmr.data <- data.frame(spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA, Concentration = NA, CH4mmol = NA,
         co2 = NA, ch4 = NA)
     for (i in 1:length(meta$spot)) {
@@ -29,5 +30,25 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
         }
     }
     hmr.data <- hmr.data[-1, ]
+
     return(hmr.data)
+}
+
+#' Process GASMET data
+#'
+#' @inheritParams preprocess_gasmet
+#'
+#' @return data frame with flux data
+#' @export
+#'
+process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098){
+  hmr.data <- preprocess_gasmet(rts, meta)
+
+  transect.flux.co2 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "Concentration", .id = c("day","co2", "rep",  "spot"), methods = c("robust linear"), select = "RF2011")
+  transect.flux.ch4 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CH4mmol", .id = c("day","ch4", "rep","spot"), methods = c("robust linear"), select = "RF2011")
+
+  # flux in mmol m-2 d-1
+  flux <- data.frame(date=as.POSIXct(transect.flux.co2$day, format="%d.%m.%Y"), site=transect.flux.co2$spot, CO2.flux=transect.flux.co2$robust.linear.f0*24, CO2.flux.p=transect.flux.co2$robust.linear.f0.p, CH4.flux=transect.flux.ch4$robust.linear.f0*24, CH4.flux.p=transect.flux.ch4$robust.linear.f0.p, begin=meta%>%dplyr::filter(!is.na(begin))%>%dplyr::select(begin))
+
+  return(flux)
 }

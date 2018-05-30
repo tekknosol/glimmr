@@ -8,4 +8,5 @@
 #'
 #' @docType package
 #' @name tregata
+#' @importFrom magrittr %>%
 NULL

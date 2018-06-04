@@ -4,8 +4,9 @@ Title: (Meta-)Package for the TregaTa project
 Version: 0.1.0.9000
 Author: Philipp Keller
 Maintainer: Philipp Keller <philipp.keller@ufz.de>
-Description: (Meta-)Package for the TregaTa project.
-    Bundles water and flux related functions.
+Description: The tregata package provides functions to convert high frequency concentration data
+    obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
+    processed automatically.
 License: GPL-3
 Encoding: UTF-8
 URL: https://github.com/tekknosol/tregata
@@ -15,5 +16,6 @@ Imports:
   ggplot2,
     lubridate,
     gasfluxes,
-    dplyr
+    dplyr,
+    magrittr
 Suggests: testthat

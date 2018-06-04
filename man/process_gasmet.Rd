@@ -4,7 +4,7 @@
 \alias{process_gasmet}
 \title{Process GASMET data}
 \usage{
-process_gasmet(gasmet, meta, V = 0.01461, A = 0.098)
+process_gasmet(gasmet, meta, V = 0.01461, A = 0.098, pre = F)
 }
 \arguments{
 \item{gasmet}{data frame; Recordings from GASMET.}

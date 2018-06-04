@@ -6,10 +6,6 @@
 #' @param A numeric; Chamber Area. Default to 0.098.
 #'
 #' @return dataframe which can be used as input of the gasfluxes function
-#' @export
-#'
-#' @examples
-#' flux_raw <- preprocess_gasmet(gasmet, meta)
 preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
     terminate <- F
     if(T %in% is.na(meta$pmbar)){terminate <- T}
@@ -56,8 +52,10 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
 #' @return data frame with flux data
 #' @export
 #'
-process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098){
-  hmr.data <- preprocess_gasmet(rts, meta)
+process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, pre=F){
+  hmr.data <- preprocess_gasmet(gasmet, meta)
+
+  if(pre==T){return(hmr.data)}
 
   transect.flux.co2 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "Concentration", .id = c("day","co2", "rep",  "spot"), methods = c("robust linear"), select = "RF2011")
   transect.flux.ch4 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CH4mmol", .id = c("day","ch4", "rep","spot"), methods = c("robust linear"), select = "RF2011")
@@ -78,6 +76,6 @@ process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098){
   return(flux)
 }
 
-process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098){
+process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre=F){
 
 }

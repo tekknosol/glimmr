@@ -21,6 +21,3 @@ dataframe which can be used as input of the gasfluxes function
 \description{
 Preprocess GASMET data for flux calculations
 }
-\examples{
-flux_raw <- preprocess_gasmet(gasmet, meta)
-}

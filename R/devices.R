@@ -29,9 +29,10 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
             series <- paste(rownames(meta[i, ]), meta[i, ]$spot, sep = "-")
             begin <- which(gasmet$datetime == meta[i, ]$begin)
             a <- gasmet[(begin + meta[i, ]$offset):(begin + meta[i, ]$wndw - 1), ]
-            conc <- a$CO2 * 10^-6 * (meta[i, ]$pmbar * 100)/(8.314 * (meta[i, ]$temp + 273.15)) * 1000  # calculate concentration in mmol/m³
-            conc.CH4 <- a$CH4 * 10^-6 * (meta[i, ]$pmbar * 100)/(8.314 * (meta[i, ]$temp + 273.15)) * 1000
-            conc.N2O <- a$N2O * 10^-6 * (meta[i, ]$pmbar * 100)/(8.314 * (meta[i, ]$temp + 273.15)) * 1000
+            pmbar <- mean(a$Luftdruck)
+            conc <- a$CO2 * 10^-6 * (pmbar * 100)/(8.314 * (meta[i, ]$temp + 273.15)) * 1000  # calculate concentration in mmol/m³
+            conc.CH4 <- a$CH4 * 10^-6 * (pmbar * 100)/(8.314 * (meta[i, ]$temp + 273.15)) * 1000
+            conc.N2O <- a$N2O * 10^-6 * (pmbar * 100)/(8.314 * (meta[i, ]$temp + 273.15)) * 1000
 
             # time in hour because algorithm expects that. fluxes need to be trensformed to daily fluxes afterwards
             hmr.data.tmp <- data.frame(spot = meta[i, ]$spot, day = meta[i, ]$day, rep = rownames(meta[i, ]),

@@ -22,7 +22,7 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
       warning("No offset provided in meta file. Set to 0.")
     }
 
-    hmr.data <- data.frame(spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA, Concentration = NA, CH4mmol = NA,
+    hmr.data <- data.frame(spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA, CO2mmol = NA, CH4mmol = NA,
         N2Ommol = NA, co2 = NA, ch4 = NA, n2o = NA)
     for (i in 1:length(meta$spot)) {
         if (!is.na(meta[i, ]$begin)) {
@@ -35,7 +35,7 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
 
             # time in hour because algorithm expects that. fluxes need to be trensformed to daily fluxes afterwards
             hmr.data.tmp <- data.frame(spot = meta[i, ]$spot, day = meta[i, ]$day, rep = rownames(meta[i, ]),
-                V = V, A = A, Time = as.numeric(a$datetime - a[1, ]$datetime)/60/60, Concentration = conc, CH4mmol = conc.CH4,
+                V = V, A = A, Time = as.numeric(a$datetime - a[1, ]$datetime)/60/60, CO2mmol = conc, CH4mmol = conc.CH4,
                 N2Ommol = conc.N2O, ch4 = "ch4", co2 = "co2", n2o="n2o")
             hmr.data <- rbind(hmr.data, hmr.data.tmp)
         }
@@ -57,7 +57,7 @@ process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, pre=F){
 
   if(pre==T){return(hmr.data)}
 
-  transect.flux.co2 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "Concentration", .id = c("day","co2", "rep",  "spot"), methods = c("robust linear"), select = "RF2011")
+  transect.flux.co2 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CO2mmol", .id = c("day","co2", "rep",  "spot"), methods = c("robust linear"), select = "RF2011")
   transect.flux.ch4 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CH4mmol", .id = c("day","ch4", "rep","spot"), methods = c("robust linear"), select = "RF2011")
   transect.flux.n2o <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "N2Ommol", .id = c("day","n2o", "rep","spot"), methods = c("robust linear"), select = "RF2011")
 

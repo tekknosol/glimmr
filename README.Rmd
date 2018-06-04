@@ -4,7 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -17,22 +17,28 @@ library(dplyr)
 # TregaTa
 
 ## Overview
-tregata will be a (meta-)package for waterchemistry and gasflux calculations.
-It is initially designed for the TregaTa Project and may include some project related functions at early stages.
+tregata will be a (meta-)package covering waterchemistry, waterphysics and gasflux calculations.
+It was initially designed for the TregaTa Project and may include some project related functions at early stages.
 
 ## Installation
 
 ```{r, eval = FALSE}
-# The package is not yet released on CRAN.
+# The package is not released on CRAN yet.
 # Development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("tekknosol/tregata")
 ```
 
-## Usage
+## Getting started
+Calculate fluxes from device records and a meta file containing information about single measurements.
 
+First check preprocessed data:
 ```{r, eval = TRUE}
 data("gasmet", "meta")
-flux_raw <- preprocess_gasmet(gasmet, meta)
+flux_raw <- process_gasmet(gasmet, meta, pre=T)
 glimpse(flux_raw)
+```
+Compute fluxes with:
+```{r, eval = FALSE}
+flux <- process_gasmet(gasmet, meta)
 ```

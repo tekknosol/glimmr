@@ -2,6 +2,7 @@
 * add flux conversions between per day and per sec
 * add functions to create ggplot2 ylabs for gasfluxes
 * add preprocessing of GASMET data
+* add complete processing of GASMET data
 
 # tregata 0.1.0
 * add basic functions

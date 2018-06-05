@@ -8,9 +8,8 @@
 #' @return dataframe which can be used as input of the gasfluxes function
 preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
     terminate <- F
-    if(T %in% is.na(meta$pmbar)){terminate <- T}
     if(T %in% is.na(meta$temp)){terminate <- T}
-    if(terminate){stop("missing preassure or temperature values in meta file. Flux calculation stoped.")}
+    if(terminate){stop("missing temperature values in meta file. Flux calculation stoped.")}
 
     if(T %in% is.na(meta$wndw)| is.null(meta$wndw)){
       meta$wndw <- 10
@@ -77,6 +76,60 @@ process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, pre=F){
   return(flux)
 }
 
-process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre=F){
+preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
+  meta$start <- lubridate::ceiling_date(meta$start, "minute", change_on_boundary = T)
+  meta$end <- lubridate::floor_date(meta$end, "minute")
+  hmr.data <- data.frame(spot = NA, rep = NA, V = NA, A = NA, Time = NA, CO2mmol = NA, CH4mmol = NA,
+                         co2 = NA, ch4 = NA)
+  for (i in 1:length(meta$spot)) {
+    if (!is.na(meta[i, ]$start)) {
+      begin <- which(losgatos$Time >= meta[i, ]$start)[1]
+      end <- which(losgatos$Time <= meta[i,]$end)
+      end <- end[length(end)]
+      a <- losgatos[begin:end, ]
+      pmbar <- mean(a$GasP_torr)*1.33322
+      temp <- mean(c(meta$tstart, meta$tend))
+      conc <- a$`[CO2]_ppm` * 10^-6 * (pmbar * 100)/(8.314 * (temp + 273.15)) * 1000  # calculate concentration in mmol/m³
+      conc.CH4 <- a$`[CH4]_ppm` * 10^-6 * (pmbar * 100)/(8.314 * (temp + 273.15)) * 1000
+      hmr.data.tmp <- data.frame(spot = meta[i, ]$spot, rep = rownames(meta[i, ]),
+                                 V = V, A = A, Time = as.numeric(a$Time - a[1, ]$Time)/60/60, CO2mmol = conc, CH4mmol = conc.CH4,
+                                 ch4 = "ch4", co2 = "co2")
+      hmr.data <- rbind(hmr.data, hmr.data.tmp)
+    }
+  }
+  hmr.data <- hmr.data[-1, ]
+  return(hmr.data)
+}
 
+#' Process flux calculation for LosGatos data.
+#'
+#' @param losgatos a data frame containing LosGatos data.
+#' @param meta a data frame of meta information. See 'Details'.
+#' @param V numeric; Chamber volume.
+#' @param A numeric; Chamber area.
+#' @param pre if TRUE don't process the flux calculation and return the preprocessed dataframe.
+#'     When FALSE (the default) data is processed with routines from 'gasfluxes' package and the fluxes are returned.
+#'
+#' @return Fluxes
+#' @export
+#'
+process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre=F){
+  hmr.data <- preprocess_losgatos(losgatos, meta, V=V, A=A)
+
+  if(pre==T){return(hmr.data)}
+
+  transect.flux.co2 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CO2mmol", .id = c("day","co2", "rep",  "spot"), methods = c("robust linear"), select = "RF2011")
+  transect.flux.ch4 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CH4mmol", .id = c("day","ch4", "rep","spot"), methods = c("robust linear"), select = "RF2011")
+
+  # flux in mmol m-2 d-1
+  flux <- data.frame(date=as.POSIXct(transect.flux.co2$day, format="%d.%m.%Y"),
+                     site=transect.flux.co2$spot,
+                     CO2.flux=transect.flux.co2$robust.linear.f0*24,
+                     CO2.flux.p=transect.flux.co2$robust.linear.f0.p,
+                     CH4.flux=transect.flux.ch4$robust.linear.f0*24,
+                     CH4.flux.p=transect.flux.ch4$robust.linear.f0.p,
+                     begin=meta%>%dplyr::filter(!is.na(begin))%>%dplyr::select(begin)
+  )
+
+  return(flux)
 }

@@ -18,5 +18,7 @@ Imports:
     lubridate,
     gasfluxes,
     dplyr,
-    magrittr
+    magrittr,
+    readr,
+    stringi
 Suggests: testthat

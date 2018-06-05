@@ -146,8 +146,8 @@ kH <- function(t, gas = "co2") {
     if (!gas %in% supportedGases) {
         stop("gas not supported")
     }
-    kH <- switch(tolower(gas), co2 = 0.034 * exp(2400 * (1/(t + 273.15) - 1/298.15)), ch4 = 0.0013 * exp(1600 * 
-        (1/(t + 273.15) - 1/298.15)))
+    kH <- switch(tolower(gas), co2 = 0.034 * exp(2400 * (1/(t + 273.15) - 1/298.15)), ch4 = 0.0013 * 
+        exp(1600 * (1/(t + 273.15) - 1/298.15)))
     return(kH)
 }
 

@@ -21,3 +21,18 @@ data frame with flux data
 \description{
 Process GASMET data
 }
+\details{
+Flux calculation needs a GASMET datafile and a file containing metadata. Excpected fields in the
+   meta file are:
+
+\itemize{
+  \item spot: character; ID of the measurement location.
+  \item day: character; Date of the measurement.
+  \item begin: character; Exact beginning of the measurement. Ideally directly copied from the GASMET File.
+  \item temp: number; Temperature during measurement.
+  \item wndw: (optional) Number of datapoints per measurement. Set to 10 if not provided.
+  \item offset: (optional) Number of datapoints skipped at the beginning. Set to 0 if not provided.}
+
+  The function splits the GASMET File into chunks containing the single chamber applications defined by
+    begin, wndw, and offset. These chunks are passed to the 'gasfluxes' package for the flux calculation.
+}

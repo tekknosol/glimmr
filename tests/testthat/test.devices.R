@@ -1,5 +1,5 @@
 context("Devices")
-library(tregata)
+library(glimmr)
 
 data("gasmet", "meta_gasmet")
 meta_gasmet$temp[3] <- NA

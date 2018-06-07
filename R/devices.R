@@ -4,10 +4,12 @@
 #' @param meta data frame; Metainformations, see 'Details'.
 #' @param V numeric; Chamber Volume. Default to 0.01461.
 #' @param A numeric; Chamber Area. Default to 0.098.
+#' @param wndw numeric; Default to 10. Number of datapoints per measurement. Can be overruled in metadata file. See 'Details'.
+#' @param offset numeric; Default to 0. Number of datapoints skipped at the beginning. Can be overruled in metadata file. See 'Details'.
 #'
 #'
 #' @return dataframe which can be used as input of the gasfluxes function
-preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
+preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, wndw=10, offset=0) {
     terminate <- F
     if (T %in% is.na(meta$temp)) {
         terminate <- T
@@ -17,12 +19,12 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
     }
 
     if (T %in% is.na(meta$wndw) | is.null(meta$wndw)) {
-        meta$wndw <- 10
+        meta$wndw <- wndw
         warning("No window provided in meta file. Set to 10.")
     }
 
     if (T %in% is.na(meta$offset) | is.null(meta$offset)) {
-        meta$offset <- 0
+        meta$offset <- offset
         warning("No offset provided in meta file. Set to 0.")
     }
 
@@ -57,7 +59,7 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
 #' @param pre if TRUE don't process the flux calculation and return the preprocessed dataframe.
 #'     When FALSE (the default) data is processed with routines from 'gasfluxes' package and the fluxes are returned.
 #'
-#' @return data frame with flux data
+#' @return data frame with flux data in mmol m-2 d-1
 #'
 #' @details Flux calculation needs a GASMET datafile and a file containing metadata. Excpected fields in the
 #'    meta file are:
@@ -65,19 +67,25 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
 #' \itemize{
 #'   \item spot: character; ID of the measurement location.
 #'   \item day: character; Date of the measurement.
-#'   \item begin: character; Exact beginning of the measurement. Ideally directly copied from the GASMET File.
-#'   \item temp: number; Temperature during measurement.
-#'   \item wndw: (optional) Number of datapoints per measurement. Set to 10 if not provided.
-#'   \item offset: (optional) Number of datapoints skipped at the beginning. Set to 0 if not provided.}
+#'   \item begin: character; Exact start of the measurement in the format HH:MM:SS. Ideally directly copied from the GASMET File.
+#'   \item temp: number; Temperature inside the chamber during measurement.
+#'   \item wndw: (optional) Number of datapoints per measurement. Function parameter is used if not provided (default: 10).
+#'   \item offset: (optional) Number of datapoints skipped at the beginning. Function parameter is used if not provided (default: 0).}
 #'
 #'   The function splits the GASMET File into chunks containing the single chamber applications defined by
-#'     begin, wndw, and offset. These chunks are passed to the 'gasfluxes' package for the flux calculation.
+#'     begin, wndw, and offset. These chunks are passed to the 'gasfluxes' package for the flux calculation and
+#'     CO2, CH4 and N2O fluxes are returned as single data frame.
+#'     'gasfluxes' creates a plot for every single measurement which are saved into a 'pics' subfolder within
+#'     the working directory.
+#'
+#'     wndw and offset can be set as function parameters for the whole dataset or induvidually in
+#'     the metadata file for every measurement.
 #'
 #'
 #' @export
 #'
-process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, pre = F) {
-    hmr.data <- preprocess_gasmet(gasmet, meta)
+process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, pre = F, wndw=10, offset=0) {
+    hmr.data <- preprocess_gasmet(gasmet, meta, V=V, A=A, wndw=wndw, offset=offset)
 
     if (pre == T) {
         return(hmr.data)

@@ -21,12 +21,12 @@ Gas fLuxes and dynamIc chaMber MeasuRements
 
 ## Overview
 The `glimmr` package provides functions to convert high frequency concentration data
-obtained by chamber measurements into gasfluxes. Data recorded with different devices can be processed automatically.
-The model fitting itself is done with the `gasfluxes` package.
+obtained by (dynamic-) chamber measurements into gasfluxes. Data recorded with different devices can be processed automatically. The data is separated into chunks covering the single chamber applicatoins and containing additional meta information (e.g. IDs, temperature...) provided by a metadata file.
+The model fitting for the different gas species is done with the `gasfluxes` package.
 
 Furthermore `glimmr` contains functions to calculate gasfluxes with the 'Boundary Layer Equation' (BLE). 
 
-To calculate gasfluxes from high frequency chamber measurements, tregata supports two devices with two `read_` and `process_` functions:
+To calculate gasfluxes from high frequency chamber measurements, glimmr supports two devices with two `read_` and `process_` functions:
 
 * `read_gasmet()` & `process_gasmet()`: GASMET
 * `read_losgatos()` & `process_losgatos()`: LosGatos

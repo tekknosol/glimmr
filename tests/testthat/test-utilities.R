@@ -1,5 +1,5 @@
 context("kW context")
-library(tregata)
+library(glimmr)
 
 test_that("Unsupportet model throws error", {
   expect_error(calc_kW(1,2, model =  "XXX"), "model not supported")

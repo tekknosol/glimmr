@@ -4,7 +4,8 @@
 \alias{process_gasmet}
 \title{Process GASMET data}
 \usage{
-process_gasmet(gasmet, meta, V = 0.01461, A = 0.098, pre = F)
+process_gasmet(gasmet, meta, V = 0.01461, A = 0.098, pre = F, wndw = 10,
+  offset = 0)
 }
 \arguments{
 \item{gasmet}{data frame; Recordings from GASMET.}
@@ -17,9 +18,13 @@ process_gasmet(gasmet, meta, V = 0.01461, A = 0.098, pre = F)
 
 \item{pre}{if TRUE don't process the flux calculation and return the preprocessed dataframe.
 When FALSE (the default) data is processed with routines from 'gasfluxes' package and the fluxes are returned.}
+
+\item{wndw}{numeric; Default to 10. Number of datapoints per measurement. Can be overruled in metadata file. See 'Details'.}
+
+\item{offset}{numeric; Default to 0. Number of datapoints skipped at the beginning. Can be overruled in metadata file. See 'Details'.}
 }
 \value{
-data frame with flux data
+data frame with flux data in mmol m-2 d-1
 }
 \description{
 Process GASMET data
@@ -31,11 +36,17 @@ Flux calculation needs a GASMET datafile and a file containing metadata. Excpect
 \itemize{
   \item spot: character; ID of the measurement location.
   \item day: character; Date of the measurement.
-  \item begin: character; Exact beginning of the measurement. Ideally directly copied from the GASMET File.
-  \item temp: number; Temperature during measurement.
-  \item wndw: (optional) Number of datapoints per measurement. Set to 10 if not provided.
-  \item offset: (optional) Number of datapoints skipped at the beginning. Set to 0 if not provided.}
+  \item begin: character; Exact start of the measurement in the format HH:MM:SS. Ideally directly copied from the GASMET File.
+  \item temp: number; Temperature inside the chamber during measurement.
+  \item wndw: (optional) Number of datapoints per measurement. Function parameter is used if not provided (default: 10).
+  \item offset: (optional) Number of datapoints skipped at the beginning. Function parameter is used if not provided (default: 0).}
 
   The function splits the GASMET File into chunks containing the single chamber applications defined by
-    begin, wndw, and offset. These chunks are passed to the 'gasfluxes' package for the flux calculation.
+    begin, wndw, and offset. These chunks are passed to the 'gasfluxes' package for the flux calculation and
+    CO2, CH4 and N2O fluxes are returned as single data frame.
+    'gasfluxes' creates a plot for every single measurement which are saved into a 'pics' subfolder within
+    the working directory.
+
+    wndw and offset can be set as function parameters for the whole dataset or induvidually in
+    the metadata file for every measurement.
 }

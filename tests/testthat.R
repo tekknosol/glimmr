@@ -1,4 +1,4 @@
 library(testthat)
-library(tregata)
+library(glimmr)
 
-test_check("tregata")
+test_check("glimmr")

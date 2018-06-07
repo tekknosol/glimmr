@@ -1,18 +1,18 @@
-Package: tregata
+Package: glimmr
 Type: Package
-Title: (Meta-)Package for the TregaTa project
+Title: Gas fLuxes and dynamIc chaMber MeasuRements
 Version: 0.1.0.9000
 Authors@R: person("Philipp S.", "Keller", email = "phlipp.keller@ufz.de",
   role = c("aut", "cre"))
-Description: The tregata package provides functions to convert high frequency concentration data
+Description: The glimmr package provides functions to convert high frequency concentration data
     obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
     processed automatically.
 Date: 2018
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 Depends: R (>= 2.10)
-URL: https://github.com/tekknosol/tregata
-BugReports: https://github.com/tekknosol/tregata/issues
+URL: https://github.com/tekknosol/glimmr
+BugReports: https://github.com/tekknosol/glimmr/issues
 LazyData: true
 RoxygenNote: 6.0.1
 Imports:

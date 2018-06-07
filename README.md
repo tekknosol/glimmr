@@ -1,14 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-TregaTa
-=======
+glimmr
+======
+
+Gas fLuxes and dynamIc chaMber MeasuRements
 
 [![tidyverse\_lifecycle\_badge](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 Overview
 --------
 
-tregata is a (meta-)package providing routines for waterchemistry, waterphysics and gasflux calculations. It was initially designed for the TregaTa Project and may include some project related functions at early stages.
+The `glimmr` package provides functions to convert high frequency concentration data obtained by chamber measurements into gasfluxes. Data recorded with different devices can be processed automatically. The model fitting itself is done with the `gasfluxes` package.
+
+Furthermore `glimmr` contains functions to calculate gasfluxes with the 'Boundary Layer Equation' (BLE).
 
 To calculate gasfluxes from high frequency chamber measurements, tregata supports two devices with two `read_` and `process_` functions:
 
@@ -22,7 +26,7 @@ Installation
 # The package is not released on CRAN yet.
 # Development version from GitHub:
 # install.packages("devtools")
-devtools::install_github("tekknosol/tregata")
+devtools::install_github("tekknosol/glimmr")
 ```
 
 Getting started

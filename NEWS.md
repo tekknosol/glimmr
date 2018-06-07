@@ -3,6 +3,7 @@
 * add functions to create ggplot2 ylabs for gasfluxes
 * add preprocessing of GASMET data
 * add complete processing of GASMET data
+* add complete processing of LosGatos data
 * use atm. pressure data from GASMET data directly
 * add routines to read GASMET and LosGatos files from disk
 

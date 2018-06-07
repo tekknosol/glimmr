@@ -15,6 +15,7 @@ library(dplyr)
 ```
 
 # TregaTa
+[![tidyverse_lifecycle_badge](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 ## Overview
 tregata is a (meta-)package providing routines for waterchemistry, waterphysics and gasflux calculations.

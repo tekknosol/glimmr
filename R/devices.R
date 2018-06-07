@@ -54,6 +54,8 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098) {
 #' Process GASMET data
 #'
 #' @inheritParams preprocess_gasmet
+#' @param pre if TRUE don't process the flux calculation and return the preprocessed dataframe.
+#'     When FALSE (the default) data is processed with routines from 'gasfluxes' package and the fluxes are returned.
 #'
 #' @return data frame with flux data
 #'

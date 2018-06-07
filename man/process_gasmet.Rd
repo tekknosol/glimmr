@@ -14,6 +14,9 @@ process_gasmet(gasmet, meta, V = 0.01461, A = 0.098, pre = F)
 \item{V}{numeric; Chamber Volume. Default to 0.01461.}
 
 \item{A}{numeric; Chamber Area. Default to 0.098.}
+
+\item{pre}{if TRUE don't process the flux calculation and return the preprocessed dataframe.
+When FALSE (the default) data is processed with routines from 'gasfluxes' package and the fluxes are returned.}
 }
 \value{
 data frame with flux data

@@ -1,7 +1,7 @@
 library(dplyr)
 library(lubridate)
-gasmet <- read_gasmet("/home/kellerp/PhD/Projekte/Paper1/data/fluxe/unprocessed/20170412/gasmet.csv")
-meta_gasmet <- readr::read_csv("/home/kellerp/PhD/Projekte/Paper1/data/fluxe/unprocessed/20170412/meta.csv")
+gasmet <- read_gasmet("data-raw/gasmet.csv")
+meta_gasmet <- readr::read_csv("data-raw/meta.csv")
 
 meta_gasmet <- meta_gasmet %>%
   mutate(begin=dmy_hms(paste(day,begin))) %>%

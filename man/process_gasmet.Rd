@@ -50,3 +50,13 @@ Flux calculation needs a GASMET datafile and a file containing metadata. Excpect
     wndw and offset can be set as function parameters for the whole dataset or induvidually in
     the metadata file for every measurement.
 }
+\examples{
+# preprocessing of data (pre=TRUE) returns data frame with chunks ready to pass to
+# 'gasfluxes'.
+process_gasmet(gasmet, meta_gasmet, pre=TRUE)
+
+# prcessing provokes flux calculation for the three gas species (CO2, CH4, N2O).
+\dontrun{
+process_gasmet(gasmet, meta_gasmet)
+}
+}

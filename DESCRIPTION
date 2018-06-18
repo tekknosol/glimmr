@@ -3,7 +3,7 @@ Type: Package
 Title: Gas fLuxes and dynamIc chaMber MeasuRements
 Version: 0.1.0.9000
 Authors@R: person("Philipp S.", "Keller", email = "phlipp.keller@ufz.de",
-  role = c("aut", "cre"))
+  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3565-4413"))
 Description: The glimmr package provides functions to convert high frequency concentration data
     obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
     processed automatically.

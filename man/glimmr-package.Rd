@@ -19,7 +19,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Philipp S. Keller \email{phlipp.keller@ufz.de}
+\strong{Maintainer}: Philipp S. Keller \email{phlipp.keller@ufz.de} (0000-0002-3565-4413)
 
 }
 \keyword{internal}

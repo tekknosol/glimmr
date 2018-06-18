@@ -36,6 +36,10 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, wndw=10, off
             repcount[repcount$spot == meta[i, ]$spot, ]$count <- repcount[repcount$spot==meta[i, ]$spot, ]$count+1
             series <- paste(rownames(meta[i, ]), meta[i, ]$spot, sep = "-")
             begin <- which(gasmet$datetime == meta[i, ]$begin)
+            if(length(begin) == 0){
+              warning(call.=FALSE, paste("meta entry", i, "skipped. Begin does not match data."))
+              next
+            }
             a <- gasmet[(begin + meta[i, ]$offset):(begin + meta[i, ]$wndw - 1), ]
             pmbar <- mean(a$Luftdruck)
             conc <- a$CO2 * 10^-6 * (pmbar * 100)/(8.314 * (meta[i, ]$temp + 273.15)) * 1000  # calculate concentration in mmol/m³
@@ -94,13 +98,17 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, wndw=10, off
 #' process_gasmet(gasmet, meta_gasmet)
 #' }
 process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, pre = F, wndw=10, offset=0) {
-    hmr.data <- preprocess_gasmet(gasmet, meta, V=V, A=A, wndw=wndw, offset=offset)
-
     # define begin to avoid check note for CRAN
     begin <- NULL
 
+    hmr.data <- preprocess_gasmet(gasmet, meta, V=V, A=A, wndw=wndw, offset=offset)
+
     if (pre == T) {
-        return(hmr.data)
+      return(hmr.data)
+    }
+
+    if (length(rownames(hmr.data)) == 0) {
+      stop("No data to process.")
     }
 
     transect.flux.co2 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CO2mmol", .id = c("day",

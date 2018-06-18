@@ -17,3 +17,9 @@ test_that("Window & Offset", {
   expect_warning(process_gasmet(gasmet, meta_gasmet1, pre = T), "No window provided in meta file. Set to 10.")
   expect_warning(process_gasmet(gasmet, meta_gasmet, pre = T), "No offset provided in meta file. Set to 0.")
 })
+
+rm(meta_gasmet)
+data("meta_gasmet")
+test_that("No NA in preprocessed data",{
+  expect_false(TRUE %in% is.na(process_gasmet(gasmet, meta_gasmet, pre = T)))
+})

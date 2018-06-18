@@ -30,8 +30,10 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, wndw=10, off
 
     hmr.data <- data.frame(spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA, CO2mmol = NA,
         CH4mmol = NA, N2Ommol = NA, co2 = NA, ch4 = NA, n2o = NA)
+    repcount <- data.frame(spot = unique(meta_gasmet$spot), count = 0)
     for (i in 1:length(meta$spot)) {
         if (!is.na(meta[i, ]$begin)) {
+            repcount[repcount$spot == meta[i, ]$spot, ]$count <- repcount[repcount$spot==meta[i, ]$spot, ]$count+1
             series <- paste(rownames(meta[i, ]), meta[i, ]$spot, sep = "-")
             begin <- which(gasmet$datetime == meta[i, ]$begin)
             a <- gasmet[(begin + meta[i, ]$offset):(begin + meta[i, ]$wndw - 1), ]
@@ -42,8 +44,7 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, wndw=10, off
 
             # time in hour because algorithm expects that. fluxes need to be trensformed to daily fluxes
             # afterwards
-            hmr.data.tmp <- data.frame(spot = meta[i, ]$spot, day = meta[i, ]$day, rep = rownames(meta[i,
-                ]), V = V, A = A, Time = as.numeric(a$datetime - a[1, ]$datetime)/60/60, CO2mmol = conc,
+            hmr.data.tmp <- data.frame(spot = meta[i, ]$spot, day = meta[i, ]$day, rep = repcount[repcount$spot == meta[i, ]$spot, ]$count, V = V, A = A, Time = as.numeric(a$datetime - a[1, ]$datetime)/60/60, CO2mmol = conc,
                 CH4mmol = conc.CH4, N2Ommol = conc.N2O, ch4 = "ch4", co2 = "co2", n2o = "n2o")
             hmr.data <- rbind(hmr.data, hmr.data.tmp)
         }
@@ -83,20 +84,31 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, wndw=10, off
 #'
 #'
 #' @export
+#' @examples
+#' # preprocessing of data (pre=TRUE) returns data frame with chunks ready to pass to
+#' # 'gasfluxes'.
+#' process_gasmet(gasmet, meta_gasmet, pre=TRUE)
 #'
+#' # prcessing provokes flux calculation for the three gas species (CO2, CH4, N2O).
+#' \dontrun{
+#' process_gasmet(gasmet, meta_gasmet)
+#' }
 process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098, pre = F, wndw=10, offset=0) {
     hmr.data <- preprocess_gasmet(gasmet, meta, V=V, A=A, wndw=wndw, offset=offset)
+
+    # define begin to avoid check note for CRAN
+    begin <- NULL
 
     if (pre == T) {
         return(hmr.data)
     }
 
     transect.flux.co2 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CO2mmol", .id = c("day",
-        "co2", "rep", "spot"), methods = c("robust linear"), select = "RF2011")
+        "co2", "spot", "rep"), methods = c("robust linear"), select = "RF2011")
     transect.flux.ch4 <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "CH4mmol", .id = c("day",
-        "ch4", "rep", "spot"), methods = c("robust linear"), select = "RF2011")
+        "ch4", "spot", "rep"), methods = c("robust linear"), select = "RF2011")
     transect.flux.n2o <- gasfluxes::gasfluxes(hmr.data, .times = "Time", .C = "N2Ommol", .id = c("day",
-        "n2o", "rep", "spot"), methods = c("robust linear"), select = "RF2011")
+        "n2o", "spot", "rep"), methods = c("robust linear"), select = "RF2011")
 
     # flux in mmol m-2 d-1
     flux <- data.frame(date = as.POSIXct(transect.flux.co2$day, format = "%d.%m.%Y"), site = transect.flux.co2$spot,
@@ -147,6 +159,9 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
 #'
 process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
     hmr.data <- preprocess_losgatos(losgatos, meta, V = V, A = A)
+
+    # define begin to avoid check note for CRAN
+    begin <- NULL
 
     if (pre == T) {
         return(hmr.data)

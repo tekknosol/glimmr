@@ -42,3 +42,13 @@ meta <- read_csv("path/to/meta_file.csv")
 # compute fluxes
 flux <- process_gasmet(gasmet, meta)
 ```
+
+Calculate gas transfer coefficient used with the Boundary Layer Equation (BLE).
+
+``` r
+windspeed <- c(2, 4.3, 1.8)
+watertemperature <- c(18, 21, 19.3)
+
+calc_kW(windspeed, watertemperature)
+#> [1] 1.488888 7.426978 1.246858
+```

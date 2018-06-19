@@ -6,6 +6,8 @@
 * add complete processing of LosGatos data
 * use atm. pressure data from GASMET data directly
 * add routines to read GASMET and LosGatos files from disk
+* fix bug regarding wrong rep nr. in ids
+* add inspect functions
 
 # tregata 0.1.0
 * add basic functions

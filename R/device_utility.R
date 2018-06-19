@@ -87,7 +87,7 @@ clean_losgatos_dir <- function(path) {
     used_files <- get_losgatos_files(path)
     all_files <- dir(path = path, pattern = "*", full.names = T, recursive = F)
     message(length(which(!all_files %in% used_files)), " files deleted.")
-    file.remove(f2[which(!all_files %in% used_files)])
+    file.remove(all_files[which(!all_files %in% used_files)])
 
 }
 
@@ -97,4 +97,38 @@ get_losgatos_files <- function(path) {
     txt <- txt[which(!txt %in% zips)]
     txt <- txt[which(!txt %in% stringr::str_split(zips, ".zip", simplify = T)[, 1])]
     return(append(zips, txt))
+}
+
+#' Show plots for every measurement
+#'
+#' @param fluxdata A data frame with recorded data. Either loaded with \code{\link{read_gasmet}} or \code{\link{read_losgatos}}.
+#' @param meta Metadata
+#' @aliases inspect_losgatos
+#'
+#' @return A series of plots
+#' @export
+#'
+inspect_gasmet <- function(fluxdata, meta){
+  df <- process_gasmet(gasmet, meta_gasmet, pre = TRUE)
+  df <- df %>% tidyr::gather(key="gas", value="concentration", CO2mmol, CH4mmol, N2Ommol)
+  inspect_fluxdata(df)
+}
+
+#' @rdname inspect_gasmet
+#' @export
+#'
+inspect_losgatos <- function(fluxdata, meta){
+  df <- process_losgatos(losgatos, meta, pre = TRUE)
+  df <- df %>% tidyr::gather(key="gas", value="concentration", A,B)
+  inspect_fluxdata(df)
+}
+
+inspect_fluxdata <- function(df){
+  for(i in unique(df$spot)){
+    print(ggplot2::ggplot(df %>% dplyr::filter(spot==i), aes(Time, concentration)) +
+            ggplot2::geom_point()+
+            ggplot2::facet_grid(gas ~ spot + rep, scales = "free"))
+    # op <- par(ask=TRUE)
+  }
+  # par(op)
 }

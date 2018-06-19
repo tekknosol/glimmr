@@ -42,9 +42,9 @@ Flux calculation needs a GASMET datafile and a file containing metadata. Excpect
   \item offset: (optional) Number of datapoints skipped at the beginning. Function parameter is used if not provided (default: 0).}
 
   The function splits the GASMET File into chunks containing the single chamber applications defined by
-    begin, wndw, and offset. These chunks are passed to the 'gasfluxes' package for the flux calculation and
+    begin, wndw, and offset. These chunks are passed to the \code{\link[gasfluxes]{gasfluxes}} package for the flux calculation and
     CO2, CH4 and N2O fluxes are returned as single data frame.
-    'gasfluxes' creates a plot for every single measurement which are saved into a 'pics' subfolder within
+    \code{\link[gasfluxes]{gasfluxes}} creates a plot for every single measurement which are saved into a 'pics' subfolder within
     the working directory.
 
     wndw and offset can be set as function parameters for the whole dataset or induvidually in

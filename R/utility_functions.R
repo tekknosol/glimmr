@@ -89,9 +89,9 @@ calc_kW <- function(ws, wt, gas = "co2", model = "wann14") {
     }
     switch(tolower(model), wann14 = {
         kW <- switch(tolower(gas), co2 = {
-            0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
+            0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas)/660)^-0.5
         }, ch4 = {
-            0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
+            0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas)/660)^-0.5
         })
     }, cole98 = {
         ifelse(is.na(ws), return(NA), n <- 0.67)
@@ -109,9 +109,9 @@ calc_kW <- function(ws, wt, gas = "co2", model = "wann14") {
 calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
     switch(tolower(model), wann14 = {
         kW <- switch(tolower(gas), co2 = {
-            0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
+            0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas)/660)^-0.5
         }, ch4 = {
-            0.251 * calc.u10(ws)^2 * (calc.SN(wt, gas)/660)^-0.5
+            0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas)/660)^-0.5
         })
     }, cole98 = {
         ifelse(is.na(ws), return(NA), n <- 0.67)

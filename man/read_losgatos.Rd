@@ -4,12 +4,14 @@
 \alias{read_losgatos}
 \title{Read a LosGatos file.}
 \usage{
-read_losgatos(file, ...)
+read_losgatos(path, clean_dir = FALSE, ...)
 }
 \arguments{
-\item{file}{Path to a file.}
+\item{clean_dir}{If TRUE directory is cleaned}
 
 \item{...}{additional parameters passed to read_csv()}
+
+\item{file}{Path to a file or directory.}
 }
 \value{
 A data frame.

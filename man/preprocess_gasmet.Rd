@@ -16,9 +16,11 @@ preprocess_gasmet(gasmet, meta, V = 0.01461, A = 0.098, wndw = 10,
 
 \item{A}{numeric; Chamber Area. Default to 0.098.}
 
-\item{wndw}{numeric; Default to 10. Number of datapoints per measurement. Can be overruled in metadata file. See 'Details'.}
+\item{wndw}{numeric; Default to 10. Number of datapoints per measurement.
+Can be overruled in metadata file. See 'Details'.}
 
-\item{offset}{numeric; Default to 0. Number of datapoints skipped at the beginning. Can be overruled in metadata file. See 'Details'.}
+\item{offset}{numeric; Default to 0. Number of datapoints skipped at the
+beginning. Can be overruled in metadata file. See 'Details'.}
 }
 \value{
 dataframe which can be used as input of the gasfluxes function

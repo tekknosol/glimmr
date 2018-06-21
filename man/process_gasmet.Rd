@@ -16,12 +16,16 @@ process_gasmet(gasmet, meta, V = 0.01461, A = 0.098, pre = F, wndw = 10,
 
 \item{A}{numeric; Chamber Area. Default to 0.098.}
 
-\item{pre}{if TRUE don't process the flux calculation and return the preprocessed dataframe.
-When FALSE (the default) data is processed with routines from 'gasfluxes' package and the fluxes are returned.}
+\item{pre}{if TRUE don't process the flux calculation and return the
+ preprocessed dataframe.
+When FALSE (the default) data is processed with routines from 'gasfluxes'
+package and the fluxes are returned.}
 
-\item{wndw}{numeric; Default to 10. Number of datapoints per measurement. Can be overruled in metadata file. See 'Details'.}
+\item{wndw}{numeric; Default to 10. Number of datapoints per measurement.
+Can be overruled in metadata file. See 'Details'.}
 
-\item{offset}{numeric; Default to 0. Number of datapoints skipped at the beginning. Can be overruled in metadata file. See 'Details'.}
+\item{offset}{numeric; Default to 0. Number of datapoints skipped at the
+beginning. Can be overruled in metadata file. See 'Details'.}
 }
 \value{
 data frame with flux data in mmol m-2 d-1
@@ -30,32 +34,39 @@ data frame with flux data in mmol m-2 d-1
 Process GASMET data
 }
 \details{
-Flux calculation needs a GASMET datafile and a file containing metadata. Excpected fields in the
-   meta file are:
+Flux calculation needs a GASMET datafile and a file containing
+  metadata. Expected fields in the meta file are:
 
 \itemize{
   \item spot: character; ID of the measurement location.
   \item day: character; Date of the measurement.
-  \item begin: character; Exact start of the measurement in the format HH:MM:SS. Ideally directly copied from the GASMET File.
+  \item begin: character; Exact start of the measurement in the format
+    HH:MM:SS. Ideally directly copied from the GASMET File.
   \item temp: number; Temperature inside the chamber during measurement.
-  \item wndw: (optional) Number of datapoints per measurement. Function parameter is used if not provided (default: 10).
-  \item offset: (optional) Number of datapoints skipped at the beginning. Function parameter is used if not provided (default: 0).}
+  \item wndw: (optional) Number of datapoints per measurement. Function
+    parameter is used if not provided (default: 10).
+  \item offset: (optional) Number of datapoints skipped at the beginning.
+    Function parameter is used if not provided (default: 0).}
 
-  The function splits the GASMET File into chunks containing the single chamber applications defined by
-    begin, wndw, and offset. These chunks are passed to the \code{\link[gasfluxes]{gasfluxes}} package for the flux calculation and
-    CO2, CH4 and N2O fluxes are returned as single data frame.
-    \code{\link[gasfluxes]{gasfluxes}} creates a plot for every single measurement which are saved into a 'pics' subfolder within
-    the working directory.
+  The function splits the GASMET File into chunks containing the single
+    chamber applications defined by begin, wndw, and offset. These chunks
+    are passed to the \code{\link[gasfluxes]{gasfluxes}} package for the
+    flux calculation and CO2, CH4 and N2O fluxes are returned as single data
+    frame.
+    \code{\link[gasfluxes]{gasfluxes}} creates a plot for every single
+    measurement which are saved into a 'pics' subfolder within the working
+    directory.
 
-    wndw and offset can be set as function parameters for the whole dataset or induvidually in
-    the metadata file for every measurement.
+    wndw and offset can be set as function parameters for the whole dataset
+    or individually in the metadata file for every measurement.
 }
 \examples{
-# preprocessing of data (pre=TRUE) returns data frame with chunks ready to pass to
-# 'gasfluxes'.
+# preprocessing of data (pre=TRUE) returns data frame with chunks ready to
+  # pass to 'gasfluxes'.
 process_gasmet(gasmet, meta_gasmet, pre=TRUE)
 
-# prcessing provokes flux calculation for the three gas species (CO2, CH4, N2O).
+# prcessing provokes flux calculation for the three gas species
+  # (CO2, CH4, N2O).
 \dontrun{
 process_gasmet(gasmet, meta_gasmet)
 }

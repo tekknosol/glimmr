@@ -7,11 +7,11 @@
 read_losgatos(path, clean_dir = FALSE, ...)
 }
 \arguments{
+\item{path}{Path to a file or directory.}
+
 \item{clean_dir}{If TRUE directory is cleaned}
 
 \item{...}{additional parameters passed to read_csv()}
-
-\item{file}{Path to a file or directory.}
 }
 \value{
 A data frame.

@@ -3,7 +3,7 @@
 \docType{data}
 \name{gasmet}
 \alias{gasmet}
-\title{GASMET Flux measurement with three entrys.}
+\title{GASMET Flux measurement with three entries.}
 \format{A data frame with 25 rows and 7 variables:
 \describe{
   \item{Datum}{Date of measurement}

@@ -15,8 +15,9 @@ process_losgatos(losgatos, meta, V = 0.01461, A = 0.098, pre = F)
 
 \item{A}{numeric; Chamber area.}
 
-\item{pre}{if TRUE don't process the flux calculation and return the preprocessed dataframe.
-When FALSE (the default) data is processed with routines from 'gasfluxes' package and the fluxes are returned.}
+\item{pre}{if TRUE don't process the flux calculation and return the
+preprocessed dataframe. When FALSE (the default) data is processed with
+routines from 'gasfluxes' package and the fluxes are returned.}
 }
 \value{
 Fluxes

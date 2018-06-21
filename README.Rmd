@@ -18,6 +18,7 @@ library(dplyr)
 Gas fLuxes and dynamIc chaMber MeasuRements
 
 [![tidyverse_lifecycle_badge](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Travis-CI Build Status](https://travis-ci.org/tekknosol/glimmr.svg?branch=master)](https://travis-ci.org/tekknosol/glimmr)
 
 ## Overview
 The `glimmr` package provides functions to convert high frequency concentration data

@@ -5,7 +5,7 @@ glimmr
 
 Gas fLuxes and dynamIc chaMber MeasuRements
 
-[![tidyverse\_lifecycle\_badge](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![tidyverse\_lifecycle\_badge](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental) [![Travis-CI Build Status](https://travis-ci.org/tekknosol/glimmr.svg?branch=master)](https://travis-ci.org/tekknosol/glimmr)
 
 Overview
 --------

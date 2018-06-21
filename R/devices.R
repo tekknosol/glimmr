@@ -190,7 +190,10 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
       end <- end[length(end)]
       a <- losgatos[begin:end, ]
       pmbar <- mean(a$GasP_torr) * 1.33322
-      temp <- mean(c(meta$t_start, meta$t_end))
+      temp <- mean(c(meta$t_start, meta$t_end), na.rm=TRUE)
+      if(is.na(temp)){
+        temp <- mean(a$AmbT_C, na.rm=TRUE)
+      }
       # calculate concentration in mmol/m³
       conc <- a$`[CO2]_ppm` * 1e-6 * (pmbar * 100) / (8.314 *
         (temp + 273.15)) * 1000

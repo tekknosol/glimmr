@@ -68,6 +68,10 @@ read_losgatos_file <- function(path, ...) {
 
 read_losgatos_dir <- function(path, clean_dir = FALSE) {
   Time <- NULL
+  `[CH4]_ppm` <- NULL
+  `[CO2]_ppm` <- NULL
+  GasP_torr <- NULL
+  AmbT_C <- NULL
   files <- get_losgatos_files(path)
   date <- stringr::str_split(stringr::str_split(files[1], "micro_")[[1]][2],
     "_f")[[1]][1]
@@ -83,7 +87,9 @@ read_losgatos_dir <- function(path, clean_dir = FALSE) {
     clean_losgatos_dir(path)
   }
 
-  complete <- dplyr::bind_rows(complete) %>% dplyr::arrange(Time)
+  complete <- dplyr::bind_rows(complete) %>%
+    dplyr::arrange(Time) %>%
+    dplyr::select(Time, `[CH4]_ppm`, `[CO2]_ppm`, GasP_torr, AmbT_C)
 }
 
 clean_losgatos_dir <- function(path) {

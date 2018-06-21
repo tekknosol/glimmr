@@ -23,5 +23,6 @@ Imports:
     magrittr,
     readr,
     stringi,
-    stringr
+    stringr,
+    tidyr
 Suggests: testthat

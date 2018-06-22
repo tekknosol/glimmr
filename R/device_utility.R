@@ -67,6 +67,7 @@ read_losgatos_file <- function(path, ...) {
 }
 
 read_losgatos_dir <- function(path, clean_dir = FALSE) {
+
   Time <- NULL
   `[CH4]_ppm` <- NULL
   `[CO2]_ppm` <- NULL
@@ -76,12 +77,17 @@ read_losgatos_dir <- function(path, clean_dir = FALSE) {
   files <- get_losgatos_files(path)
   date <- stringr::str_split(stringr::str_split(files[1], "micro_")[[1]][2],
     "_f")[[1]][1]
-  complete <- lapply(files, function(x) {
-    lg <- readr::read_csv(x, skip = 1) %>%
-      dplyr::mutate(Time = lubridate::dmy_hms(Time)) %>%
-      dplyr::filter(!is.na(Time)) %>%
-      dplyr::filter_if(is.numeric, dplyr::all_vars(!is.na(.)))
-  })
+  message("read ", length(files), " files")
+  suppressWarnings(
+    suppressMessages(
+      complete <- lapply(files, function(x) {
+        lg <- readr::read_csv(x, skip = 1) %>%
+          dplyr::mutate(Time = lubridate::dmy_hms(Time)) %>%
+          dplyr::filter(!is.na(Time)) %>%
+          dplyr::filter_if(is.numeric, dplyr::all_vars(!is.na(.)))
+      })
+    )
+  )
 
   if (clean_dir) {
     clean_losgatos_dir(path)

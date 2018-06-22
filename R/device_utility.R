@@ -50,7 +50,7 @@ read_gasmet <- function(file) {
 #' @export
 #'
 read_losgatos <- function(path, clean_dir = FALSE, ...) {
-  if (file_test("-f", path)) {
+  if (utils::file_test("-f", path)) {
     lg <- read_losgatos_file(path)
   } else {
     lg <- read_losgatos_dir(path, clean_dir)
@@ -134,10 +134,9 @@ inspect_gasmet <- function(fluxdata, meta) {
 #' @rdname inspect_gasmet
 #' @export
 #'
-CO2mmol <-NULL
-CH4mmol <- NULL
-
 inspect_losgatos <- function(fluxdata, meta) {
+  CO2mmol <-NULL
+  CH4mmol <- NULL
   df <- process_losgatos(fluxdata, meta, pre = TRUE)
   df <- df %>% tidyr::gather(key = "gas", value = "concentration", CO2mmol,
     CH4mmol)

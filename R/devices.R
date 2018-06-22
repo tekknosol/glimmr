@@ -180,11 +180,13 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
   )
   meta$end <- lubridate::floor_date(meta$end, "minute")
   hmr_data <- data.frame(
-    spot = NA, rep = NA, V = NA, A = NA, Time = NA,
+    spot = NA, day=NA, rep = NA, V = NA, A = NA, Time = NA,
     CO2mmol = NA, CH4mmol = NA, co2 = NA, ch4 = NA
   )
+  repcount <- data.frame(spot = unique(meta$spot), count = 0)
   for (i in 1:length(meta$spot)) {
     if (!is.na(meta[i, ]$start)) {
+      repcount[repcount$spot == meta[i, ]$spot, ]$count <- repcount[repcount$spot == meta[i, ]$spot, ]$count + 1
       begin <- which(losgatos$Time >= meta[i, ]$start)[1]
       end <- which(losgatos$Time <= meta[i, ]$end)
       end <- end[length(end)]
@@ -200,8 +202,8 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
       conc.CH4 <- a$`[CH4]_ppm` * 1e-6 * (pmbar * 100) / (8.314 *
         (temp + 273.15)) * 1000
       hmr_data_tmp <- data.frame(
-        spot = meta[i, ]$spot, rep =
-          rownames(meta[i, ]), V = V, A = A, Time = as.numeric(a$Time -
+        spot = meta[i, ]$spot, day = as.character(meta[i, ]$day), rep =repcount[repcount$spot ==
+          meta[i, ]$spot, ]$count, V = V, A = A, Time = as.numeric(a$Time -
           a[1, ]$Time) / 60 / 60, CO2mmol = conc, CH4mmol = conc.CH4,
         ch4 = "ch4", co2 = "co2"
       )
@@ -247,15 +249,13 @@ process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
 
   # flux in mmol m-2 d-1
   flux <- data.frame(
-    date = as.POSIXct(transect_flux_co2$day,
-      format =
-        "%d.%m.%Y"
-    ), site = transect_flux_co2$spot, CO2_flux =
+    date = ymd(transect_flux_co2$day),
+      site = transect_flux_co2$spot, CO2_flux =
       transect_flux_co2$robust.linear.f0 * 24, CO2_flux.p =
       transect_flux_co2$robust.linear.f0.p, CH4_flux =
       transect_flux_ch4$robust.linear.f0 * 24, CH4_flux_p =
       transect_flux_ch4$robust.linear.f0.p, begin =
-      meta %>% dplyr::filter(!is.na(begin)) %>% dplyr::select(begin)
+      meta %>% dplyr::filter(!is.na(start)) %>% dplyr::select(start)
   )
 
 }

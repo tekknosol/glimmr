@@ -1,0 +1,33 @@
+reference:
+- title: Dynamic chamber measurements
+  desc:  ~
+  contents:
+  - '`preprocess_gasmet`'
+  - '`process_gasmet`'
+  - '`process_losgatos`'
+  - '`read_gasmet`'
+  - '`read_losgatos`'
+  - '`inspect_gasmet`'
+- title: BLE
+  desc:  ~
+  contents:
+  - '`calc_SN`'
+  - '`calc_k600`'
+  - '`calc_kW`'
+  - '`kH`'
+- title: Helper functions
+  desc:  ~
+  contents:
+  - '`sec2day`'
+  - '`day2sec`'
+  - '`axis.flux.ch4`'
+  - '`axis.flux.co2`'
+  - '`axis.flux.gas`'
+- title: Data
+  desc: ~
+  contents:
+  - '`gasmet`'
+  - '`losgatos`'
+  - '`meta_gasmet`'
+  - '`meta_losgatos`'
+

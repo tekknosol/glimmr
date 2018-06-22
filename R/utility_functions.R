@@ -154,22 +154,19 @@ kH <- function(t, gas = "co2") {
   return(kH)
 }
 
-#' Convert mmol m⁻² d⁻¹ to µMol m⁻² d⁻¹
+#' Convert flux units
 #'
-#' @param flux numeric; Flux value in mmol m⁻² d⁻¹
+#' @param flux numeric; Flux value in mmol m⁻² d⁻¹ or µMol m⁻² d⁻¹
 #'
-#' @return Flux in µMol m⁻² d⁻¹
+#' @return Flux
 #' @export
 #'
 day2sec <- function(flux) {
   return(flux * 1000 / 86400)
 }
 
-#' Converts µMol m⁻² d⁻¹ to mmol m⁻² d⁻¹
-#'
-#' @param flux numeric; Flux value in µMol m⁻² d⁻¹
-#'
-#' @return Flux in mmol m⁻² d⁻¹
+
+#' @rdname day2sec
 #' @export
 #'
 sec2day <- function(flux) {

@@ -187,10 +187,12 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
   for (i in 1:length(meta$spot)) {
     if (!is.na(meta[i, ]$start)) {
       repcount[repcount$spot == meta[i, ]$spot, ]$count <- repcount[repcount$spot == meta[i, ]$spot, ]$count + 1
-      begin <- which(losgatos$Time >= meta[i, ]$start)[1]
-      end <- which(losgatos$Time <= meta[i, ]$end)
-      end <- end[length(end)]
-      a <- losgatos[begin:end, ]
+      a <- losgatos %>% dplyr::filter(Time>=meta[i,]$start & Time<=meta[i,]$end)
+      if(length(rownames(a)) == 0){
+        warning(call. = FALSE, "meta entry", i, "skipped.
+                                             No matching data.")
+        next
+      }
       pmbar <- mean(a$GasP_torr) * 1.33322
       temp <- mean(c(meta$t_start, meta$t_end), na.rm=TRUE)
       if(is.na(temp)){
@@ -202,10 +204,10 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
       conc.CH4 <- a$`[CH4]_ppm` * 1e-6 * (pmbar * 100) / (8.314 *
         (temp + 273.15)) * 1000
       hmr_data_tmp <- data.frame(
-        spot = meta[i, ]$spot, day = as.character(meta[i, ]$day), rep =repcount[repcount$spot ==
-          meta[i, ]$spot, ]$count, V = V, A = A, Time = as.numeric(a$Time -
-          a[1, ]$Time) / 60 / 60, CO2mmol = conc, CH4mmol = conc.CH4,
-        ch4 = "ch4", co2 = "co2"
+        spot = meta[i, ]$spot, day = as.character(meta[i, ]$day), rep =
+          repcount[repcount$spot == meta[i, ]$spot, ]$count, V = V, A = A,
+          Time = as.numeric(a$Time - a[1, ]$Time) / 60 / 60, CO2mmol = conc,
+          CH4mmol = conc.CH4, ch4 = "ch4", co2 = "co2"
       )
       hmr_data <- rbind(hmr_data, hmr_data_tmp)
     }
@@ -230,7 +232,7 @@ process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
   hmr_data <- preprocess_losgatos(losgatos, meta, V = V, A = A)
 
   # define begin to avoid check note for CRAN
-  begin <- NULL
+  start <- NULL
 
   if (pre == T) {
     return(hmr_data)

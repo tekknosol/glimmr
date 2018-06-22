@@ -43,8 +43,8 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461,
       repcount[repcount$spot == meta[i, ]$spot, ]$count <- repcount[repcount$spot == meta[i, ]$spot, ]$count + 1
       begin <- which(gasmet$datetime == meta[i, ]$begin)
       if (length(begin) == 0) {
-        warning(call. = FALSE, "meta entry", i, "skipped.
-                                             Begin does not match data.")
+        warning(call. = FALSE, "meta entry ", i, " skipped.",
+          " Begin does not match data.")
         next
       }
       a <- gasmet[(begin + meta[i, ]$offset):
@@ -175,28 +175,30 @@ process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098,
 }
 
 preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
+  Time <- NULL
   meta$start <- lubridate::ceiling_date(meta$start, "minute",
-    change_on_boundary = T
+    change_on_boundary = TRUE
   )
   meta$end <- lubridate::floor_date(meta$end, "minute")
   hmr_data <- data.frame(
-    spot = NA, day=NA, rep = NA, V = NA, A = NA, Time = NA,
+    spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA,
     CO2mmol = NA, CH4mmol = NA, co2 = NA, ch4 = NA
   )
   repcount <- data.frame(spot = unique(meta$spot), count = 0)
   for (i in 1:length(meta$spot)) {
     if (!is.na(meta[i, ]$start)) {
       repcount[repcount$spot == meta[i, ]$spot, ]$count <- repcount[repcount$spot == meta[i, ]$spot, ]$count + 1
-      a <- losgatos %>% dplyr::filter(Time>=meta[i,]$start & Time<=meta[i,]$end)
-      if(length(rownames(a)) == 0){
+      a <- losgatos %>%
+        dplyr::filter(Time >= meta[i, ]$start & Time <= meta[i, ]$end)
+      if (length(rownames(a)) == 0){
         warning(call. = FALSE, "meta entry", i, "skipped.
                                              No matching data.")
         next
       }
       pmbar <- mean(a$GasP_torr) * 1.33322
-      temp <- mean(c(meta$t_start, meta$t_end), na.rm=TRUE)
-      if(is.na(temp)){
-        temp <- mean(a$AmbT_C, na.rm=TRUE)
+      temp <- mean(c(meta$t_start, meta$t_end), na.rm = TRUE)
+      if (is.na(temp)){
+        temp <- mean(a$AmbT_C, na.rm = TRUE)
       }
       # calculate concentration in mmol/m³
       conc <- a$`[CO2]_ppm` * 1e-6 * (pmbar * 100) / (8.314 *

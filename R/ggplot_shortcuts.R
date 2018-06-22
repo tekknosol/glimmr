@@ -7,8 +7,8 @@
 #'
 axis.flux.co2 <- function(time) {
   time <- tolower(time)
-  supportedTimes <- c("sec", "day")
-  if (!time %in% supportedTimes) {
+  supported_times <- c("sec", "day")
+  if (!time %in% supported_times) {
     stop("Time not supported")
   }
   axis <- switch(time,
@@ -23,8 +23,8 @@ axis.flux.co2 <- function(time) {
 #' @export
 axis.flux.gas <- function(time) {
   time <- tolower(time)
-  supportedTimes <- c("sec", "day")
-  if (!time %in% supportedTimes) {
+  supported_times <- c("sec", "day")
+  if (!time %in% supported_times) {
     stop("Time not supported")
   }
   axis <- switch(time,
@@ -40,8 +40,8 @@ axis.flux.gas <- function(time) {
 #' @export
 axis.flux.ch4 <- function(time) {
   time <- tolower(time)
-  supportedTimes <- c("sec", "day")
-  if (!time %in% supportedTimes) {
+  supported_times <- c("sec", "day")
+  if (!time %in% supported_times) {
     stop("Time not supported")
   }
   axis <- switch(time, sec = ggplot2::ylab(expression(CH[4] ~ Flux ~ "\u00B5" ~ mol ~ m^-2 ~ s^-1)),

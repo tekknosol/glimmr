@@ -141,7 +141,7 @@ inspect_gasmet <- function(fluxdata, meta) {
 #' @export
 #'
 inspect_losgatos <- function(fluxdata, meta) {
-  CO2mmol <-NULL
+  CO2mmol <- NULL
   CH4mmol <- NULL
   df <- process_losgatos(fluxdata, meta, pre = TRUE)
   df <- df %>% tidyr::gather(key = "gas", value = "concentration", CO2mmol,

@@ -13,11 +13,14 @@ calc_SN <- function(wt, gas = "co2") {
   if (!gas %in% supportedGases) {
     stop("gas not supported")
   }
-  switch(tolower(gas), co2 = {
-    SN <- 1923.6 + (-125.06 * wt) + (4.3773 * wt^2) + (-0.085681 * wt^3) + (0.00070284 * wt^4)
-  }, ch4 = {
-    SN <- 1909.4 + (-120.78 * wt) + (4.1555 * wt^2) + (-0.080578 * wt^3) + (0.00065777 * wt^4)
-  })
+  switch(tolower(gas),
+    co2 = {
+      SN <- 1923.6 + (-125.06 * wt) + (4.3773 * wt^2) + (-0.085681 * wt^3) + (0.00070284 * wt^4)
+    },
+    ch4 = {
+      SN <- 1909.4 + (-120.78 * wt) + (4.1555 * wt^2) + (-0.080578 * wt^3) + (0.00065777 * wt^4)
+    }
+  )
 }
 
 #' @inheritParams calc_SN

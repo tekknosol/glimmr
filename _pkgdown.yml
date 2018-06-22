@@ -1,8 +1,9 @@
+development:
+  mode: unreleased
 reference:
 - title: Dynamic chamber measurements
   desc:  ~
   contents:
-  - '`preprocess_gasmet`'
   - '`process_gasmet`'
   - '`process_losgatos`'
   - '`read_gasmet`'
@@ -18,7 +19,6 @@ reference:
 - title: Helper functions
   desc:  ~
   contents:
-  - '`sec2day`'
   - '`day2sec`'
   - '`axis.flux.ch4`'
   - '`axis.flux.co2`'

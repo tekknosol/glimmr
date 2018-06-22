@@ -2,16 +2,19 @@
 % Please edit documentation in R/utility_functions.R
 \name{day2sec}
 \alias{day2sec}
-\title{Convert mmol m⁻² d⁻¹ to µMol m⁻² d⁻¹}
+\alias{sec2day}
+\title{Convert flux units}
 \usage{
 day2sec(flux)
+
+sec2day(flux)
 }
 \arguments{
-\item{flux}{numeric; Flux value in mmol m⁻² d⁻¹}
+\item{flux}{numeric; Flux value in mmol m⁻² d⁻¹ or µMol m⁻² d⁻¹}
 }
 \value{
-Flux in µMol m⁻² d⁻¹
+Flux
 }
 \description{
-Convert mmol m⁻² d⁻¹ to µMol m⁻² d⁻¹
+Convert flux units
 }

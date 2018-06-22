@@ -1,16 +1,4 @@
-#' Preprocess GASMET data for flux calculations
-#'
-#' @param gasmet data frame; Recordings from GASMET.
-#' @param meta data frame; Metainformations, see 'Details'.
-#' @param V numeric; Chamber Volume. Default to 0.01461.
-#' @param A numeric; Chamber Area. Default to 0.098.
-#' @param wndw numeric; Default to 10. Number of datapoints per measurement.
-#'   Can be overruled in metadata file. See 'Details'.
-#' @param offset numeric; Default to 0. Number of datapoints skipped at the
-#'   beginning. Can be overruled in metadata file. See 'Details'.
-#'
-#'
-#' @return dataframe which can be used as input of the gasfluxes function
+
 preprocess_gasmet <- function(gasmet, meta, V = 0.01461,
                               A = 0.098, wndw = 10, offset = 0) {
   terminate <- F
@@ -77,7 +65,14 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461,
 
 #' Process GASMET data
 #'
-#' @inheritParams preprocess_gasmet
+#' @param gasmet data frame; Recordings from GASMET.
+#' @param meta data frame; Metainformations, see 'Details'.
+#' @param V numeric; Chamber Volume. Default to 0.01461.
+#' @param A numeric; Chamber Area. Default to 0.098.
+#' @param wndw numeric; Default to 10. Number of datapoints per measurement.
+#'   Can be overruled in metadata file. See 'Details'.
+#' @param offset numeric; Default to 0. Number of datapoints skipped at the
+#'   beginning. Can be overruled in metadata file. See 'Details'.
 #' @param pre if TRUE don't process the flux calculation and return the
 #'   preprocessed dataframe.
 #'  When FALSE (the default) data is processed with routines from 'gasfluxes'

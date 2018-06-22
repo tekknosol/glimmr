@@ -72,15 +72,15 @@ read_losgatos_dir <- function(path, clean_dir = FALSE) {
   `[CO2]_ppm` <- NULL
   GasP_torr <- NULL
   AmbT_C <- NULL
+  . <- NULL
   files <- get_losgatos_files(path)
   date <- stringr::str_split(stringr::str_split(files[1], "micro_")[[1]][2],
     "_f")[[1]][1]
   complete <- lapply(files, function(x) {
     lg <- readr::read_csv(x, skip = 1) %>%
       dplyr::mutate(Time = lubridate::dmy_hms(Time)) %>%
-      dplyr::filter(lubridate::date(Time) == date) %>%
-      # mutate(Time = as.character(Time)) %>%
-      dplyr::filter(!is.na(Time))
+      dplyr::filter(!is.na(Time)) %>%
+      dplyr::filter_if(is.numeric, dplyr::all_vars(!is.na(.)))
   })
 
   if (clean_dir) {

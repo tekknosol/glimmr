@@ -249,7 +249,7 @@ process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
 
   # flux in mmol m-2 d-1
   flux <- data.frame(
-    date = ymd(transect_flux_co2$day),
+    date = lubridate::ymd(transect_flux_co2$day),
       site = transect_flux_co2$spot, CO2_flux =
       transect_flux_co2$robust.linear.f0 * 24, CO2_flux.p =
       transect_flux_co2$robust.linear.f0.p, CH4_flux =

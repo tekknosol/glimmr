@@ -156,12 +156,13 @@ inspect_fluxdata <- function(df) {
   spot <- NULL
   devAskNewPage(ask = TRUE)
   for (i in unique(df$spot)) {
-    print(ggplot2::ggplot(df %>% dplyr::filter(spot == i), ggplot2::aes(Time,
-      concentration)) +
+    print(ggplot2::ggplot(df %>% dplyr::filter(spot == i),
+      ggplot2::aes(Time * 60, concentration)) +
       ggplot2::geom_point() +
-      ggplot2::facet_grid(gas ~ spot + rep, scales = "free"))
-    # op <- par(ask=TRUE)
+      ggplot2::xlab("minutes") +
+      ggplot2::theme_bw() +
+      ggplot2::facet_grid(gas ~ spot + rep, scales = "free")
+    )
   }
   devAskNewPage(ask = FALSE)
-  # par(op)
 }

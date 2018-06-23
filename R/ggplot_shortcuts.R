@@ -19,7 +19,7 @@ axis.flux.co2 <- function(time) {
 
 #' Label axis for arbitrary gases according to flux scale.
 #'
-#' @inheritParams axis.flux.co2
+#' @rdname axis.flux.co2
 #' @export
 axis.flux.gas <- function(time) {
   time <- tolower(time)
@@ -36,7 +36,7 @@ axis.flux.gas <- function(time) {
 
 #' Label axis for CH4 according to flux scale.
 #'
-#' @inheritParams axis.flux.co2
+#' @rdname axis.flux.co2
 #' @export
 axis.flux.ch4 <- function(time) {
   time <- tolower(time)

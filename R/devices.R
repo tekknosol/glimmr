@@ -20,7 +20,7 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461,
     warning("No offset provided in meta file. Set to 0.")
   }
 
-  hmr_data <- data.frame(
+  hmr_data <- dplyr::tibble(
     spot = NA, day = NA, rep = NA, V = NA, A = NA,
     Time = NA, CO2mmol = NA, CH4mmol = NA,
     N2Ommol = NA, co2 = NA, ch4 = NA, n2o = NA
@@ -39,12 +39,9 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461,
       (begin + meta[i, ]$wndw - 1), ]
       pmbar <- mean(a$Luftdruck)
       # calculate concentration in mmol/m³
-      conc <- a$CO2 * 1e-6 * (pmbar * 100) / (8.314 *
-        (meta[i, ]$temp + 273.15)) * 1000
-      conc.CH4 <- a$CH4 * 1e-6 * (pmbar * 100) / (8.314 *
-        (meta[i, ]$temp + 273.15)) * 1000
-      conc.N2O <- a$N2O * 1e-6 * (pmbar * 100) / (8.314 *
-        (meta[i, ]$temp + 273.15)) * 1000
+      conc     <- ppm2conc(a$CO2, meta[i, ]$temp, pmbar)
+      conc.CH4 <- ppm2conc(a$CH4, meta[i, ]$temp, pmbar)
+      conc.N2O <- ppm2conc(a$N2O, meta[i, ]$temp, pmbar)
 
       # time in hour because algorithm expects that.
       # fluxes need to be trensformed to daily fluxes afterwards
@@ -128,7 +125,7 @@ process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098,
     offset = offset
   )
 
-  if (pre == T) {
+  if (pre == TRUE) {
     return(hmr.data)
   }
 
@@ -175,7 +172,7 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
     change_on_boundary = TRUE
   )
   meta$end <- lubridate::floor_date(meta$end, "minute")
-  hmr_data <- data.frame(
+  hmr_data <- dplyr::tibble(
     spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA,
     CO2mmol = NA, CH4mmol = NA, co2 = NA, ch4 = NA
   )
@@ -195,11 +192,11 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
       if (is.na(temp)){
         temp <- mean(a$AmbT_C, na.rm = TRUE)
       }
+
       # calculate concentration in mmol/m³
-      conc <- a$`[CO2]_ppm` * 1e-6 * (pmbar * 100) / (8.314 *
-        (temp + 273.15)) * 1000
-      conc.CH4 <- a$`[CH4]_ppm` * 1e-6 * (pmbar * 100) / (8.314 *
-        (temp + 273.15)) * 1000
+      conc     <- ppm2conc(a$`[CO2]_ppm`, temp, pmbar)
+      conc.CH4 <- ppm2conc(a$`[CH4]_ppm`, temp, pmbar)
+
       hmr_data_tmp <- data.frame(
         spot = meta[i, ]$spot, day = as.character(meta[i, ]$day), rep =
           repcount[repcount$spot == meta[i, ]$spot, ]$count, V = V, A = A,
@@ -231,7 +228,7 @@ process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
   # define begin to avoid check note for CRAN
   start <- NULL
 
-  if (pre == T) {
+  if (pre == TRUE) {
     return(hmr_data)
   }
 

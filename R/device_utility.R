@@ -166,3 +166,7 @@ inspect_fluxdata <- function(df) {
   }
   devAskNewPage(ask = FALSE)
 }
+
+ppm2conc <- function(ppm, temp, pmbar){
+  conc <- ppm * 1e-6 * (pmbar * 100) / (8.314 *(temp + 273.15)) * 1000
+}

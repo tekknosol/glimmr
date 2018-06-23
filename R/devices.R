@@ -183,8 +183,8 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
       a <- losgatos %>%
         dplyr::filter(Time >= meta[i, ]$start & Time <= meta[i, ]$end)
       if (length(rownames(a)) == 0){
-        warning(call. = FALSE, "meta entry", i, "skipped.
-                                             No matching data.")
+        warning(call. = FALSE, "meta entry", i, "skipped.",
+          " No matching data.")
         next
       }
       pmbar <- mean(a$GasP_torr) * 1.33322
@@ -247,7 +247,7 @@ process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
   flux <- data.frame(
     date = lubridate::ymd(transect_flux_co2$day),
       site = transect_flux_co2$spot, CO2_flux =
-      transect_flux_co2$robust.linear.f0 * 24, CO2_flux.p =
+      transect_flux_co2$robust.linear.f0 * 24, CO2_flux_p =
       transect_flux_co2$robust.linear.f0.p, CH4_flux =
       transect_flux_ch4$robust.linear.f0 * 24, CH4_flux_p =
       transect_flux_ch4$robust.linear.f0.p, begin =

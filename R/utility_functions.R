@@ -9,8 +9,8 @@
 #'
 calc_SN <- function(wt, gas = "CO2") {
   supported_gases <- c("co2", "ch4")
-  gas <- match.arg(gas, supported_gases)
-  switch(tolower(gas),
+  gas <- match.arg(tolower(gas), supported_gases)
+  switch(gas,
     co2 = {
       SN <- 1923.6 + (-125.06 * wt) + (4.3773 * wt^2) + (-0.085681 * wt^3) + (0.00070284 * wt^4)
     },
@@ -18,6 +18,7 @@ calc_SN <- function(wt, gas = "CO2") {
       SN <- 1909.4 + (-120.78 * wt) + (4.1555 * wt^2) + (-0.080578 * wt^3) + (0.00065777 * wt^4)
     }
   )
+  return(SN)
 }
 
 #' @inheritParams calc_SN
@@ -128,14 +129,14 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
 
 #' Calculate Henry's constant
 #'
-#' @param t numeric; temperature °C
+#' @param t numeric; temperature in °C
 #' @param gas character; Gas to calculate kH for. See 'Details'.
 #'
-#' @details Currently these gases are supported:
+#' @details Currently supported gases:
 #'
 #'  \itemize{
-#'    \item CO_2
-#'    \item CH_4
+#'    \item CO2
+#'    \item CH4
 #'  }
 #'
 #' @return Henry's constant

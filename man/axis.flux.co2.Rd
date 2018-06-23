@@ -2,9 +2,15 @@
 % Please edit documentation in R/ggplot_shortcuts.R
 \name{axis.flux.co2}
 \alias{axis.flux.co2}
+\alias{axis.flux.gas}
+\alias{axis.flux.ch4}
 \title{Label axis for CO2 according to flux scale.}
 \usage{
 axis.flux.co2(time)
+
+axis.flux.gas(time)
+
+axis.flux.ch4(time)
 }
 \arguments{
 \item{time}{character; Timescale. See 'Details'.}
@@ -14,4 +20,8 @@ ggplot ylab object.
 }
 \description{
 Label axis for CO2 according to flux scale.
+
+Label axis for arbitrary gases according to flux scale.
+
+Label axis for CH4 according to flux scale.
 }

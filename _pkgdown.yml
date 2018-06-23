@@ -15,7 +15,7 @@ reference:
   - '`calc_SN`'
   - '`calc_k600`'
   - '`calc_kW`'
-  - '`kH`'
+  - '`calc_kH`'
 - title: Helper functions
   desc:  ~
   contents:

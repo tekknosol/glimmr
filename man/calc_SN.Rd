@@ -4,7 +4,7 @@
 \alias{calc_SN}
 \title{Calculate Schmidt Number}
 \usage{
-calc_SN(wt, gas = "co2")
+calc_SN(wt, gas = "CO2")
 }
 \arguments{
 \item{wt}{numeric; Water temperature.}

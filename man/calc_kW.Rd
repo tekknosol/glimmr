@@ -4,7 +4,7 @@
 \alias{calc_kW}
 \title{Calculate Gas transfer coefficient}
 \usage{
-calc_kW(ws, wt, gas = "co2", model = "wann14")
+calc_kW(ws, wt, gas = "CO2", model = "wann14")
 }
 \arguments{
 \item{ws}{numeric; windspeed m/s}

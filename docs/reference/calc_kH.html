@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Label axis for CO2 according to flux scale. — axis.flux.co2 • glimmr</title>
+<title>Calculate Henry's constant — calc_kH • glimmr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,9 @@
 
 
 
-<meta property="og:title" content="Label axis for CO2 according to flux scale. — axis.flux.co2" />
+<meta property="og:title" content="Calculate Henry's constant — calc_kH" />
 
-<meta property="og:description" content="Label axis for CO2 according to flux scale.
-Label axis for arbitrary gases according to flux scale.
-Label axis for CH4 according to flux scale." />
+<meta property="og:description" content="Calculate Henry's constant" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,37 +100,43 @@ Label axis for CH4 according to flux scale." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Label axis for CO2 according to flux scale.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/ggplot_shortcuts.R'><code>R/ggplot_shortcuts.R</code></a></small>
-    <div class="hidden name"><code>axis.flux.co2.Rd</code></div>
+    <h1>Calculate Henry's constant</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/utility_functions.R'><code>R/utility_functions.R</code></a></small>
+    <div class="hidden name"><code>calc_kH.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Label axis for CO2 according to flux scale.</p>
-<p>Label axis for arbitrary gases according to flux scale.</p>
-<p>Label axis for CH4 according to flux scale.</p>
+    <p>Calculate Henry's constant</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>axis.flux.co2</span>(<span class='no'>time</span>)
-
-<span class='fu'>axis.flux.gas</span>(<span class='no'>time</span>)
-
-<span class='fu'>axis.flux.ch4</span>(<span class='no'>time</span>)</pre>
+    <pre class="usage"><span class='fu'>calc_kH</span>(<span class='no'>t</span>, <span class='kw'>gas</span> <span class='kw'>=</span> <span class='st'>"CO2"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>time</th>
-      <td><p>character; Timescale. See 'Details'.</p></td>
+      <th>t</th>
+      <td><p>numeric; temperature °C</p></td>
+    </tr>
+    <tr>
+      <th>gas</th>
+      <td><p>character; Gas to calculate kH for. See 'Details'.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot ylab object.</p>
+    <p>Henry's constant</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Currently these gases are supported:</p>
+<p></p><ul>
+<li><p>CO_2</p></li>
+<li><p>CH_4</p></li>
+</ul>
     
 
   </div>
@@ -142,6 +146,8 @@ Label axis for CH4 according to flux scale." />
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

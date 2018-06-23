@@ -7,12 +7,9 @@
 #' @return test
 #' @export
 #'
-calc_SN <- function(wt, gas = "co2") {
-  supportedGases <- c("co2", "ch4")
-  gas <- tolower(gas)
-  if (!gas %in% supportedGases) {
-    stop("gas not supported")
-  }
+calc_SN <- function(wt, gas = "CO2") {
+  supported_gases <- c("co2", "ch4")
+  gas <- match.arg(gas, supported_gases)
   switch(tolower(gas),
     co2 = {
       SN <- 1923.6 + (-125.06 * wt) + (4.3773 * wt^2) + (-0.085681 * wt^3) + (0.00070284 * wt^4)
@@ -79,32 +76,33 @@ calc_k600 <- function(ws) {
 #'   Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in a low-wind oligotrophic lake measured by the addition of SF6. Limnology and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
 #' @export
 #'
-calc_kW <- function(ws, wt, gas = "co2", model = "wann14") {
-  gas <- tolower(gas)
-  model <- tolower(model)
-  supportedGases <- c("co2", "ch4")
-  supportedModels <- c("wann14", "cole98")
-  if (!gas %in% supportedGases) {
-    stop("gas not supported")
-  }
-  if (!model %in% supportedModels) {
-    stop("model not supported")
-  }
-  switch(tolower(model), wann14 = {
-    kW <- switch(tolower(gas), co2 = {
-      0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas) / 660)^-0.5
-    }, ch4 = {
-      0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas) / 660)^-0.5
+calc_kW <- function(ws, wt, gas = "CO2", model = "wann14") {
+  supported_gases <- c("co2", "ch4")
+  supported_models <- c("wann14", "cole98")
+  gas <- match.arg(tolower(gas), supported_gases)
+  model <- match.arg(tolower(model), supported_models)
+
+  switch(model,
+    wann14 = {
+    kW <- switch(tolower(gas),
+      co2 = {
+        0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas) / 660)^-0.5
+      },
+      ch4 = {
+        0.251 * calc_u10(ws)^2 * (calc_SN(wt, gas) / 660)^-0.5
+      })
+    },
+    cole98 = {
+      ifelse(is.na(ws), return(NA), n <- 0.67)
+      ifelse(ws > 3, n <- 0.5, n <- 0.67)
+      kW <- switch(tolower(gas),
+        co2 = {
+          calc_k600(ws) * (600 / calc_SN(wt, gas))^n
+        },
+        ch4 = {
+          calc_k600(ws) * (600 / calc_SN(wt, gas))^n
+        })
     })
-  }, cole98 = {
-    ifelse(is.na(ws), return(NA), n <- 0.67)
-    ifelse(ws > 3, n <- 0.5, n <- 0.67)
-    kW <- switch(tolower(gas), co2 = {
-      calc_k600(ws) * (600 / calc_SN(wt, gas))^n
-    }, ch4 = {
-      calc_k600(ws) * (600 / calc_SN(wt, gas))^n
-    })
-  })
   return(kW)
 }
 
@@ -143,12 +141,9 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
 #' @return Henry's constant
 #' @export
 #'
-kH <- function(t, gas = "co2") {
-  supportedGases <- c("co2", "ch4")
-  gas <- tolower(gas)
-  if (!gas %in% supportedGases) {
-    stop("gas not supported")
-  }
+calc_kH <- function(t, gas = "CO2") {
+  supported_gases <- c("co2", "ch4")
+  gas <- match.arg(tolower(gas), supported_gases)
   kH <- switch(tolower(gas), co2 = 0.034 * exp(2400 * (1 / (t + 273.15) - 1 / 298.15)), ch4 = 0.0013 *
     exp(1600 * (1 / (t + 273.15) - 1 / 298.15)))
   return(kH)

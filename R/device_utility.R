@@ -206,3 +206,27 @@ parse_var <- function(conc, meta, x){
     }
   }
 }
+
+process_flux <- function(hmr_data, meta, device){
+  flux <- tibble(
+    date = lubridate::ymd(meta$day),
+    site = meta$spot,
+    begin =
+      meta %>% dplyr::filter(!is.na(start)) %>% dplyr::pull(start)
+  )
+
+  for(col in device$conc_column){
+    gas <- names(device$conc_columns)[device$conc_columns == col]
+    colname <- paste(gas, "mmol", sep="")
+    flux_tmp <- gasfluxes::gasfluxes(hmr_data,
+                                     .times = "Time", .C = colname,
+                                     .id = c("day", gas, "rep", "spot"), methods =
+                                       c("robust linear"), select = "RF2011"
+    )
+    flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=
+                                          flux_tmp$robust.linear.f0 * 24, !!paste(gas, "flux", "p", sep = "_") :=
+                                          flux_tmp$robust.linear.f0.p)
+  }
+
+  return(flux)
+}

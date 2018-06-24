@@ -298,29 +298,38 @@ preprocess_chamber <- function(conc, meta, device, V, A){
   hmr_data <- hmr_data[-1, ]
 }
 
-process_chamber <- function(conc, meta, time_stamp, conc_columns, preassure, temperature, V, A, pre = TRUE){
+process_chamber <- function(conc, meta, time_stamp, conc_columns, preassure, temperature, V, A, pre = FALSE){
   device <- device_generic(time_stamp, conc_columns, preassure, temperature)
   hmr_data <- preprocess_chamber(conc, meta, device, V, A)
 
   if (pre == TRUE) {
     return(hmr_data)
   }
+
+  flux <- process_flux(hmr_data, meta, device)
+  return(flux)
 }
 
-process_losgatos <- function(data, meta, temperature = "AmbT_C", V, A, pre = TRUE){
+process_losgatos <- function(data, meta, temperature = "AmbT_C", V, A, pre = FALSE){
   device <- device_losgatos(temperature)
   hmr_data <- preprocess_chamber(data, meta, device, V, A)
 
   if (pre == TRUE) {
     return(hmr_data)
   }
+
+  flux <- process_flux(hmr_data, meta, device)
+  return(flux)
 }
 
-process_gasmet <- function(data, meta, temperature = "temp", count=10, V, A, pre = TRUE){
+process_gasmet <- function(data, meta, temperature = "temp", count=10, V, A, pre = FALSE){
   device <- device_gasmet(temperature = temperature, count = count)
   hmr_data <- preprocess_chamber(data, meta, device, V, A)
 
   if (pre == TRUE) {
     return(hmr_data)
   }
+
+  flux <- process_flux(hmr_data, meta, device)
+  return(flux)
 }

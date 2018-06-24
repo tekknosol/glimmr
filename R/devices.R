@@ -115,7 +115,7 @@ preprocess_gasmet <- function(gasmet, meta, V = 0.01461,
 #' \dontrun{
 #' process_gasmet(gasmet, meta_gasmet)
 #' }
-process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098,
+process_gasmet2 <- function(gasmet, meta, V = 0.01461, A = 0.098,
                            pre = F, wndw = 10, offset = 0) {
   # define begin to avoid check note for CRAN
   begin <- NULL
@@ -166,7 +166,7 @@ process_gasmet <- function(gasmet, meta, V = 0.01461, A = 0.098,
 
 }
 
-preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
+preprocess_losgatos2 <- function(losgatos, meta, V = 0.01461, A = 0.098) {
   Time <- NULL
   meta$start <- lubridate::ceiling_date(meta$start, "minute",
     change_on_boundary = TRUE
@@ -222,7 +222,7 @@ preprocess_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098) {
 #' @return Fluxes
 #' @export
 #'
-process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
+process_losgatos2 <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
   hmr_data <- preprocess_losgatos(losgatos, meta, V = V, A = A)
 
   # define begin to avoid check note for CRAN
@@ -256,49 +256,69 @@ process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
 
 }
 
-preprocess_chamber <- function(conc, meta, V = 0.01461, A = 0.098, conc_columns, temp = 25, preassure = 1000000){
+preprocess_chamber <- function(conc, meta, device, V, A){
   hmr_data <- dplyr::tibble(
     spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA
   )
 
-  for (col in conc_columns){
-    colname <- paste("conc_", col, sep="")
+  for (col in device$conc_columns){
+    gas <- names(device$conc_columns)[device$conc_columns == col]
+    colname <- paste(gas, "mmol", sep="")
     hmr_data <- hmr_data %>%
-      tibble::add_column(!!colname := NA, !!col := NA)
+      tibble::add_column(!!colname := NA, !!gas := NA)
   }
 
   repcount <- data.frame(spot = unique(meta$spot), count = 0)
   for (i in 1:length(meta$spot)) {
-    start <- ymd_hms(paste(meta[i, ]$day, meta[i, ]$start))
-    end <- parse_end(start, meta[i, ]$end)
-    # temp <- parse_temp(conc, meta, temp)
-    # preassure <- parse_preassure(conc, meta, preassure)
-
+    start <- lubridate::ymd_hms(paste(meta[i, ]$day, meta[i, ]$start))
+    end <- parse_end(conc, device, start, meta[i, ])
+    repcount[repcount$spot == meta[i, ]$spot, ]$count <- repcount[repcount$spot == meta[i, ]$spot, ]$count + 1
     a <- conc %>%
-      dplyr::filter(Time >= start & Time <= end)
+      dplyr::filter(!!rlang::sym(device$time_stamp) >= start & !!rlang::sym(device$time_stamp) <= end)
+
+    temp_value <- parse_var(a, meta[i, ], device$temperature)
+    preassure_value <- parse_var(a, meta[i, ], device$preassure)
 
     hmr_data_tmp <- data.frame(
       spot = meta[i, ]$spot, day = as.character(meta[i, ]$day), rep =
         repcount[repcount$spot == meta[i, ]$spot, ]$count, V = V, A = A,
-      Time = as.numeric(a$Time - a[1, ]$Time) / 60 / 60
+      Time = as.numeric(a %>% dplyr::pull(device$time_stamp) - a[1,] %>% dplyr::pull(device$time_stamp)) / 60 / 60
     )
 
     # calculate concentration in mmol/m³
-    for (col in conc_columns){
-      colname <- paste("conc_", col, sep="")
+    for (col in device$conc_columns){
+      # colname <- paste("conc_", col, sep="")
+      gas <- names(device$conc_columns)[device$conc_columns == col]
+      colname <- paste(gas, "mmol", sep="")
       hmr_data_tmp <- hmr_data_tmp %>%
-        tibble::add_column(!!colname := ppm2conc(a %>% pull(!!col), temp, preassure), !!col := col)
+        tibble::add_column(!!colname := ppm2conc(a %>% dplyr::pull(!!col), temp_value, preassure_value), !!gas := gas)
     }
     hmr_data <- rbind(hmr_data, hmr_data_tmp)
   }
   hmr_data <- hmr_data[-1, ]
 }
 
-process_chamber <- function(conc, meta, pre = TRUE, ...){
-  # supported_types <- c("end", "duration", "count")
-  # type <- match.arg(type, supported_types)
-  # if(grepl(":"))
-  hmr_data <- preprocess_chamber(conc, meta, ...)
+process_chamber <- function(conc, meta, time_stamp, conc_columns, preassure, temperature, V, A, pre = TRUE){
+  device <- device_generic(time_stamp, conc_columns, preassure, temperature)
+  hmr_data <- preprocess_chamber(conc, meta, device, V, A)
+
+  if (pre == TRUE) {
+    return(hmr_data)
+  }
+}
+
+process_losgatos <- function(data, meta, temperature = "AmbT_C", V, A, pre = TRUE){
+  device <- device_losgatos(temperature)
+  hmr_data <- preprocess_chamber(data, meta, device, V, A)
+
+  if (pre == TRUE) {
+    return(hmr_data)
+  }
+}
+
+process_gasmet <- function(data, meta, temperature = "temp", count=10, V, A, pre = TRUE){
+  device <- device_gasmet(temperature = temperature, count = count)
+  hmr_data <- preprocess_chamber(data, meta, device, V, A)
 
   if (pre == TRUE) {
     return(hmr_data)

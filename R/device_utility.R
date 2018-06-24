@@ -150,6 +150,10 @@ inspect_losgatos <- function(fluxdata, meta) {
   invisible(fluxdata)
 }
 
+inspect_chamber <- function(fluxdata, meta, conc_columns, preassure, temp){
+  df <- process_chamber(fluxdata, meta, conc_columns, preassure, temp, pre = TRUE)
+}
+
 inspect_fluxdata <- function(df) {
   Time <- NULL
   concentration <- NULL
@@ -172,11 +176,33 @@ ppm2conc <- function(ppm, temp, pmbar){
 }
 
 
-parse_end <- function(start, end){
-  if (grepl(":", end)){
-    end <- lubridate::ymd_hms(paste(lubridate::date(start), end))
+parse_end <- function(data, device, start, meta){
+  if (device$duration_count){
+    if (is.numeric(device$count)){
+      fl <- which(data %>% dplyr::pull(device$time_stamp)>start)[1] + device$count
+    } else {
+        fl <- which(data %>% dplyr::pull(device$time_stamp)>=start)[1] + (meta %>% dplyr::pull("wndw") - 1)
+      }
+    end <- data[fl,] %>% dplyr::pull(device$time_stamp)
   } else {
-    end <- start + end * 60
-  }
+      if (grepl(":", meta$end)){
+        end <- lubridate::ymd_hms(paste(lubridate::date(start), meta$end))
+      } else {
+          end <- start + end * 60
+        }
+    }
   return(end)
+}
+
+
+parse_var <- function(conc, meta, x){
+  if (x %in% colnames(meta)){
+    x <- meta %>% dplyr::pull(!!x)
+    return(x)
+  } else {
+    if (x %in% colnames(conc)){
+      x <- mean(conc %>% dplyr::pull(!!x))
+      return(x)
+    }
+  }
 }

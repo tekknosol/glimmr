@@ -16,7 +16,7 @@ BugReports: https://github.com/tekknosol/glimmr/issues
 LazyData: true
 RoxygenNote: 6.0.1
 Imports:
-  ggplot2,
+    ggplot2,
     lubridate,
     gasfluxes,
     dplyr,
@@ -25,5 +25,6 @@ Imports:
     stringi,
     stringr,
     tidyr,
-    tibble
+    tibble,
+    rlang
 Suggests: testthat

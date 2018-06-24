@@ -255,3 +255,52 @@ process_losgatos <- function(losgatos, meta, V = 0.01461, A = 0.098, pre = F) {
   )
 
 }
+
+preprocess_chamber <- function(conc, meta, V = 0.01461, A = 0.098, conc_columns, temp = 25, preassure = 1000000){
+  hmr_data <- dplyr::tibble(
+    spot = NA, day = NA, rep = NA, V = NA, A = NA, Time = NA
+  )
+
+  for (col in conc_columns){
+    colname <- paste("conc_", col, sep="")
+    hmr_data <- hmr_data %>%
+      tibble::add_column(!!colname := NA, !!col := NA)
+  }
+
+  repcount <- data.frame(spot = unique(meta$spot), count = 0)
+  for (i in 1:length(meta$spot)) {
+    start <- ymd_hms(paste(meta[i, ]$day, meta[i, ]$start))
+    end <- parse_end(start, meta[i, ]$end)
+    # temp <- parse_temp(conc, meta, temp)
+    # preassure <- parse_preassure(conc, meta, preassure)
+
+    a <- conc %>%
+      dplyr::filter(Time >= start & Time <= end)
+
+    hmr_data_tmp <- data.frame(
+      spot = meta[i, ]$spot, day = as.character(meta[i, ]$day), rep =
+        repcount[repcount$spot == meta[i, ]$spot, ]$count, V = V, A = A,
+      Time = as.numeric(a$Time - a[1, ]$Time) / 60 / 60
+    )
+
+    # calculate concentration in mmol/m³
+    for (col in conc_columns){
+      colname <- paste("conc_", col, sep="")
+      hmr_data_tmp <- hmr_data_tmp %>%
+        tibble::add_column(!!colname := ppm2conc(a %>% pull(!!col), temp, preassure), !!col := col)
+    }
+    hmr_data <- rbind(hmr_data, hmr_data_tmp)
+  }
+  hmr_data <- hmr_data[-1, ]
+}
+
+process_chamber <- function(conc, meta, pre = TRUE, ...){
+  # supported_types <- c("end", "duration", "count")
+  # type <- match.arg(type, supported_types)
+  # if(grepl(":"))
+  hmr_data <- preprocess_chamber(conc, meta, ...)
+
+  if (pre == TRUE) {
+    return(hmr_data)
+  }
+}

@@ -24,5 +24,6 @@ Imports:
     readr,
     stringi,
     stringr,
-    tidyr
+    tidyr,
+    tibble
 Suggests: testthat

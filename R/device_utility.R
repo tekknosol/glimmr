@@ -170,3 +170,13 @@ inspect_fluxdata <- function(df) {
 ppm2conc <- function(ppm, temp, pmbar){
   conc <- ppm * 1e-6 * (pmbar * 100) / (8.314 *(temp + 273.15)) * 1000
 }
+
+
+parse_end <- function(start, end){
+  if (grepl(":", end)){
+    end <- lubridate::ymd_hms(paste(lubridate::date(start), end))
+  } else {
+    end <- start + end * 60
+  }
+  return(end)
+}

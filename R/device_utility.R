@@ -154,7 +154,7 @@ inspect_fluxdata <- function(df) {
   Time <- NULL
   concentration <- NULL
   spot <- NULL
-  devAskNewPage(ask = TRUE)
+  grDevices::devAskNewPage(ask = TRUE)
   for (i in unique(df$spot)) {
     print(ggplot2::ggplot(df %>% dplyr::filter(spot == i),
       ggplot2::aes(Time * 60, concentration)) +
@@ -164,7 +164,7 @@ inspect_fluxdata <- function(df) {
       ggplot2::facet_grid(gas ~ spot + rep, scales = "free")
     )
   }
-  devAskNewPage(ask = FALSE)
+  grDevices::devAskNewPage(ask = FALSE)
 }
 
 ppm2conc <- function(ppm, temp, pmbar){

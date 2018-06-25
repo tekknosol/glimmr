@@ -22,8 +22,9 @@ Equation (BLE).
 # (Dynamic-) chamber measurements
 ## Approach
 During applications of dynamic chambers, typically two kinds of datasets are
-created: One continous dataset containing the raw gas mixing ratios and one 
-metadataset with information about the single applications. Typically this 
+created: One continous dataset, provided by the gas analyzer, containing the gas
+mixing ratios and one
+metadataset with information about the single chamber applications. Typically this 
 contains an ID of the spot location, time of the measurement start (and end) and
 maybe the chamber temperature.
 
@@ -88,6 +89,6 @@ process_losgatos(losgatos, meta_losgatos)
 process_gasmet(gasmet, meta_gasmet)
 ```
 
-While the start of the single measurements is (usually) defined by a known point
+While the start of single measurements is (usually) defined by a known point
 in time, the end can be defined in different ways. See `process_chamber()` for 
 details.

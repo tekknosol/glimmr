@@ -10,7 +10,7 @@ day2sec(flux)
 sec2day(flux)
 }
 \arguments{
-\item{flux}{numeric; Flux value in mmol m⁻² d⁻¹ or µMol m⁻² d⁻¹}
+\item{flux}{numeric; Flux value in mmol/sqm/d or µMol/sqm/d}
 }
 \value{
 Flux

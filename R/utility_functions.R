@@ -152,7 +152,7 @@ calc_kH <- function(t, gas = "CO2") {
 
 #' Convert flux units
 #'
-#' @param flux numeric; Flux value in mmol m⁻² d⁻¹ or µMol m⁻² d⁻¹
+#' @param flux numeric; Flux value in mmol/sqm/d or µMol/sqm/d
 #'
 #' @return Flux
 #' @export

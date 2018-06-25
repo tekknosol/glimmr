@@ -7,7 +7,7 @@
 calc_kH(t, gas = "CO2")
 }
 \arguments{
-\item{t}{numeric; temperature °C}
+\item{t}{numeric; temperature in °C}
 
 \item{gas}{character; Gas to calculate kH for. See 'Details'.}
 }
@@ -18,10 +18,10 @@ Henry's constant
 Calculate Henry's constant
 }
 \details{
-Currently these gases are supported:
+Currently supported gases:
 
  \itemize{
-   \item CO_2
-   \item CH_4
+   \item CO2
+   \item CH4
  }
 }

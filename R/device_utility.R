@@ -120,13 +120,13 @@ get_losgatos_files <- function(path) {
 #'
 #' @param fluxdata A data frame with recorded data. Either loaded with
 #'   \code{\link{read_gasmet}} or \code{\link{read_losgatos}}.
-#' @param meta Metadata
-#' @aliases inspect_losgatos
+#' @inheritParams process_chamber
 #'
 #' @return A series of plots
 #' @export
 #'
-inspect_gasmet <- function(fluxdata, meta) {
+inspect_gasmet <- function(fluxdata, meta, manual_temperature = "temp", spot = "spot", day = "day",
+                           start = "start", end = "wndw") {
   CO2mmol <- NULL
   CH4mmol <- NULL
   N2Ommol <- NULL
@@ -140,21 +140,27 @@ inspect_gasmet <- function(fluxdata, meta) {
 #' @rdname inspect_gasmet
 #' @export
 #'
-inspect_losgatos <- function(fluxdata, meta) {
+inspect_losgatos <- function(fluxdata, meta, manual_temperature = NA, spot = "spot", day = "day",
+                             start = "start", end = "end") {
   CO2mmol <- NULL
   CH4mmol <- NULL
-  df <- process_losgatos(fluxdata, meta, pre = TRUE)
+  df <- process_losgatos(fluxdata, meta, manual_temperature = NA, spot = "spot", day = "day",
+                         start = "start", end = "end", pre = TRUE)
   df <- df %>% tidyr::gather(key = "gas", value = "concentration", CO2mmol,
     CH4mmol)
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
 
+inspect_chamber <- function(fluxdata, meta, conc_columns, preassure, temp){
+  df <- process_chamber(fluxdata, meta, conc_columns, preassure, temp, pre = TRUE)
+}
+
 inspect_fluxdata <- function(df) {
   Time <- NULL
   concentration <- NULL
   spot <- NULL
-  devAskNewPage(ask = TRUE)
+  grDevices::devAskNewPage(ask = TRUE)
   for (i in unique(df$spot)) {
     print(ggplot2::ggplot(df %>% dplyr::filter(spot == i),
       ggplot2::aes(Time * 60, concentration)) +
@@ -164,9 +170,122 @@ inspect_fluxdata <- function(df) {
       ggplot2::facet_grid(gas ~ spot + rep, scales = "free")
     )
   }
-  devAskNewPage(ask = FALSE)
+  grDevices::devAskNewPage(ask = FALSE)
 }
 
 ppm2conc <- function(ppm, temp, pmbar){
   conc <- ppm * 1e-6 * (pmbar * 100) / (8.314 *(temp + 273.15)) * 1000
+}
+
+
+parse_end <- function(data, device, start, meta){
+  if (device$duration_count){
+    if (is.numeric(device$end)){
+      fl <- which(data %>% dplyr::pull(device$time_stamp)>start)[1] + device$end
+    } else {
+        fl <- which(data %>% dplyr::pull(device$time_stamp)>=start)[1] + (meta %>% dplyr::pull(device$end) - 1)
+      }
+    end <- data[fl,] %>% dplyr::pull(device$time_stamp)
+  } else {
+      if (grepl(":", meta$end)){
+        end <- lubridate::ymd_hms(paste(lubridate::date(start), meta$end))
+      } else {
+          end <- start + end * 60
+        }
+    }
+  return(end)
+}
+
+
+parse_var <- function(conc, meta, x){
+  if (x %in% colnames(meta)){
+    x <- meta %>% dplyr::pull(!!x)
+    return(x)
+  } else {
+    if (x %in% colnames(conc)){
+      x <- mean(conc %>% dplyr::pull(!!x))
+      return(x)
+    }
+  }
+  stop("Column ", x, " not found", call. = FALSE)
+}
+
+process_flux <- function(hmr_data, meta, device){
+  start <- NULL
+  flux <- tibble::tibble(
+    date = lubridate::ymd(meta$day),
+    site = hmr_data$spot,
+    begin =
+      hmr_data %>% dplyr::pull(start)
+  )
+
+  for(col in device$conc_column){
+    gas <- names(device$conc_columns)[device$conc_columns == col]
+    colname <- paste(gas, "mmol", sep="")
+    flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
+      .id = c("day", gas, "rep", "spot"), methods =  c("robust linear"),
+      select = "RF2011"
+    )
+    flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=
+      flux_tmp$robust.linear.f0 * 24, !!paste(gas, "flux", "p", sep = "_") :=
+      flux_tmp$robust.linear.f0.p)
+  }
+
+  return(flux)
+}
+
+
+
+#' Functions to modify interval between start and end of chamber deployment
+#'
+#' These functions are used to modify the measurement interval.
+#'
+#' `trim_time()` increases start of interval to the nearest minute and
+#'  decreases end of interval to the nearest minute.
+#'
+#'
+#' @param interval Intervall of chamber deployment. Created with
+#'   lubridate::intervall()
+#'
+#' @return Modified interval
+#'
+#' @examples
+#' library(lubridate)
+#' start <- ymd_hms("2018-06-25 12:13")
+#' end <- ymd_hms("2018-06-25 12:18")
+#' int <- interval(start, end)
+#'
+#' trim_time(int)
+#' @name trimmers
+NULL
+
+#' @rdname trimmers
+#' @export
+trim_time <- function(interval){
+  if(missing(interval)){return(NA)}
+  lubridate::int_start(interval) <- lubridate::ceiling_date(lubridate::int_start(interval), "minute",
+                          change_on_boundary = TRUE
+  )
+  lubridate::int_end(interval) <- lubridate::floor_date(lubridate::int_end(interval), "minute")
+  return(interval)
+}
+
+
+chamber_diagnostic <- function(conc, meta, device){
+  message("Processing ", device$name, " data.")
+  if (device$duration_count & is.numeric(device$end)){
+    message("End of interval determined by number of observations. Count = ", device$end)
+  } else{
+    if (device$duration_count & !is.numeric(device$end)){
+      message("End of interval determined by number of observations. Count = column ", device$end)
+    }
+  }
+  if (!is.na(device$manual_temperature)){
+    message("Using temperature from meta file. Column = ", device$manual_temperature)
+  }
+
+  cols <- which(device$conc_columns %in% colnames(conc) == FALSE)
+  if (length(cols) > 0){
+    stop("Column(s) ", paste(device$conc_columns[cols], collapse = " "), " not found.", call. = FALSE)
+  }
 }

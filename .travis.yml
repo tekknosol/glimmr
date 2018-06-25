@@ -1,5 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
+os:
+  - linux
+  - osx
 language: R
 sudo: false
 cache: packages
@@ -7,3 +9,7 @@ r:
   - oldrel
   - release
   - devel
+matrix:
+  exclude:
+    - os: osx
+      r: devel

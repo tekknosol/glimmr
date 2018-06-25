@@ -22,6 +22,8 @@ mask <- which( (gasmet$datetime >= meta_gasmet$begin[1] &
 # gasmet <- gasmet[mask, ]
 
 meta_losgatos <- readr::read_csv("data-raw/meta_losgatos.csv")
+meta_losgatos$start <- as.character(meta_losgatos$start)
+meta_losgatos$end <- as.character(meta_losgatos$end)
 # meta_losgatos <- meta_losgatos %>%
   # mutate(start = ymd_hms(paste(day, start)), end = ymd_hms(paste(day, end)))
 losgatos <- read_losgatos("data-raw/2018-05-23/")

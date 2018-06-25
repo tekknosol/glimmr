@@ -1,0 +1,94 @@
+---
+title: "Compute gasfluxes from dynamic chamber measurements or BLE"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(glimmr)
+```
+
+glimmr is an R package that makes it easier to process and handle data from 
+dynamic flux measurements and provides functions to use with the boundary layer 
+Equation (BLE).
+
+# (Dynamic-) chamber measurements
+## Approach
+During applications of dynamic chambers, typically two kinds of datasets are
+created: One continous dataset, provided by the gas analyzer, containing the gas
+mixing ratios and one
+metadataset with information about the single chamber applications. Typically this 
+contains an ID of the spot location, time of the measurement start (and end) and
+maybe the chamber temperature.
+
+glimmr reads both datasets, slices the concentration data into chunks defined by
+the metadata and pases this to `gasfluxes::gasfluxes` for the actual flux 
+calculation.
+
+The datastructure of the recorderd data can be widely defined, hence glimmr is 
+not restriced to a speceific device.
+Nevertheless, wrapper functions are included for GASMET and LosGatos gas
+analizers.
+
+## Read data
+GASMET and LosGatos records can be directly loaded:
+```{r, eval=FALSE}
+gasmet <- read_gasmet("path/to/gasmet_file.csv")
+
+losgatos <- read_losgatos("path/to/losgatos/dir")
+losgatos <- read_losgatos("path/to/losgatos_file.txt")
+```
+Single LosGatos files, as well as directories containing zips and txt files are
+supported. See `read_losgatos()` for details.
+
+The structure of corresponding metdata is defined as follows:
+```{r}
+meta_gasmet
+meta_losgatos
+```
+
+## Process fluxes
+To use any arbitrary device all columns containing used informations need to be
+defined.
+```{r, eval=FALSE}
+process_chamber(
+  # specify data
+  losgatos, 
+  meta_losgatos,
+  #define datastructure
+  time_stamp = "Time", 
+  conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"), 
+  preassure = "GasP_torr", 
+  temperature = "AmbT_C", 
+  time_proc = trim_time,
+  # define metadata structure
+  spot = "spot",
+  day = "day",
+  start = "start"
+  end = "end",
+  manual_temperature = "t_start",
+  #define chamber dimensions
+  V = 0.01461, 
+  A = 0.098
+)
+```
+
+For simplification, GASMET and LosGatos can be called via convenient
+wrapper functions:
+
+```{r, eval=FALSE}
+process_losgatos(losgatos, meta_losgatos)
+
+process_gasmet(gasmet, meta_gasmet)
+```
+
+While the start of single measurements is (usually) defined by a known point
+in time, the end can be defined in different ways. See `process_chamber()` for 
+details.

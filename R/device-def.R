@@ -3,7 +3,7 @@ device_generic <- function(name = "generic", time_stamp, conc_columns, preassure
                            preassure_factor = 1, temperature,
                            manual_temperature = NA, duration_count = FALSE,
                            spot = "spot", day = "day", start = "start",
-                           end = "end", time_proc = NA){
+                           end = "end", time_proc = NULL){
   structure(
     list(
       name = name,

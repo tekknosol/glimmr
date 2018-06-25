@@ -245,16 +245,17 @@ process_flux <- function(hmr_data, meta, device){
 #'
 #'
 #' @param interval Intervall of chamber deployment. Created with
-#'   lubridate::intervall()
+#'   \code{\link[lubridate]{interval}}.
 #'
 #' @return Modified interval
 #'
 #' @examples
 #' library(lubridate)
-#' start <- ymd_hms("2018-06-25 12:13")
-#' end <- ymd_hms("2018-06-25 12:18")
+#' start <- ymd_hm("2018-06-25 12:13")
+#' end <- ymd_hm("2018-06-25 12:18")
 #' int <- interval(start, end)
 #'
+#' int
 #' trim_time(int)
 #' @name trimmers
 NULL

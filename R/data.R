@@ -51,7 +51,7 @@
 #' \describe{
 #'   \item{spot}{ID of the measurement spot}
 #'   \item{day}{Day of the measurement}
-#'   \item{begin}{}
+#'   \item{start}{}
 #'   \item{temp}{}
 #'   \item{wndw}{}
 #'   \item{offset}{}

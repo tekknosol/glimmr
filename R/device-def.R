@@ -1,34 +1,63 @@
 
-device_generic <- function(time_stamp, conc_columns, preassure, temperature, duration_count = FALSE, count = NA){
+device_generic <- function(name = "generic", time_stamp, conc_columns, preassure,
+                           preassure_factor = 1, temperature,
+                           manual_temperature = NA, duration_count = FALSE,
+                           spot = "spot", day = "day", start = "start",
+                           end = "end", time_proc = NA){
   structure(
     list(
+      name = name,
       time_stamp = time_stamp,
       conc_columns = conc_columns,
       preassure = preassure,
+      preassure_factor = preassure_factor,
       temperature = temperature,
-      duration_count = duration_count
+      manual_temperature = manual_temperature,
+      duration_count = duration_count,
+      spot = spot,
+      day = day,
+      start = start,
+      end = end,
+      time_proc = as.character(quote(time_proc))
     ),
     class = "fluxdevice"
   )
 }
 
 
-device_losgatos <- function(temperature = "AmbT_C"){
+device_losgatos <- function(manual_temperature = NA, spot = "spot", day = "day",
+                            start = "start", end = "end"){
   device_generic(
+    name = "losgatos",
     time_stamp = "Time",
     conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
     preassure = "GasP_torr",
-    temperature = temperature
+    preassure_factor = 1.33322,
+    temperature = "AmbT_C",
+    manual_temperature = manual_temperature,
+    spot = spot,
+    day = day,
+    start = start,
+    end = end,
+    time_proc = as.character(substitute(trim_time()))
   )
 }
 
-device_gasmet <- function(temperature = "temp", duration_count = TRUE, count = 10){
+device_gasmet <- function(manual_temperature = "temp",
+                          spot = "spot", day = "day", start = "start",
+                          end = "wndw"){
   device_generic(
+    name = "gasmet",
     time_stamp = c("datetime"),
     conc_columns = c(CH4 = "CH4", CO2 = "CO2"),
     preassure = "Luftdruck",
-    temperature = temperature,
-    duration_count = duration_count,
-    count = count
+    temperature = NA,
+    manual_temperature = manual_temperature,
+    duration_count = TRUE,
+    spot = spot,
+    day = day,
+    start = start,
+    end = end,
+    time_proc = NA
   )
 }

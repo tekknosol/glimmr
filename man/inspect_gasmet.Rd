@@ -8,7 +8,8 @@
 \usage{
 inspect_gasmet(fluxdata, meta)
 
-inspect_losgatos(fluxdata, meta)
+inspect_losgatos(fluxdata, meta, manual_temperature = NA, spot = "spot",
+  day = "day", start = "start", end = "end")
 }
 \arguments{
 \item{fluxdata}{A data frame with recorded data. Either loaded with

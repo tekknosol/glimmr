@@ -5,13 +5,14 @@
 \alias{trim_time}
 \title{Functions to modify interval between start and end of chamber deployment}
 \usage{
-trim_time(intervall)
+trim_time(interval)
 }
 \arguments{
-\item{intervall}{}
+\item{interval}{Intervall of chamber deployment. Created with
+lubridate::intervall()}
 }
 \value{
-Modified intervall
+Modified interval
 }
 \description{
 These functions are used to modify the measurement interval.
@@ -21,6 +22,7 @@ These functions are used to modify the measurement interval.
  decreases end of interval to the nearest minute.
 }
 \examples{
+library(lubridate)
 start <- ymd_hms("2018-06-25 12:13")
 end <- ymd_hms("2018-06-25 12:18")
 int <- interval(start, end)

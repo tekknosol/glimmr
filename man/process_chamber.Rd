@@ -6,7 +6,7 @@
 \alias{process_gasmet}
 \title{Calculate gasfluxes from dynamic chamber measurement}
 \usage{
-process_chamber(conc, meta, time_stamp, conc_columns, preassure,
+process_chamber(data, meta, time_stamp, conc_columns, preassure,
   preassure_factor = 1, temperature = "temp", manual_temperature = NA,
   duration_count = FALSE, spot = "spot", day = "day", start = "start",
   end = "end", V, A, time_proc = NA, pre = FALSE)
@@ -16,10 +16,11 @@ process_losgatos(data, meta, manual_temperature = NA, spot = "spot",
   pre = FALSE)
 
 process_gasmet(data, meta, manual_temperature = "temp", spot = "spot",
-  day = "day", start = "start", end = "wndw", V, A, pre = FALSE)
+  day = "day", start = "start", end = "wndw", V = 0.01461, A = 0.098,
+  pre = FALSE)
 }
 \arguments{
-\item{conc}{Data frame. Recorded data from device.}
+\item{data}{Data frame. Recorded data from device.}
 
 \item{meta}{Data frame. Metadata containing required informations.}
 
@@ -34,6 +35,8 @@ ppm data from conc. E.g. c(CO2 = "CO2").}
 \item{preassure_factor}{Numeric value to convert preassure to mbar.}
 
 \item{temperature}{Character.}
+
+\item{manual_temperature}{Character.}
 
 \item{duration_count}{Is `end` given as time information or number of
 datapoints? If FALSE (the default), `end` will be interpreted as Time or duration in
@@ -57,8 +60,6 @@ between `start` and `end`.}
 
 \item{pre}{If FALSE, flux processing will be executed. If FALSE flux
 processing will be skipped and preprocessed data frame will be returned.}
-
-\item{manuel_temperature}{Character.}
 }
 \value{
 A data frame.

@@ -2,11 +2,11 @@ context("kW context")
 library(glimmr)
 
 test_that("Unsupportet model throws error", {
-  expect_error(calc_kW(1, 2, model = "XXX"), "'arg' should be one of \"wann14\", \"cole98\"")
+  expect_error(calc_kW(1, 2, model = "XXX"))
 })
 
 test_that("Unsupportet gas throws error", {
-  expect_error(calc_kW(1, 2, gas = "XXX"), "'arg' should be one of \"co2\", \"ch4\"")
+  expect_error(calc_kW(1, 2, gas = "XXX"))
   expect_error(kH(1, "XXX"))
   expect_error(calc_SN(1, "XXX"))
 })

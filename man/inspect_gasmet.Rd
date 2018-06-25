@@ -3,10 +3,10 @@
 \name{inspect_gasmet}
 \alias{inspect_gasmet}
 \alias{inspect_losgatos}
-\alias{inspect_losgatos}
 \title{Show plots for every measurement}
 \usage{
-inspect_gasmet(fluxdata, meta)
+inspect_gasmet(fluxdata, meta, manual_temperature = "temp", spot = "spot",
+  day = "day", start = "start", end = "wndw")
 
 inspect_losgatos(fluxdata, meta, manual_temperature = NA, spot = "spot",
   day = "day", start = "start", end = "end")
@@ -15,7 +15,17 @@ inspect_losgatos(fluxdata, meta, manual_temperature = NA, spot = "spot",
 \item{fluxdata}{A data frame with recorded data. Either loaded with
 \code{\link{read_gasmet}} or \code{\link{read_losgatos}}.}
 
-\item{meta}{Metadata}
+\item{meta}{Data frame. Metadata containing required informations.}
+
+\item{manual_temperature}{Character.}
+
+\item{spot}{Character.}
+
+\item{day}{Character.}
+
+\item{start}{Character.}
+
+\item{end}{Character.}
 }
 \value{
 A series of plots

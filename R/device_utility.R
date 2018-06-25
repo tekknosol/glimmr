@@ -120,13 +120,13 @@ get_losgatos_files <- function(path) {
 #'
 #' @param fluxdata A data frame with recorded data. Either loaded with
 #'   \code{\link{read_gasmet}} or \code{\link{read_losgatos}}.
-#' @param meta Metadata
-#' @aliases inspect_losgatos
+#' @inheritParams process_chamber
 #'
 #' @return A series of plots
 #' @export
 #'
-inspect_gasmet <- function(fluxdata, meta) {
+inspect_gasmet <- function(fluxdata, meta, manual_temperature = "temp", spot = "spot", day = "day",
+                           start = "start", end = "wndw") {
   CO2mmol <- NULL
   CH4mmol <- NULL
   N2Ommol <- NULL
@@ -211,7 +211,8 @@ parse_var <- function(conc, meta, x){
 }
 
 process_flux <- function(hmr_data, meta, device){
-  flux <- tibble(
+  start <- NULL
+  flux <- tibble::tibble(
     date = lubridate::ymd(meta$day),
     site = hmr_data$spot,
     begin =
@@ -243,11 +244,13 @@ process_flux <- function(hmr_data, meta, device){
 #'  decreases end of interval to the nearest minute.
 #'
 #'
-#' @param interval
+#' @param interval Intervall of chamber deployment. Created with
+#'   lubridate::intervall()
 #'
 #' @return Modified interval
 #'
 #' @examples
+#' library(lubridate)
 #' start <- ymd_hms("2018-06-25 12:13")
 #' end <- ymd_hms("2018-06-25 12:18")
 #' int <- interval(start, end)

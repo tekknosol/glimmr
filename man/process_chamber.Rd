@@ -58,7 +58,7 @@ chamber application.}
 \item{time_proc}{NA or name of function. Function is used to modify interval
 between `start` and `end`.}
 
-\item{pre}{If FALSE, flux processing will be executed. If FALSE flux
+\item{pre}{If FALSE (the default), flux processing will be executed. If TRUE flux
 processing will be skipped and preprocessed data frame will be returned.}
 }
 \value{

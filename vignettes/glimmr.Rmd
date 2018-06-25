@@ -55,7 +55,7 @@ meta_losgatos
 ```
 
 ## Process fluxes
-To use any arbitrary device all columns containing used informations need to be
+To use any arbitrary device all columns containing used information need to be
 defined.
 ```{r, eval=FALSE}
 process_chamber(

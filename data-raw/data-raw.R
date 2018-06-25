@@ -17,13 +17,13 @@ mask <- which( (gasmet$datetime >= meta_gasmet$begin[1] &
   gasmet$datetime <= meta_gasmet$begin[6])
 )
 
-mask <- append(mask, (mask[length(mask)] + 1):(mask[length(mask)] + 15))
+# mask <- append(mask, (mask[length(mask)] + 1):(mask[length(mask)] + 15))
 
-gasmet <- gasmet[mask, ]
+# gasmet <- gasmet[mask, ]
 
 meta_losgatos <- readr::read_csv("data-raw/meta_losgatos.csv")
-meta_losgatos <- meta_losgatos %>%
-  mutate(start = ymd_hms(paste(day, start)), end = ymd_hms(paste(day, end)))
+# meta_losgatos <- meta_losgatos %>%
+  # mutate(start = ymd_hms(paste(day, start)), end = ymd_hms(paste(day, end)))
 losgatos <- read_losgatos("data-raw/2018-05-23/")
 
 devtools::use_data(gasmet, meta_gasmet, losgatos, meta_losgatos, overwrite = T)

@@ -100,10 +100,18 @@ process_chamber <- function(data, meta, time_stamp, conc_columns, preassure,
                             manual_temperature = NA, duration_count = FALSE,
                             spot = "spot", day = "day", start = "start",
                             end = "end", V, A, time_proc = NA, pre = FALSE){
-  device <- device_generic(time_stamp = time_stamp, conc_columns = conc_columns,
-    preassure = preassure, preassure_factor = preassure_factor, temperature =
-    temperature, manual_temperature = manual_temperature, duration_count =
-    duration_count, spot = spot, day = day, start = start, end = end,
+  device <- device_generic(
+    time_stamp = time_stamp,
+    conc_columns = conc_columns,
+    preassure = preassure,
+    preassure_factor = preassure_factor,
+    temperature = temperature,
+    manual_temperature = manual_temperature,
+    duration_count =  duration_count,
+    spot = spot,
+    day = day,
+    start = start,
+    end = end,
     time_proc = time_proc
   )
   hmr_data <- preprocess_chamber(data, meta, device, V, A)
@@ -121,8 +129,13 @@ process_chamber <- function(data, meta, time_stamp, conc_columns, preassure,
 process_losgatos <- function(data, meta, manual_temperature = NA, spot = "spot", day = "day",
                              start = "start", end = "end", V = 0.01461,
                              A = 0.098, pre = FALSE){
-  device <- device_losgatos(manual_temperature = manual_temperature, spot = spot, day = day,
-    start = start, end = end)
+  device <- device_losgatos(
+    manual_temperature = manual_temperature,
+    spot = spot,
+    day = day,
+    start = start,
+    end = end
+  )
   hmr_data <- preprocess_chamber(data, meta, device, V, A)
 
   if (pre == TRUE) {
@@ -138,8 +151,13 @@ process_losgatos <- function(data, meta, manual_temperature = NA, spot = "spot",
 process_gasmet <- function(data, meta, manual_temperature = "temp", spot = "spot", day = "day",
                            start = "start", end = "wndw", V = 0.01461,
                            A = 0.098, pre = FALSE){
-  device <- device_gasmet(manual_temperature = manual_temperature, spot = spot, day = day,
-    start = start, end = end)
+  device <- device_gasmet(
+    manual_temperature = manual_temperature,
+    spot = spot,
+    day = day,
+    start = start,
+    end = end
+  )
   hmr_data <- preprocess_chamber(data, meta, device, V, A)
 
   if (pre == TRUE) {

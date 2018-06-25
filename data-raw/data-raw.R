@@ -10,12 +10,12 @@ meta_gasmet <- meta_gasmet %>%
 
 meta_gasmet <- meta_gasmet[1:6, ]
 meta_gasmet$day <- "2017-04-12"
-
-mask <- which( (gasmet$datetime >= meta_gasmet$begin[1] &
-  gasmet$datetime <= meta_gasmet$begin[3]) |
-  (gasmet$datetime >= meta_gasmet$begin[4] &
-  gasmet$datetime <= meta_gasmet$begin[6])
-)
+meta_gasmet$start <- as.character(meta_gasmet$start)
+# mask <- which( (gasmet$datetime >= meta_gasmet$begin[1] &
+#   gasmet$datetime <= meta_gasmet$begin[3]) |
+#   (gasmet$datetime >= meta_gasmet$begin[4] &
+#   gasmet$datetime <= meta_gasmet$begin[6])
+# )
 
 # mask <- append(mask, (mask[length(mask)] + 1):(mask[length(mask)] + 15))
 

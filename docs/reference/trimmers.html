@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GASMET Flux measurement with three entries. — gasmet • glimmr</title>
+<title>Functions to modify interval between start and end of chamber deployment — trimmers • glimmr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="GASMET Flux measurement with three entries. — gasmet" />
+<meta property="og:title" content="Functions to modify interval between start and end of chamber deployment — trimmers" />
 
-<meta property="og:description" content="A dataset containing three flux measurements." />
+<meta property="og:description" content="These functions are used to modify the measurement interval." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,39 +115,60 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>GASMET Flux measurement with three entries.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>gasmet.Rd</code></div>
+    <h1>Functions to modify interval between start and end of chamber deployment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/device_utility.R'><code>R/device_utility.R</code></a></small>
+    <div class="hidden name"><code>trimmers.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A dataset containing three flux measurements.</p>
+    <p>These functions are used to modify the measurement interval.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>gasmet</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>trim_time</span>(<span class='no'>interval</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>interval</th>
+      <td><p>Intervall of chamber deployment. Created with
+<code><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></code>.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 25 rows and 7 variables:</p><dl class='dl-horizontal'>
-  <dt>Datum</dt><dd><p>Date of measurement</p></dd>
-  <dt>Zeit</dt><dd><p>Time of the datapoint</p></dd>
-  <dt>CO2</dt><dd><p></p></dd>
-  <dt>CH4</dt><dd><p></p></dd>
-  <dt>N2O</dt><dd><p></p></dd>
-  <dt>Luftdruck</dt><dd><p></p></dd>
-  <dt>datetime</dt><dd><p></p></dd>
-</dl>
+    <p>Modified interval</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>`trim_time()` increases start of interval to the nearest minute and
+ decreases end of interval to the nearest minute.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>lubridate</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attache Paket: ‘lubridate’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    date</span></div><div class='input'><span class='no'>start</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hm</a></span>(<span class='st'>"2018-06-25 12:13"</span>)
+<span class='no'>end</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hm</a></span>(<span class='st'>"2018-06-25 12:18"</span>)
+<span class='no'>int</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span>(<span class='no'>start</span>, <span class='no'>end</span>)
+
+<span class='no'>int</span></div><div class='output co'>#&gt; [1] 2018-06-25 12:13:00 UTC--2018-06-25 12:18:00 UTC</div><div class='input'><span class='fu'>trim_time</span>(<span class='no'>int</span>)</div><div class='output co'>#&gt; [1] 2018-06-25 12:14:00 UTC--2018-06-25 12:18:00 UTC</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-          </ul>
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

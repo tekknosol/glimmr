@@ -19,6 +19,7 @@ reference:
 - title: Helper functions
   desc:  ~
   contents:
+  - '`trimmers`'
   - '`day2sec`'
   - '`axis.flux.ch4`'
   - '`axis.flux.co2`'

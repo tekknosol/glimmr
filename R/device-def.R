@@ -3,7 +3,7 @@ device_generic <- function(name = "generic", time_stamp, conc_columns, preassure
                            preassure_factor = 1, temperature,
                            manual_temperature = NA, duration_count = FALSE,
                            spot = "spot", day = "day", start = "start",
-                           end = "end", time_proc = NA){
+                           end = "end", time_proc = NULL){
   structure(
     list(
       name = name,
@@ -18,7 +18,7 @@ device_generic <- function(name = "generic", time_stamp, conc_columns, preassure
       day = day,
       start = start,
       end = end,
-      time_proc = as.character(quote(time_proc))
+      time_proc = time_proc
     ),
     class = "fluxdevice"
   )
@@ -39,7 +39,7 @@ device_losgatos <- function(manual_temperature = NA, spot = "spot", day = "day",
     day = day,
     start = start,
     end = end,
-    time_proc = as.character(substitute(trim_time()))
+    time_proc = trim_time
   )
 }
 

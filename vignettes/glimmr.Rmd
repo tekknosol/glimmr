@@ -1,0 +1,23 @@
+---
+title: "Compute gasfluxes from dynamic chamber measurements"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+glimmr is an R package that makes it easier to process and handle data from 
+dynamic flux measurements.
+
+```{r}
+library(glimmr)
+process_losgatos(losgatos, meta_losgatos, V = 0.01461, A = 0.098, pre = TRUE)
+```

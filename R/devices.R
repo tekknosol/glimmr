@@ -21,9 +21,9 @@ preprocess_chamber <- function(conc, meta, device, V, A){
       end <- parse_end(conc, device, start, meta[i, ])
 
     int <- lubridate::interval(start, end)
-    if(!is.na(device$time_proc)){
-      func <- match.fun(device$time_proc)
-      int <- func(int)
+    if(!is.null(device$time_proc)){
+      FUN <- match.fun(device$time_proc)
+      int <- FUN(int)
     }
 
     repcount[repcount$spot == meta[i, ] %>% dplyr::pull(device$spot), ]$count <- repcount[repcount$spot == meta[i, ] %>% dplyr::pull(device$spot), ]$count + 1

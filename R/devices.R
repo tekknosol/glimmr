@@ -89,7 +89,7 @@ preprocess_chamber <- function(conc, meta, device, V, A){
 #'   between `start` and `end`.
 #' @param V Numeric. Volume of used chamber.
 #' @param A Numeric. Area of used chamber.
-#' @param pre If FALSE, flux processing will be executed. If FALSE flux
+#' @param pre If FALSE (the default), flux processing will be executed. If TRUE flux
 #'   processing will be skipped and preprocessed data frame will be returned.
 #'
 #' @return A data frame.

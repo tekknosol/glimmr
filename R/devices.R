@@ -21,6 +21,7 @@ preprocess_chamber <- function(conc, meta, device, V, A){
       end <- parse_end(conc, device, start, meta[i, ])
 
     int <- lubridate::interval(start, end)
+
     if(!is.null(device$time_proc)){
       FUN <- match.fun(device$time_proc)
       int <- FUN(int)

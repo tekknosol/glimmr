@@ -100,7 +100,7 @@ process_chamber <- function(data, meta, time_stamp, conc_columns, preassure,
                             preassure_factor = 1, temperature = "temp",
                             manual_temperature = NA, duration_count = FALSE,
                             spot = "spot", day = "day", start = "start",
-                            end = "end", V, A, time_proc = NA, pre = FALSE){
+                            end = "end", V, A, trimmer = NA, pre = FALSE){
   device <- device_generic(
     time_stamp = time_stamp,
     conc_columns = conc_columns,
@@ -113,7 +113,7 @@ process_chamber <- function(data, meta, time_stamp, conc_columns, preassure,
     day = day,
     start = start,
     end = end,
-    time_proc = time_proc
+    trimmer = trimmer
   )
   hmr_data <- preprocess_chamber(data, meta, device, V, A)
 

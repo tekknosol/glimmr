@@ -13,6 +13,7 @@ processed automatically.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://tekknosol.github.io/glimmr/}
   \item \url{https://github.com/tekknosol/glimmr}
   \item Report bugs at \url{https://github.com/tekknosol/glimmr/issues}
 }

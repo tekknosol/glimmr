@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>glimmr: Gas fLuxes and dynamIc chaMber MeasuRements — glimmr-package • glimmr</title>
+<title>LosGatos setup — gals_losgatos • glimmr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,9 @@
 
 
 
-<meta property="og:title" content="glimmr: Gas fLuxes and dynamIc chaMber MeasuRements — glimmr-package" />
+<meta property="og:title" content="LosGatos setup — gals_losgatos" />
 
-<meta property="og:description" content="The glimmr package provides functions to convert high frequency concentration data
-obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
-processed automatically." />
+<meta property="og:description" content="LosGatos setup" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,27 +103,37 @@ processed automatically." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>glimmr: Gas fLuxes and dynamIc chaMber MeasuRements</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/glimmr.R'><code>R/glimmr.R</code></a></small>
-    <div class="hidden name"><code>glimmr-package.Rd</code></div>
+    <h1>LosGatos setup</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/gals.R'><code>R/gals.R</code></a></small>
+    <div class="hidden name"><code>gals_losgatos.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The glimmr package provides functions to convert high frequency concentration data
-obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
-processed automatically.</p>
+    <p>LosGatos setup</p>
     
     </div>
 
+    <pre class="usage"><span class='fu'>gals_losgatos</span>()</pre>
         
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="definition-"><a class="anchor" href="#definition-"></a>Definition:</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://tekknosol.github.io/glimmr/'>https://tekknosol.github.io/glimmr/</a></p></li>
-<li><p><a href='https://github.com/tekknosol/glimmr'>https://github.com/tekknosol/glimmr</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/tekknosol/glimmr/issues'>https://github.com/tekknosol/glimmr/issues</a></p></li>
-</ul></div>
+    <p>losgatos uses the following parameters (fixed parameters are in bold):</p><ul>
+<li><p><strong>name</strong> = losgatos</p></li>
+<li><p><strong>time_stamp</strong> = Time</p></li>
+<li><p><strong>conc_columns</strong> = [CH4]_ppm, [CO2]_ppm</p></li>
+<li><p><strong>preassure</strong> = GasP_torr</p></li>
+<li><p><strong>preassure_factor</strong> = 1.33322</p></li>
+<li><p><strong>temperature</strong> = AmbT_C</p></li>
+<li><p>duration_count = FALSE</p></li>
+<li><p>spot = spot</p></li>
+<li><p>day = day</p></li>
+<li><p>start = start</p></li>
+<li><p>end = end</p></li>
+<li><p>trimmer = trim_time</p></li>
+<li><p>V = 0.01461</p></li>
+<li><p>A = 0.098</p></li>
+</ul>
     
 
   </div>
@@ -133,13 +141,8 @@ processed automatically.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#definition-">Definition:</a></li>
           </ul>
-
-    <h2>Author</h2>
-    
-<strong>Maintainer</strong>: Philipp S. Keller <a href='mailto:phlipp.keller@ufz.de'>phlipp.keller@ufz.de</a> (0000-0002-3565-4413)
-
 
   </div>
 </div>

@@ -117,10 +117,9 @@ meta_losgatos
 <h2 class="hasAnchor">
 <a href="#process-fluxes" class="anchor"></a>Process fluxes</h2>
 <p>To use any arbitrary device all columns containing used information need to be defined.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/process_chamber.html">process_chamber</a></span>(
-  <span class="co"># specify data</span>
-  losgatos, 
-  meta_losgatos,
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># setup analyzer</span>
+analyzer &lt;-<span class="st"> </span><span class="kw"><a href="../reference/gals.html">gals</a></span>(
   <span class="co">#define datastructure</span>
   <span class="dt">time_stamp =</span> <span class="st">"Time"</span>, 
   <span class="dt">conc_columns =</span> <span class="kw">c</span>(<span class="dt">CH4 =</span> <span class="st">"[CH4]_ppm"</span>, <span class="dt">CO2 =</span> <span class="st">"[CO2]_ppm"</span>), 
@@ -136,12 +135,21 @@ meta_losgatos
   <span class="co">#define chamber dimensions</span>
   <span class="dt">V =</span> <span class="fl">0.01461</span>, 
   <span class="dt">A =</span> <span class="fl">0.098</span>
+)
+
+<span class="co"># compute fluxes</span>
+<span class="kw"><a href="../reference/process_chamber.html">process_chamber</a></span>(
+  <span class="co"># specify data</span>
+  losgatos, 
+  meta_losgatos,
+  <span class="co">#specify analyuer</span>
+  analyzer
 )</code></pre></div>
 <p>For simplification, GASMET and LosGatos can be called via convenient wrapper functions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/process_chamber.html">process_losgatos</a></span>(losgatos, meta_losgatos)
 
 <span class="kw"><a href="../reference/process_chamber.html">process_gasmet</a></span>(gasmet, meta_gasmet)</code></pre></div>
-<p>While the start of single measurements is (usually) defined by a known point in time, the end can be defined in different ways. See <code><a href="../reference/process_chamber.html">process_chamber()</a></code> for details.</p>
+<p>While the start of single measurements is (usually) defined by a known point in time, the end can be defined in different ways. See <code>proces_chamber()</code> for details.</p>
 </div>
 </div>
   </div>

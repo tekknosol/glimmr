@@ -14,7 +14,7 @@ Depends: R (>= 2.10)
 URL: https://tekknosol.github.io/glimmr/, https://github.com/tekknosol/glimmr
 BugReports: https://github.com/tekknosol/glimmr/issues
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Imports:
     ggplot2,
     lubridate,

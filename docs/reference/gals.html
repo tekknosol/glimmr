@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate gasfluxes from dynamic chamber measurement — process_chamber • glimmr</title>
+<title>Gas analyzer setup — gals • glimmr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Calculate gasfluxes from dynamic chamber measurement — process_chamber" />
+<meta property="og:title" content="Gas analyzer setup — gals" />
 
-<meta property="og:description" content="`process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()`." />
+<meta property="og:description" content="Gas analyzer setup" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -104,51 +103,101 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate gasfluxes from dynamic chamber measurement</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/devices.R'><code>R/devices.R</code></a></small>
-    <div class="hidden name"><code>process_chamber.Rd</code></div>
+    <h1>Gas analyzer setup</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/gals.R'><code>R/gals.R</code></a></small>
+    <div class="hidden name"><code>gals.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>`process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()`.</p>
+    <p>Gas analyzer setup</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>process_chamber</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>analyzer</span> <span class='kw'>=</span> <span class='fu'><a href='gals.html'>gals</a></span>(), <span class='kw'>pre</span> <span class='kw'>=</span> <span class='no'>T</span>)
-
-<span class='fu'>process_losgatos</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='kw'>analyzer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>process_gasmet</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='kw'>manual_temperature</span> <span class='kw'>=</span> <span class='st'>"temp"</span>, <span class='kw'>spot</span> <span class='kw'>=</span> <span class='st'>"spot"</span>,
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"start"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"wndw"</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='fl'>0.01461</span>, <span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>0.098</span>,
-  <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>gals</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"custom"</span>, <span class='kw'>fixed_params</span> <span class='kw'>=</span> <span class='fu'>c</span>(), <span class='kw'>time_stamp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>conc_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>preassure</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>preassure_factor</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>manual_temperature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>duration_count</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>spot</span> <span class='kw'>=</span> <span class='st'>"spot"</span>, <span class='kw'>day</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"start"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"end"</span>,
+  <span class='kw'>trimmer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='fl'>0.01461</span>, <span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>0.098</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>Data frame. Recorded data from device.</p></td>
+      <th>name</th>
+      <td><p>Name of device. Defaults to "custom"</p></td>
     </tr>
     <tr>
-      <th>meta</th>
-      <td><p>Data frame. Metadata containing required informations.</p></td>
+      <th>fixed_params</th>
+      <td><p>Named vector.</p></td>
     </tr>
     <tr>
-      <th>analyzer</th>
-      <td><p>Object created with gals().</p></td>
+      <th>time_stamp</th>
+      <td><p>Character vector. Value will be used as the column in conc
+containing the timestamp.</p></td>
     </tr>
     <tr>
-      <th>pre</th>
-      <td><p>If FALSE (the default), flux processing will be executed. If TRUE flux
-processing will be skipped and preprocessed data frame will be returned.</p></td>
+      <th>conc_columns</th>
+      <td><p>A named character vector. Values will be used to extract
+ppm data from conc. E.g. c(CO2 = "CO2").</p></td>
+    </tr>
+    <tr>
+      <th>preassure</th>
+      <td><p>Character</p></td>
+    </tr>
+    <tr>
+      <th>preassure_factor</th>
+      <td><p>Numeric value to convert preassure to mbar.</p></td>
+    </tr>
+    <tr>
+      <th>temperature</th>
+      <td><p>Character</p></td>
+    </tr>
+    <tr>
+      <th>manual_temperature</th>
+      <td><p>Character</p></td>
+    </tr>
+    <tr>
+      <th>duration_count</th>
+      <td><p>Is `end` given as time information or number of
+datapoints? If FALSE (the default), `end` will be interpreted as Time or
+duration in minutes. If TRUE, `end` will be interpreted as number of
+datapoints per chamber application.</p></td>
+    </tr>
+    <tr>
+      <th>spot</th>
+      <td><p>Character.</p></td>
+    </tr>
+    <tr>
+      <th>day</th>
+      <td><p>Character.</p></td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td><p>Character.</p></td>
+    </tr>
+    <tr>
+      <th>end</th>
+      <td><p>Character.</p></td>
+    </tr>
+    <tr>
+      <th>trimmer</th>
+      <td><p>NULL or function. Function is used to modify interval between
+`start` and `end`.</p></td>
+    </tr>
+    <tr>
+      <th>V</th>
+      <td><p>Numeric. Volume of used chamber.</p></td>
+    </tr>
+    <tr>
+      <th>A</th>
+      <td><p>Numeric. Area of used chamber.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame.</p>
+    <p>A gals object.</p>
     
 
   </div>

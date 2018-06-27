@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>glimmr: Gas fLuxes and dynamIc chaMber MeasuRements — glimmr-package • glimmr</title>
+<title>Functions to modify interval between start and end of chamber deployment — trimmer • glimmr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,9 @@
 
 
 
-<meta property="og:title" content="glimmr: Gas fLuxes and dynamIc chaMber MeasuRements — glimmr-package" />
+<meta property="og:title" content="Functions to modify interval between start and end of chamber deployment — trimmer" />
 
-<meta property="og:description" content="The glimmr package provides functions to convert high frequency concentration data
-obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
-processed automatically." />
+<meta property="og:description" content="These functions are used to modify the measurement interval." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,41 +103,60 @@ processed automatically." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>glimmr: Gas fLuxes and dynamIc chaMber MeasuRements</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/glimmr.R'><code>R/glimmr.R</code></a></small>
-    <div class="hidden name"><code>glimmr-package.Rd</code></div>
+    <h1>Functions to modify interval between start and end of chamber deployment</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/trimmer.R'><code>R/trimmer.R</code></a></small>
+    <div class="hidden name"><code>trimmer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The glimmr package provides functions to convert high frequency concentration data
-obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
-processed automatically.</p>
+    <p>These functions are used to modify the measurement interval.</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <pre class="usage"><span class='fu'>trim_time</span>(<span class='no'>interval</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>interval</th>
+      <td><p>Intervall of chamber deployment. Created with
+<code><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></code>.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://tekknosol.github.io/glimmr/'>https://tekknosol.github.io/glimmr/</a></p></li>
-<li><p><a href='https://github.com/tekknosol/glimmr'>https://github.com/tekknosol/glimmr</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/tekknosol/glimmr/issues'>https://github.com/tekknosol/glimmr/issues</a></p></li>
-</ul></div>
+    <p>Modified interval</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>`trim_time()` increases start of interval to the nearest minute and
+ decreases end of interval to the nearest minute.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>lubridate</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attache Paket: ‘lubridate’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    date</span></div><div class='input'><span class='no'>start</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hm</a></span>(<span class='st'>"2018-06-25 12:13"</span>)
+<span class='no'>end</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/ymd_hms.html'>ymd_hm</a></span>(<span class='st'>"2018-06-25 12:18"</span>)
+<span class='no'>int</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://lubridate.tidyverse.org/reference/interval.html'>interval</a></span>(<span class='no'>start</span>, <span class='no'>end</span>)
+
+<span class='no'>int</span></div><div class='output co'>#&gt; [1] 2018-06-25 12:13:00 UTC--2018-06-25 12:18:00 UTC</div><div class='input'><span class='fu'>trim_time</span>(<span class='no'>int</span>)</div><div class='output co'>#&gt; [1] 2018-06-25 12:14:00 UTC--2018-06-25 12:18:00 UTC</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
-          </ul>
+      <li><a href="#value">Value</a></li>
 
-    <h2>Author</h2>
-    
-<strong>Maintainer</strong>: Philipp S. Keller <a href='mailto:phlipp.keller@ufz.de'>phlipp.keller@ufz.de</a> (0000-0002-3565-4413)
-
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -125,8 +125,7 @@ get_losgatos_files <- function(path) {
 #' @return A series of plots
 #' @export
 #'
-inspect_gasmet <- function(fluxdata, meta, manual_temperature = "temp", spot = "spot", day = "day",
-                           start = "start", end = "wndw") {
+inspect_gasmet <- function(fluxdata, meta) {
   CO2mmol <- NULL
   CH4mmol <- NULL
   N2Ommol <- NULL
@@ -140,20 +139,22 @@ inspect_gasmet <- function(fluxdata, meta, manual_temperature = "temp", spot = "
 #' @rdname inspect_gasmet
 #' @export
 #'
-inspect_losgatos <- function(fluxdata, meta, manual_temperature = NA, spot = "spot", day = "day",
-                             start = "start", end = "end") {
+inspect_losgatos <- function(fluxdata, meta) {
   CO2mmol <- NULL
   CH4mmol <- NULL
-  df <- process_losgatos(fluxdata, meta, manual_temperature = NA, spot = "spot", day = "day",
-                         start = "start", end = "end", pre = TRUE)
+  df <- process_losgatos(fluxdata, meta, pre = TRUE)
   df <- df %>% tidyr::gather(key = "gas", value = "concentration", CO2mmol,
     CH4mmol)
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
 
-inspect_chamber <- function(fluxdata, meta, conc_columns, preassure, temp){
-  df <- process_chamber(fluxdata, meta, conc_columns, preassure, temp, pre = TRUE)
+inspect_chamber <- function(fluxdata, meta, analyzer = gals()){
+
+  df <- process_chamber(fluxdata, meta, analyzer = analyzer, pre = TRUE)
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", dplyr::ends_with("mmol"))
+  inspect_fluxdata(df)
+  invisible(fluxdata)
 }
 
 inspect_fluxdata <- function(df) {
@@ -245,7 +246,7 @@ chamber_diagnostic <- function(conc, meta, device){
       message("End of interval determined by number of observations. Count = column ", device$end)
     }
   }
-  if (!is.na(device$manual_temperature)){
+  if (!is.null(device$manual_temperature)){
     message("Using temperature from meta file. Column = ", device$manual_temperature)
   }
 

@@ -1,6 +1,6 @@
 
 
-preprocess_chamber <- function(conc, meta, device, V, A){
+preprocess_chamber <- function(conc, meta, device){
   chamber_diagnostic(conc, meta, device)
   hmr_data <- dplyr::tibble(
     spot = NA, day = NA, rep = NA, start = NA, V = NA, A = NA, Time = NA
@@ -22,8 +22,8 @@ preprocess_chamber <- function(conc, meta, device, V, A){
 
     int <- lubridate::interval(start, end)
 
-    if(!is.null(device$time_proc)){
-      FUN <- match.fun(device$time_proc)
+    if(length(device$trimmer) != 0){
+      FUN <- match.fun(device$trimmer)
       int <- FUN(int)
     }
 
@@ -36,18 +36,19 @@ preprocess_chamber <- function(conc, meta, device, V, A){
       next
     }
 
-    if (is.na(device$manual_temperature)){
+    if (is.null(device$manual_temperature)){
       temp_value <- parse_var(a, meta[i, ], device$temperature)
     } else{
       temp_value <- parse_var(a, meta[i, ], device$manual_temperature)
     }
     preassure_value <- parse_var(a, meta[i, ], device$preassure) * device$preassure_factor
 
-    hmr_data_tmp <- data.frame(
-      spot = meta[i, ] %>% dplyr::pull(device$spot), day =
-      as.character(meta[i, ] %>% dplyr::pull(device$day)), rep =
-      repcount[repcount$spot == meta[i, ] %>% dplyr::pull(device$spot), ]$count,
-      start = as.character(lubridate::int_start(int)), V = V, A = A, Time = as.numeric(a %>% dplyr::pull(device$time_stamp) - a[1,] %>% dplyr::pull(device$time_stamp)) / 60 / 60
+    hmr_data_tmp <- tibble::tibble(
+      spot = meta[i, ][[device$spot]], day =
+      as.character(meta[i, ][[device$day]]), rep =
+      repcount[repcount$spot == meta[i, ][[device$spot]], ]$count,
+      start = as.character(lubridate::int_start(int)), V = device[["V"]], A = device[["A"]],
+      Time = as.numeric(a[[device$time_stamp]] - a[1,][[device$time_stamp]]) / 60 / 60
     )
 
     # calculate concentration in mmol/m³
@@ -70,52 +71,35 @@ preprocess_chamber <- function(conc, meta, device, V, A){
 #'
 #' @param data Data frame. Recorded data from device.
 #' @param meta Data frame. Metadata containing required informations.
-#' @param time_stamp Character vector. Value will be used as the column in conc
-#'   containing the timestamp.
-#' @param conc_columns A named character vector. Values will be used to extract
-#'   ppm data from conc. E.g. c(CO2 = "CO2").
-#' @param preassure Character.
-#' @param preassure_factor Numeric value to convert preassure to mbar.
-#' @param temperature Character.
-#' @param manual_temperature Character.
-#' @param spot Character.
-#' @param day Character.
-#' @param start Character.
-#' @param duration_count Is `end` given as time information or number of
-#'   datapoints? If FALSE (the default), `end` will be interpreted as Time or duration in
-#'   minutes. If TRUE, `end` will be interpreted as number of datapoints per
-#'   chamber application.
-#' @param end Character.
-#' @param time_proc NA or name of function. Function is used to modify interval
-#'   between `start` and `end`.
-#' @param V Numeric. Volume of used chamber.
-#' @param A Numeric. Area of used chamber.
+#' @param analyzer Object created with gals().
 #' @param pre If FALSE (the default), flux processing will be executed. If TRUE flux
 #'   processing will be skipped and preprocessed data frame will be returned.
 #'
 #' @return A data frame.
 #' @export
 #'
-process_chamber <- function(data, meta, time_stamp, conc_columns, preassure,
-                            preassure_factor = 1, temperature = "temp",
-                            manual_temperature = NA, duration_count = FALSE,
-                            spot = "spot", day = "day", start = "start",
-                            end = "end", V, A, trimmer = NA, pre = FALSE){
-  device <- device_generic(
-    time_stamp = time_stamp,
-    conc_columns = conc_columns,
-    preassure = preassure,
-    preassure_factor = preassure_factor,
-    temperature = temperature,
-    manual_temperature = manual_temperature,
-    duration_count =  duration_count,
-    spot = spot,
-    day = day,
-    start = start,
-    end = end,
-    trimmer = trimmer
-  )
-  hmr_data <- preprocess_chamber(data, meta, device, V, A)
+process_chamber <- function(data = NULL, meta = NULL, analyzer = gals(), pre = T){
+
+  hmr_data <- preprocess_chamber(data, meta, analyzer)
+
+  if (pre == TRUE) {
+    return(hmr_data)
+  }
+
+  flux <- process_flux(hmr_data, meta, analyzer)
+  return(flux)
+}
+
+#' @rdname process_chamber
+#' @export
+process_losgatos <- function(data, meta, analyzer = NULL, pre = FALSE){
+  device <- gals_losgatos()
+
+  if(is.gals(analyzer)){
+    device <- stats::update(device, analyzer)
+  }
+
+  hmr_data <- preprocess_chamber(data, meta, device)
 
   if (pre == TRUE) {
     return(hmr_data)
@@ -127,39 +111,12 @@ process_chamber <- function(data, meta, time_stamp, conc_columns, preassure,
 
 #' @rdname process_chamber
 #' @export
-process_losgatos <- function(data, meta, manual_temperature = NA, spot = "spot", day = "day",
-                             start = "start", end = "end", V = 0.01461,
-                             A = 0.098, pre = FALSE){
-  device <- device_losgatos(
-    manual_temperature = manual_temperature,
-    spot = spot,
-    day = day,
-    start = start,
-    end = end
-  )
-  hmr_data <- preprocess_chamber(data, meta, device, V, A)
-
-  if (pre == TRUE) {
-    return(hmr_data)
+process_gasmet <- function(data, meta, analyzer = NULL, pre = FALSE){
+  device <- gals_gasmet()
+  if(is.gals(analyzer)){
+    device <- stats::update(device, analyzer)
   }
-
-  flux <- process_flux(hmr_data, meta, device)
-  return(flux)
-}
-
-#' @rdname process_chamber
-#' @export
-process_gasmet <- function(data, meta, manual_temperature = "temp", spot = "spot", day = "day",
-                           start = "start", end = "wndw", V = 0.01461,
-                           A = 0.098, pre = FALSE){
-  device <- device_gasmet(
-    manual_temperature = manual_temperature,
-    spot = spot,
-    day = day,
-    start = start,
-    end = end
-  )
-  hmr_data <- preprocess_chamber(data, meta, device, V, A)
+  hmr_data <- preprocess_chamber(data, meta, device)
 
   if (pre == TRUE) {
     return(hmr_data)

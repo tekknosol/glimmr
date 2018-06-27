@@ -27,9 +27,11 @@ preprocess_chamber <- function(conc, meta, device){
       int <- FUN(int)
     }
 
+
     repcount[repcount$spot == meta[i, ] %>% dplyr::pull(device$spot), ]$count <- repcount[repcount$spot == meta[i, ] %>% dplyr::pull(device$spot), ]$count + 1
     a <- conc %>%
       dplyr::filter(!!rlang::sym(device$time_stamp) >= lubridate::int_start(int) & !!rlang::sym(device$time_stamp) <= lubridate::int_end(int))
+    a <- chamber_offset(df = a, device = device, meta = meta)
     if (length(rownames(a)) == 0){
       warning(call. = FALSE, "meta entry ", i, " skipped.",
               " No matching data.")

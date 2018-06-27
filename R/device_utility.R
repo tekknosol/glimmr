@@ -178,6 +178,13 @@ ppm2conc <- function(ppm, temp, pmbar){
   conc <- ppm * 1e-6 * (pmbar * 100) / (8.314 *(temp + 273.15)) * 1000
 }
 
+chamber_offset <- function(device, df, meta){
+  if (is.numeric(device$offset)){
+    df[(device$offset+1):length(rownames(df)),]
+  } else {
+    df[(meta[[device$offset]]+1):length(rownames(df)),]
+  }
+}
 
 parse_end <- function(data, device, start, meta){
   if (device$duration_count){

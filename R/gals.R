@@ -14,6 +14,7 @@
 #'   datapoints? If FALSE (the default), `end` will be interpreted as Time or
 #'   duration in minutes. If TRUE, `end` will be interpreted as number of
 #'   datapoints per chamber application.
+#' @param offset Numeric or column name.
 #' @param spot Character.
 #' @param day Character.
 #' @param start Character.
@@ -27,7 +28,7 @@
 #' @export
 gals <- function(name = "custom", fixed_params = c(), time_stamp = NULL,
                  conc_columns = NULL, preassure = NULL, preassure_factor = 1,
-                 temperature = NULL, manual_temperature = NULL, duration_count = FALSE,
+                 temperature = NULL, manual_temperature = NULL, offset = 0, duration_count = FALSE,
                  spot = "spot", day = "day", start = "start", end = "end", trimmer = NULL, V = 0.01461, A = 0.098){
   structure(
     list(
@@ -40,6 +41,7 @@ gals <- function(name = "custom", fixed_params = c(), time_stamp = NULL,
       temperature = temperature,
       manual_temperature = manual_temperature,
       duration_count = duration_count,
+      offset = offset,
       spot = spot,
       day = day,
       start = start,
@@ -86,7 +88,7 @@ gals_losgatos <- function(){
 #' @eval rd_gals("gasmet")
 gals_gasmet <- function(){
   gals(
-    fixed_params = c("name", "time_stamp", "conc_columns", "preassure", "temperature", "preassure_factor"),
+    fixed_params = c("name", "time_stamp", "conc_columns", "preassure", "temperature", "preassure_factor", "duration_count"),
     name = "gasmet",
     time_stamp = "datetime",
     conc_columns = c(CH4 = "CH4", CO2 = "CO2", N2O = "N2O"),

@@ -11,7 +11,8 @@ rd_gals <- function(name) {
     ),
     "\\itemize{",
     paste0("  \\item ", param),
-    "}"
+    "}",
+    "Learn more about these definitions in \\code{vignette(\"gals\")}"
   )
 }
 
@@ -21,11 +22,11 @@ rd_gals_item <- function(x) {
     lapply(names(x), function(name){
 
       if(!name %in% x$fixed_params){
-        if(name != "fixed_params" & !is.null(x[[name]])){
+        if(name != "fixed_params"){
           paste0(name, " = ", paste0(x[[name]], collapse=", "))
         }
       } else {
-        if(name != "trimmer" & name != "fixed_params" & !is.null(x[[name]])){
+        if(name != "fixed_params"){
           paste0("\\strong{",name,"}", " = ", paste0(x[[name]], collapse=", "))
         }
       }

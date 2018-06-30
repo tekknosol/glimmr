@@ -1,71 +1,67 @@
+.all_gals_params <- c("name", "fixed_params", "time_stamp", "conc_columns",
+  "preassure", "preassure_factor", "temperature", "manual_temperature",
+  "offset", "duration_count", "spot", "day", "start", "end", "trimmer", "V", "A")
+
+gals_default_vals <- c(name = "custom", fixed_params = c(), time_stamp = NULL,
+                      conc_columns = NULL, preassure = NULL, preassure_factor = 1,
+                      temperature = NULL, manual_temperature = NULL, offset = 0, duration_count = FALSE,
+                      spot = "spot", day = "day", start = "start", end = "end",
+                      trimmer = NULL, V = 0.01461, A = 0.098)
+
+
 #' Gas analyzer setup
 #'
-#' @param name Name of device. Defaults to "custom"
-#' @param fixed_params Named vector.
-#' @param time_stamp Character vector. Value will be used as the column in conc
-#'   containing the timestamp.
-#' @param conc_columns A named character vector. Values will be used to extract
-#'   ppm data from conc. E.g. c(CO2 = "CO2").
-#' @param preassure Character
-#' @param preassure_factor Numeric value to convert preassure to mbar.
-#' @param temperature Character
-#' @param manual_temperature Character
-#' @param duration_count Is `end` given as time information or number of
-#'   datapoints? If FALSE (the default), `end` will be interpreted as Time or
-#'   duration in minutes. If TRUE, `end` will be interpreted as number of
-#'   datapoints per chamber application.
-#' @param offset Numeric or column name.
-#' @param spot Character.
-#' @param day Character.
-#' @param start Character.
-#' @param end Character.
-#' @param trimmer NULL or function. Function is used to modify interval between
-#'   `start` and `end`.
-#' @param V Numeric. Volume of used chamber.
-#' @param A Numeric. Area of used chamber.
 #'
+#' @param ... List of name value pairs to setup the gasanalyzer.
+#' @param .default If TRUE, default settings are used in addition to the passed
+#'   ones. Useful to abbreviate the function call.
+#'
+#' @eval rd_gals("default")
 #' @return A gals object.
 #' @export
-gals <- function(name = "custom", fixed_params = c(), time_stamp = NULL,
-                 conc_columns = NULL, preassure = NULL, preassure_factor = 1,
-                 temperature = NULL, manual_temperature = NULL, offset = 0, duration_count = FALSE,
-                 spot = "spot", day = "day", start = "start", end = "end", trimmer = NULL, V = 0.01461, A = 0.098){
-  structure(
-    list(
-      name = name,
-      fixed_params = fixed_params,
-      time_stamp = time_stamp,
-      conc_columns = conc_columns,
-      preassure = preassure,
-      preassure_factor = preassure_factor,
-      temperature = temperature,
-      manual_temperature = manual_temperature,
-      duration_count = duration_count,
-      offset = offset,
-      spot = spot,
-      day = day,
-      start = start,
-      end = end,
-      trimmer = as.character(substitute(trimmer)),
-      V = V,
-      A = A
-    ),
+gals <- function(..., .default = FALSE){
+  exprs <- rlang::enquos(...)
+  exprs <- lapply(exprs, function(x){
+    if(rlang::quo_is_call(x)){ x <- eval(rlang::quo_get_expr(x)) }
+    else{x <- rlang::quo_get_expr(x)}
+    x
+  })
+  x <- structure(
+    exprs,
     class = "gals"
   )
+  if (.default) x <- set_gals_default(x)
+  x
+}
+
+gals_default <- function(){
+  gals(
+    name = "custom", fixed_params = c(), time_stamp = NULL,
+    conc_columns = NULL, preassure = NULL, preassure_factor = 1,
+    temperature = NULL, manual_temperature = NULL, offset = 0, duration_count = FALSE,
+    spot = "spot", day = "day", start = "start", end = "end",
+    trimmer = NULL, V = 0.01461, A = 0.098
+  )
+}
+
+set_gals_default <- function(x){
+  x <- update(gals_default(), x)
+  x <- structure(x[order(match(names(x),.all_gals_params))], class="gals")
+  x
 }
 
 
 #' LosGatos setup
 #'
-#' Explicitly create LosGatos setup. Usually you will not call these
+#' Explicitly create LosGatos setup. Usually you will not call this
 #' function, but will instead use the wrapper [process_losgatos()]
 #'
 #' @export
 #'
 #'
 #' @eval rd_gals("losgatos")
-gals_losgatos <- function(){
-  gals(
+gals_losgatos <- function(.default = TRUE){
+  lg <- gals(
     fixed_params = c("name", "time_stamp", "conc_columns", "preassure", "preassure_factor", "temperature"),
     name = "losgatos",
     time_stamp = "Time",
@@ -73,21 +69,26 @@ gals_losgatos <- function(){
     preassure = "GasP_torr",
     preassure_factor = 1.33322,
     temperature = "AmbT_C",
-    trimmer = trim_time()
+    trimmer = trim_time
   )
+
+  if (.default){
+    lg <- set_gals_default(lg)
+  }
+  lg
 }
 
 #' GASMET setup
 #'
-#' Explicitly create LosGatos setup. Usually you will not call these
+#' Explicitly create LosGatos setup. Usually you will not call this
 #'   function, but will instead use the wrapper [process_gasmet()]
 #'
 #' @export
 #'
 #'
 #' @eval rd_gals("gasmet")
-gals_gasmet <- function(){
-  gals(
+gals_gasmet <- function(.default = TRUE){
+  lg <- gals(
     fixed_params = c("name", "time_stamp", "conc_columns", "preassure", "temperature", "preassure_factor", "duration_count"),
     name = "gasmet",
     time_stamp = "datetime",
@@ -98,6 +99,12 @@ gals_gasmet <- function(){
     duration_count = TRUE,
     end = "wndw"
   )
+
+  if (.default){
+    lg <- update(gals_default(), lg)
+  }
+  lg <- structure(lg[order(match(names(lg),.all_gals_params))], class="gals")
+  lg
 }
 
 update.gals <- function(gal, gal2){
@@ -109,3 +116,18 @@ update.gals <- function(gal, gal2){
 }
 
 is.gals <- function(x) inherits(x, "gals")
+
+validate <- function(x) UseMethod("validate")
+
+validate.gals <- function(gals){
+  if (is.null(gals$duration_count)) gals$duration_count <- FALSE
+  if (is.null(gals$offset)) gals$offset <- 0
+  if (is.null(gals$preassure_factor)) gals$preassure_factor <- 1
+  gals
+}
+
+print.gals <- function(x){
+  params <- vapply(x, function(x){paste0(rlang::quo_label(x), collapse = ", ")}, character(1))
+  vals <- paste0(format(names(x)), " -> ", params, "\n")
+  cat(vals, sep="")
+}

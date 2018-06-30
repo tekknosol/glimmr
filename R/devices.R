@@ -1,6 +1,7 @@
 
 
 preprocess_chamber <- function(conc, meta, device){
+  device <- validate(device)
   chamber_diagnostic(conc, meta, device)
   hmr_data <- dplyr::tibble(
     spot = NA, day = NA, rep = NA, start = NA, V = NA, A = NA, Time = NA
@@ -69,13 +70,16 @@ preprocess_chamber <- function(conc, meta, device){
 #' Calculate gasfluxes from dynamic chamber measurement
 #'
 #' `process_losgatos()`and `process_gasmet()` are special cases of the general
-#' `process_chamber()`.
+#' `process_chamber()` with preconfigured settings. See [gals_losgatos()] and
+#' [gals_gasmet()] for details.
 #'
 #' @param data Data frame. Recorded data from device.
 #' @param meta Data frame. Metadata containing required informations.
-#' @param analyzer Object created with gals().
-#' @param pre If FALSE (the default), flux processing will be executed. If TRUE flux
-#'   processing will be skipped and preprocessed data frame will be returned.
+#' @param analyzer Set of setup mappings created by [gals()]. The specified name
+#'   value pairs will override default settings.
+#' @param pre If FALSE (the default), flux processing will be executed. If TRUE
+#'   flux processing will be skipped and preprocessed data frame will be
+#'   returned.
 #'
 #' @return A data frame.
 #' @export

@@ -4,10 +4,10 @@
 \alias{gals_losgatos}
 \title{LosGatos setup}
 \usage{
-gals_losgatos()
+gals_losgatos(.default = TRUE)
 }
 \description{
-Explicitly create LosGatos setup. Usually you will not call these
+Explicitly create LosGatos setup. Usually you will not call this
 function, but will instead use the wrapper [process_losgatos()]
 }
 \section{Definition}{
@@ -20,6 +20,8 @@ losgatos uses the following parameters (fixed parameters are in bold):
   \item \strong{preassure} = GasP_torr
   \item \strong{preassure_factor} = 1.33322
   \item \strong{temperature} = AmbT_C
+  \item manual_temperature = 
+  \item offset = 0
   \item duration_count = FALSE
   \item spot = spot
   \item day = day
@@ -29,5 +31,6 @@ losgatos uses the following parameters (fixed parameters are in bold):
   \item V = 0.01461
   \item A = 0.098
 }
+Learn more about these definitions in \code{vignette("gals")}
 }
 

@@ -1,0 +1,64 @@
+---
+title: "Gas analyzer setup"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette summarises the options for setting up options specified with gals().
+
+## Gas analyzer
+  
+  * **time_stamp** Column containing a timestamp.
+  
+  * **conc_columns** A named vector declaring the columns containing the actal mixing rations. E.g. `c(CO2  = "CO2")`.
+  
+  * **preassure** Column containing the atmospheric preasure in mbar. 
+  
+  * **preassure_factor** If preasure is provided in a different unit than mbar, a conversion factor can be specified. 
+  
+  * **temperature** Column containing the temperature in °C
+
+## Meta data
+
+  * **manual_temperature** Column conatining an additional measured temperature.
+    If specified, the `temperature` value is ommited. 
+  
+  * **offset** (Default = 0). Column containing the number of datapoints skipped at the beginning of the  data chunk (e.g. `offset`). 
+  
+    Alternatively a single number applied as offset to all measurements (e.g. `2`).
+  
+  * **duration_count** If TRUE, `end` is determined by the number of datapoints 
+    within each measurement. If FALSE, `end` is treated as duration or point in time.  
+  
+  * **spot** (Default = "spot"). Column containing the ID of the measurement location. 
+  
+  * **day** (Default = "day"). Column containing the day of measurement. Format: "YYYY-MM-DD".
+  
+  * **start** (Default = "start"). Column containing the start of measurement. Format: "HH:MM" or "HH:MM:SS"
+  
+  * **end** (Default = "end"). Column containing the end of measurement. There are several options:
+  
+    Point in Time. Format: "HH:MM" or "HH:MM:SS" (e.g. `"13:43"`). 
+    
+    Duration in minutes (e.g. `5`).
+    
+    Number of Datapoints regardless of the effectively elapsed time (e.g. `10`).
+    This behaviour is controlled by `duration_count`.
+    
+    Alternatively a single number treated as Duration or Number of Datapoints for all measurements (e.g. `5`, behaviour is again controlled by `duration_count`).
+  
+  * **trimmer** A function to trim the intervall between `start` and `end`. See `trim_time()` for details.
+
+## Chamber
+ * **V** Volume of the chamber.
+ * **A** Area of the chamber.

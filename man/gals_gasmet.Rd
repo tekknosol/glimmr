@@ -4,10 +4,10 @@
 \alias{gals_gasmet}
 \title{GASMET setup}
 \usage{
-gals_gasmet()
+gals_gasmet(.default = TRUE)
 }
 \description{
-Explicitly create LosGatos setup. Usually you will not call these
+Explicitly create LosGatos setup. Usually you will not call this
   function, but will instead use the wrapper [process_gasmet()]
 }
 \section{Definition}{
@@ -21,7 +21,8 @@ gasmet uses the following parameters (fixed parameters are in bold):
   \item \strong{preassure_factor} = 1
   \item \strong{temperature} = NA
   \item manual_temperature = temp
-  \item duration_count = TRUE
+  \item offset = 0
+  \item \strong{duration_count} = TRUE
   \item spot = spot
   \item day = day
   \item start = start
@@ -30,5 +31,6 @@ gasmet uses the following parameters (fixed parameters are in bold):
   \item V = 0.01461
   \item A = 0.098
 }
+Learn more about these definitions in \code{vignette("gals")}
 }
 

@@ -4,50 +4,13 @@
 \alias{gals}
 \title{Gas analyzer setup}
 \usage{
-gals(name = "custom", fixed_params = c(), time_stamp = NULL,
-  conc_columns = NULL, preassure = NULL, preassure_factor = 1,
-  temperature = NULL, manual_temperature = NULL, duration_count = FALSE,
-  spot = "spot", day = "day", start = "start", end = "end",
-  trimmer = NULL, V = 0.01461, A = 0.098)
+gals(..., .default = FALSE)
 }
 \arguments{
-\item{name}{Name of device. Defaults to "custom"}
+\item{...}{List of name value pairs to setup the gasanalyzer.}
 
-\item{fixed_params}{Named vector.}
-
-\item{time_stamp}{Character vector. Value will be used as the column in conc
-containing the timestamp.}
-
-\item{conc_columns}{A named character vector. Values will be used to extract
-ppm data from conc. E.g. c(CO2 = "CO2").}
-
-\item{preassure}{Character}
-
-\item{preassure_factor}{Numeric value to convert preassure to mbar.}
-
-\item{temperature}{Character}
-
-\item{manual_temperature}{Character}
-
-\item{duration_count}{Is `end` given as time information or number of
-datapoints? If FALSE (the default), `end` will be interpreted as Time or
-duration in minutes. If TRUE, `end` will be interpreted as number of
-datapoints per chamber application.}
-
-\item{spot}{Character.}
-
-\item{day}{Character.}
-
-\item{start}{Character.}
-
-\item{end}{Character.}
-
-\item{trimmer}{NULL or function. Function is used to modify interval between
-`start` and `end`.}
-
-\item{V}{Numeric. Volume of used chamber.}
-
-\item{A}{Numeric. Area of used chamber.}
+\item{.default}{If TRUE, default settings are used in addition to the passed
+ones. Useful to abbreviate the function call.}
 }
 \value{
 A gals object.
@@ -55,3 +18,27 @@ A gals object.
 \description{
 Gas analyzer setup
 }
+\section{Definition}{
+
+custom uses the following parameters (fixed parameters are in bold):
+\itemize{
+  \item name = custom
+  \item time_stamp = 
+  \item conc_columns = 
+  \item preassure = 
+  \item preassure_factor = 1
+  \item temperature = 
+  \item manual_temperature = 
+  \item offset = 0
+  \item duration_count = FALSE
+  \item spot = spot
+  \item day = day
+  \item start = start
+  \item end = end
+  \item trimmer = 
+  \item V = 0.01461
+  \item A = 0.098
+}
+Learn more about these definitions in \code{vignette("gals")}
+}
+

@@ -33,7 +33,8 @@
 <meta property="og:title" content="Calculate gasfluxes from dynamic chamber measurement — process_chamber" />
 
 <meta property="og:description" content="`process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()`." />
+`process_chamber()` with preconfigured settings. See [gals_losgatos()] and
+[gals_gasmet()] for details." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,6 +81,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/gals.html">Gas analyzer setup</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -112,7 +125,8 @@
     <div class="ref-description">
     
     <p>`process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()`.</p>
+`process_chamber()` with preconfigured settings. See [gals_losgatos()] and
+[gals_gasmet()] for details.</p>
     
     </div>
 
@@ -120,9 +134,7 @@
 
 <span class='fu'>process_losgatos</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='kw'>analyzer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>process_gasmet</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='kw'>manual_temperature</span> <span class='kw'>=</span> <span class='st'>"temp"</span>, <span class='kw'>spot</span> <span class='kw'>=</span> <span class='st'>"spot"</span>,
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"start"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"wndw"</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='fl'>0.01461</span>, <span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>0.098</span>,
-  <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>process_gasmet</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='kw'>analyzer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,12 +149,14 @@
     </tr>
     <tr>
       <th>analyzer</th>
-      <td><p>Object created with gals().</p></td>
+      <td><p>Set of setup mappings created by [gals()]. The specified name
+value pairs will override default settings.</p></td>
     </tr>
     <tr>
       <th>pre</th>
-      <td><p>If FALSE (the default), flux processing will be executed. If TRUE flux
-processing will be skipped and preprocessed data frame will be returned.</p></td>
+      <td><p>If FALSE (the default), flux processing will be executed. If TRUE
+flux processing will be skipped and preprocessed data frame will be
+returned.</p></td>
     </tr>
     </table>
     

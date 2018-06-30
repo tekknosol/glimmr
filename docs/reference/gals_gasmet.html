@@ -32,7 +32,8 @@
 
 <meta property="og:title" content="GASMET setup — gals_gasmet" />
 
-<meta property="og:description" content="GASMET setup" />
+<meta property="og:description" content="Explicitly create LosGatos setup. Usually you will not call this
+  function, but will instead use the wrapper [process_gasmet()]" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -79,6 +80,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/gals.html">Gas analyzer setup</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -110,14 +123,16 @@
 
     <div class="ref-description">
     
-    <p>GASMET setup</p>
+    <p>Explicitly create LosGatos setup. Usually you will not call this
+  function, but will instead use the wrapper [process_gasmet()]</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>gals_gasmet</span>()</pre>
+    <pre class="usage"><span class='fu'>gals_gasmet</span>(<span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
         
-    <h2 class="hasAnchor" id="definition-"><a class="anchor" href="#definition-"></a>Definition:</h2>
+    <h2 class="hasAnchor" id="definition"><a class="anchor" href="#definition"></a>Definition</h2>
 
+    
     <p>gasmet uses the following parameters (fixed parameters are in bold):</p><ul>
 <li><p><strong>name</strong> = gasmet</p></li>
 <li><p><strong>time_stamp</strong> = datetime</p></li>
@@ -126,7 +141,8 @@
 <li><p><strong>preassure_factor</strong> = 1</p></li>
 <li><p><strong>temperature</strong> = NA</p></li>
 <li><p>manual_temperature = temp</p></li>
-<li><p>duration_count = TRUE</p></li>
+<li><p>offset = 0</p></li>
+<li><p><strong>duration_count</strong> = TRUE</p></li>
 <li><p>spot = spot</p></li>
 <li><p>day = day</p></li>
 <li><p>start = start</p></li>
@@ -134,7 +150,7 @@
 <li><p>trimmer =</p></li>
 <li><p>V = 0.01461</p></li>
 <li><p>A = 0.098</p></li>
-</ul>
+</ul><p>Learn more about these definitions in <code><a href='../articles/gals.html'>vignette("gals")</a></code></p>
     
 
   </div>
@@ -142,7 +158,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#definition-">Definition:</a></li>
+      <li><a href="#definition">Definition</a></li>
           </ul>
 
   </div>

@@ -70,7 +70,7 @@ analyzer <- gals(
   # define metadata structure
   spot = "spot",
   day = "day",
-  start = "start"
+  start = "start",
   end = "end",
   manual_temperature = "t_start",
   #define chamber dimensions

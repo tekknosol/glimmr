@@ -17,15 +17,18 @@ process_gasmet(data, meta, analyzer = NULL, pre = FALSE)
 
 \item{meta}{Data frame. Metadata containing required informations.}
 
-\item{analyzer}{Object created with gals().}
+\item{analyzer}{Set of setup mappings created by [gals()]. The specified name
+value pairs will override default settings.}
 
-\item{pre}{If FALSE (the default), flux processing will be executed. If TRUE flux
-processing will be skipped and preprocessed data frame will be returned.}
+\item{pre}{If FALSE (the default), flux processing will be executed. If TRUE
+flux processing will be skipped and preprocessed data frame will be
+returned.}
 }
 \value{
 A data frame.
 }
 \description{
 `process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()`.
+`process_chamber()` with preconfigured settings. See [gals_losgatos()] and
+[gals_gasmet()] for details.
 }

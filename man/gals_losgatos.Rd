@@ -8,28 +8,28 @@ gals_losgatos(.default = TRUE)
 }
 \description{
 Explicitly create LosGatos setup. Usually you will not call this
-function, but will instead use the wrapper [process_losgatos()]
+function, but will instead use the wrapper \link[=process_chamber]{process_losgatos()}.
 }
 \section{Definition}{
 
 losgatos uses the following parameters (fixed parameters are in bold):
-\itemize{
-  \item \strong{name} = losgatos
-  \item \strong{time_stamp} = Time
-  \item \strong{conc_columns} = [CH4]_ppm, [CO2]_ppm
-  \item \strong{preassure} = GasP_torr
-  \item \strong{preassure_factor} = 1.33322
-  \item \strong{temperature} = AmbT_C
-  \item manual_temperature = 
-  \item offset = 0
-  \item duration_count = FALSE
-  \item spot = spot
-  \item day = day
-  \item start = start
-  \item end = end
-  \item trimmer = trim_time
-  \item V = 0.01461
-  \item A = 0.098
+\preformatted{
+name = losgatos
+time_stamp = Time
+conc_columns = [CH4]_ppm, [CO2]_ppm
+preassure = GasP_torr
+preassure_factor = 1.33322
+temperature = AmbT_C
+manual_temperature = 
+offset = 0
+duration_count = FALSE
+spot = spot
+day = day
+start = start
+end = end
+trimmer = trim_time
+V = 0.01461
+A = 0.098
 }
 Learn more about these definitions in \code{vignette("gals")}
 }

@@ -21,23 +21,23 @@ Gas analyzer setup
 \section{Definition}{
 
 custom uses the following parameters (fixed parameters are in bold):
-\itemize{
-  \item name = custom
-  \item time_stamp = 
-  \item conc_columns = 
-  \item preassure = 
-  \item preassure_factor = 1
-  \item temperature = 
-  \item manual_temperature = 
-  \item offset = 0
-  \item duration_count = FALSE
-  \item spot = spot
-  \item day = day
-  \item start = start
-  \item end = end
-  \item trimmer = 
-  \item V = 0.01461
-  \item A = 0.098
+\preformatted{
+name = custom
+time_stamp = 
+conc_columns = 
+preassure = 
+preassure_factor = 1
+temperature = 
+manual_temperature = 
+offset = 0
+duration_count = FALSE
+spot = spot
+day = day
+start = start
+end = end
+trimmer = 
+V = 0.01461
+A = 0.098
 }
 Learn more about these definitions in \code{vignette("gals")}
 }

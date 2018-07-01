@@ -9,8 +9,8 @@ rd_gals <- function(name) {
       "", obj$name, " ",
       "uses the following parameters (fixed parameters are in bold):"
     ),
-    "\\itemize{",
-    paste0("  \\item ", param),
+    "\\preformatted{",
+    param,
     "}",
     "Learn more about these definitions in \\code{vignette(\"gals\")}"
   )
@@ -27,7 +27,7 @@ rd_gals_item <- function(x) {
         }
       } else {
         if(name != "fixed_params"){
-          paste0("\\strong{",name,"}", " = ", paste0(x[[name]], collapse=", "))
+          paste0("",name,"", " = ", paste0(x[[name]], collapse=", "))
         }
       }
     })

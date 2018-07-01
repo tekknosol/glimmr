@@ -33,7 +33,7 @@
 <meta property="og:title" content="LosGatos setup — gals_losgatos" />
 
 <meta property="og:description" content="Explicitly create LosGatos setup. Usually you will not call this
-function, but will instead use the wrapper [process_losgatos()]" />
+function, but will instead use the wrapper process_losgatos()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,18 +124,42 @@ function, but will instead use the wrapper [process_losgatos()]" />
     <div class="ref-description">
     
     <p>Explicitly create LosGatos setup. Usually you will not call this
-function, but will instead use the wrapper [process_losgatos()]</p>
+function, but will instead use the wrapper <a href='process_chamber.html'>process_losgatos()</a>.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>gals_losgatos</span>(<span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
         
+    <h2 class="hasAnchor" id="definition"><a class="anchor" href="#definition"></a>Definition</h2>
+
+    
+    <p>losgatos uses the following parameters (fixed parameters are in bold):</p><pre>
+name = losgatos
+time_stamp = Time
+conc_columns = [CH4]_ppm, [CO2]_ppm
+preassure = GasP_torr
+preassure_factor = 1.33322
+temperature = AmbT_C
+manual_temperature = 
+offset = 0
+duration_count = FALSE
+spot = spot
+day = day
+start = start
+end = end
+trimmer = trim_time
+V = 0.01461
+A = 0.098
+</pre><p>Learn more about these definitions in <code><a href='../articles/gals.html'>vignette("gals")</a></code></p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      
+      <li><a href="#definition">Definition</a></li>
+          </ul>
 
   </div>
 </div>

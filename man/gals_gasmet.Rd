@@ -13,23 +13,23 @@ Explicitly create LosGatos setup. Usually you will not call this
 \section{Definition}{
 
 gasmet uses the following parameters (fixed parameters are in bold):
-\itemize{
-  \item \strong{name} = gasmet
-  \item \strong{time_stamp} = datetime
-  \item \strong{conc_columns} = CH4, CO2, N2O
-  \item \strong{preassure} = Luftdruck
-  \item \strong{preassure_factor} = 1
-  \item \strong{temperature} = NA
-  \item manual_temperature = temp
-  \item offset = 0
-  \item \strong{duration_count} = TRUE
-  \item spot = spot
-  \item day = day
-  \item start = start
-  \item end = wndw
-  \item trimmer = 
-  \item V = 0.01461
-  \item A = 0.098
+\preformatted{
+name = gasmet
+time_stamp = datetime
+conc_columns = CH4, CO2, N2O
+preassure = Luftdruck
+preassure_factor = 1
+temperature = NA
+manual_temperature = temp
+offset = 0
+duration_count = TRUE
+spot = spot
+day = day
+start = start
+end = wndw
+trimmer = 
+V = 0.01461
+A = 0.098
 }
 Learn more about these definitions in \code{vignette("gals")}
 }

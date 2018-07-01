@@ -54,7 +54,7 @@ set_gals_default <- function(x){
 #' LosGatos setup
 #'
 #' Explicitly create LosGatos setup. Usually you will not call this
-#' function, but will instead use the wrapper [process_losgatos()]
+#' function, but will instead use the wrapper \link[=process_chamber]{process_losgatos()}.
 #'
 #' @export
 #'

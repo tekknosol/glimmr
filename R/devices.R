@@ -82,6 +82,7 @@ preprocess_chamber <- function(conc, meta, device){
 #'   returned.
 #'
 #' @return A data frame.
+#' @aliases process_losgatos
 #' @export
 #'
 process_chamber <- function(data = NULL, meta = NULL, analyzer = gals(), pre = T){

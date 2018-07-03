@@ -230,7 +230,7 @@ process_flux <- function(hmr_data, meta, device){
     gas <- names(device$conc_columns)[device$conc_columns == col]
     colname <- paste(gas, "mmol", sep="")
     flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
-      .id = c("day", gas, "rep", "spot"), methods =  c("robust linear"),
+      .id = c("day", gas, "spot", "rep"), methods =  c("robust linear"),
       select = NULL
     )
     flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=

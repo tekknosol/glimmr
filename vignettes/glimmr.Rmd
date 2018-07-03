@@ -58,10 +58,9 @@ meta_losgatos
 To use any arbitrary device all columns containing used information need to be
 defined.
 ```{r, eval=FALSE}
-process_chamber(
-  # specify data
-  losgatos, 
-  meta_losgatos,
+
+# setup analyzer
+analyzer <- gals(
   #define datastructure
   time_stamp = "Time", 
   conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"), 
@@ -71,12 +70,21 @@ process_chamber(
   # define metadata structure
   spot = "spot",
   day = "day",
-  start = "start"
+  start = "start",
   end = "end",
   manual_temperature = "t_start",
   #define chamber dimensions
   V = 0.01461, 
   A = 0.098
+)
+
+# compute fluxes
+process_chamber(
+  # specify data
+  data = losgatos, 
+  meta = meta_losgatos,
+  #specify analyzer
+  analyzer = analyzer
 )
 ```
 
@@ -90,5 +98,5 @@ process_gasmet(gasmet, meta_gasmet)
 ```
 
 While the start of single measurements is (usually) defined by a known point
-in time, the end can be defined in different ways. See `process_chamber()` for 
+in time, the end can be defined in different ways. See `proces_chamber()` for 
 details.

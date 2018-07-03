@@ -79,6 +79,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/gals.html">Gas analyzer setup</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -114,11 +126,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>inspect_gasmet</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>, <span class='kw'>manual_temperature</span> <span class='kw'>=</span> <span class='st'>"temp"</span>, <span class='kw'>spot</span> <span class='kw'>=</span> <span class='st'>"spot"</span>,
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"start"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"wndw"</span>)
+    <pre class="usage"><span class='fu'>inspect_gasmet</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>)
 
-<span class='fu'>inspect_losgatos</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>, <span class='kw'>manual_temperature</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>spot</span> <span class='kw'>=</span> <span class='st'>"spot"</span>,
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"start"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"end"</span>)</pre>
+<span class='fu'>inspect_losgatos</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,26 +141,6 @@
     <tr>
       <th>meta</th>
       <td><p>Data frame. Metadata containing required informations.</p></td>
-    </tr>
-    <tr>
-      <th>manual_temperature</th>
-      <td><p>Character.</p></td>
-    </tr>
-    <tr>
-      <th>spot</th>
-      <td><p>Character.</p></td>
-    </tr>
-    <tr>
-      <th>day</th>
-      <td><p>Character.</p></td>
-    </tr>
-    <tr>
-      <th>start</th>
-      <td><p>Character.</p></td>
-    </tr>
-    <tr>
-      <th>end</th>
-      <td><p>Character.</p></td>
     </tr>
     </table>
     

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Label axis for CH4 according to flux scale. — axis.flux.ch4 • glimmr</title>
+<title>GASMET setup — gals_gasmet • glimmr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Label axis for CH4 according to flux scale. — axis.flux.ch4" />
+<meta property="og:title" content="GASMET setup — gals_gasmet" />
 
-<meta property="og:description" content="Label axis for CH4 according to flux scale." />
+<meta property="og:description" content="Explicitly create LosGatos setup. Usually you will not call this
+  function, but will instead use the wrapper [process_gasmet()]" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -74,7 +75,22 @@
   </a>
 </li>
 <li>
+  <a href="../articles/glimmr.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/gals.html">Gas analyzer setup</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -100,35 +116,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Label axis for CH4 according to flux scale.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/ggplot_shortcuts.R'><code>R/ggplot_shortcuts.R</code></a></small>
-    <div class="hidden name"><code>axis.flux.ch4.Rd</code></div>
+    <h1>GASMET setup</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/gals.R'><code>R/gals.R</code></a></small>
+    <div class="hidden name"><code>gals_gasmet.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Label axis for CH4 according to flux scale.</p>
+    <p>Explicitly create LosGatos setup. Usually you will not call this
+  function, but will instead use the wrapper [process_gasmet()]</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>axis.flux.ch4</span>(<span class='no'>time</span>)</pre>
+    <pre class="usage"><span class='fu'>gals_gasmet</span>(<span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+        
+    <h2 class="hasAnchor" id="definition"><a class="anchor" href="#definition"></a>Definition</h2>
+
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>time</th>
-      <td><p>character; Timescale. See 'Details'.</p></td>
-    </tr>
-    </table>
+    <p>gasmet uses the following parameters (fixed parameters are in bold):</p><pre>
+name = gasmet
+time_stamp = datetime
+conc_columns = CH4, CO2, N2O
+preassure = Luftdruck
+preassure_factor = 1
+temperature = NA
+manual_temperature = temp
+offset = 0
+duration_count = TRUE
+spot = spot
+day = day
+start = start
+end = wndw
+trimmer = 
+V = 0.01461
+A = 0.098
+</pre><p>Learn more about these definitions in <code><a href='../articles/gals.html'>vignette("gals")</a></code></p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#definition">Definition</a></li>
+          </ul>
 
   </div>
 </div>

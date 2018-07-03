@@ -9,6 +9,7 @@ reference:
   - '`read_gasmet`'
   - '`read_losgatos`'
   - '`inspect_gasmet`'
+  - starts_with("gals")
 - title: BLE
   desc:  ~
   contents:
@@ -19,7 +20,7 @@ reference:
 - title: Helper functions
   desc:  ~
   contents:
-  - '`trimmers`'
+  - '`trimmer`'
   - '`day2sec`'
   - '`axis.flux.ch4`'
   - '`axis.flux.co2`'

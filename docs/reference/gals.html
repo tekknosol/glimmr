@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate Henry's constant — kH • glimmr</title>
+<title>Gas analyzer setup — gals • glimmr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Calculate Henry's constant — kH" />
+<meta property="og:title" content="Gas analyzer setup — gals" />
 
-<meta property="og:description" content="Calculate Henry's constant" />
+<meta property="og:description" content="Gas analyzer setup" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -74,7 +74,22 @@
   </a>
 </li>
 <li>
+  <a href="../articles/glimmr.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/gals.html">Gas analyzer setup</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -100,43 +115,58 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate Henry's constant</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/utility_functions.R'><code>R/utility_functions.R</code></a></small>
-    <div class="hidden name"><code>kH.Rd</code></div>
+    <h1>Gas analyzer setup</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/gals.R'><code>R/gals.R</code></a></small>
+    <div class="hidden name"><code>gals.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Calculate Henry's constant</p>
+    <p>Gas analyzer setup</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>kH</span>(<span class='no'>t</span>, <span class='kw'>gas</span> <span class='kw'>=</span> <span class='st'>"co2"</span>)</pre>
+    <pre class="usage"><span class='fu'>gals</span>(<span class='no'>...</span>, <span class='kw'>.default</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>t</th>
-      <td><p>numeric; temperature °C</p></td>
+      <th>...</th>
+      <td><p>List of name value pairs to setup the gasanalyzer.</p></td>
     </tr>
     <tr>
-      <th>gas</th>
-      <td><p>character; Gas to calculate kH for. See 'Details'.</p></td>
+      <th>.default</th>
+      <td><p>If TRUE, default settings are used in addition to the passed
+ones. Useful to abbreviate the function call.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Henry's constant</p>
+    <p>A gals object.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="definition"><a class="anchor" href="#definition"></a>Definition</h2>
 
-    <p>Currently these gases are supported:</p>
-<p></p><ul>
-<li><p>CO_2</p></li>
-<li><p>CH_4</p></li>
-</ul>
+    
+    <p>custom uses the following parameters (fixed parameters are in bold):</p><pre>
+name = custom
+time_stamp = 
+conc_columns = 
+preassure = 
+preassure_factor = 1
+temperature = 
+manual_temperature = 
+offset = 0
+duration_count = FALSE
+spot = spot
+day = day
+start = start
+end = end
+trimmer = 
+V = 0.01461
+A = 0.098
+</pre><p>Learn more about these definitions in <code><a href='../articles/gals.html'>vignette("gals")</a></code></p>
     
 
   </div>
@@ -147,7 +177,7 @@
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#definition">Definition</a></li>
           </ul>
 
   </div>

@@ -125,8 +125,7 @@ get_losgatos_files <- function(path) {
 #' @return A series of plots
 #' @export
 #'
-inspect_gasmet <- function(fluxdata, meta, manual_temperature = "temp", spot = "spot", day = "day",
-                           start = "start", end = "wndw") {
+inspect_gasmet <- function(fluxdata, meta) {
   CO2mmol <- NULL
   CH4mmol <- NULL
   N2Ommol <- NULL
@@ -140,20 +139,22 @@ inspect_gasmet <- function(fluxdata, meta, manual_temperature = "temp", spot = "
 #' @rdname inspect_gasmet
 #' @export
 #'
-inspect_losgatos <- function(fluxdata, meta, manual_temperature = NA, spot = "spot", day = "day",
-                             start = "start", end = "end") {
+inspect_losgatos <- function(fluxdata, meta) {
   CO2mmol <- NULL
   CH4mmol <- NULL
-  df <- process_losgatos(fluxdata, meta, manual_temperature = NA, spot = "spot", day = "day",
-                         start = "start", end = "end", pre = TRUE)
+  df <- process_losgatos(fluxdata, meta, pre = TRUE)
   df <- df %>% tidyr::gather(key = "gas", value = "concentration", CO2mmol,
     CH4mmol)
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
 
-inspect_chamber <- function(fluxdata, meta, conc_columns, preassure, temp){
-  df <- process_chamber(fluxdata, meta, conc_columns, preassure, temp, pre = TRUE)
+inspect_chamber <- function(fluxdata, meta, analyzer = gals()){
+
+  df <- process_chamber(fluxdata, meta, analyzer = analyzer, pre = TRUE)
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", dplyr::ends_with("mmol"))
+  inspect_fluxdata(df)
+  invisible(fluxdata)
 }
 
 inspect_fluxdata <- function(df) {
@@ -177,6 +178,13 @@ ppm2conc <- function(ppm, temp, pmbar){
   conc <- ppm * 1e-6 * (pmbar * 100) / (8.314 *(temp + 273.15)) * 1000
 }
 
+chamber_offset <- function(device, df, meta){
+  if (is.numeric(device$offset)){
+    df[(device$offset+1):length(rownames(df)),]
+  } else {
+    df[(meta[[device$offset]]+1):length(rownames(df)),]
+  }
+}
 
 parse_end <- function(data, device, start, meta){
   if (device$duration_count){
@@ -213,10 +221,9 @@ parse_var <- function(conc, meta, x){
 process_flux <- function(hmr_data, meta, device){
   start <- NULL
   flux <- tibble::tibble(
-    date = lubridate::ymd(meta$day),
-    site = hmr_data$spot,
-    begin =
-      hmr_data %>% dplyr::pull(start)
+    date = lubridate::ymd(meta[[device$day]]),
+    site = meta[[device$spot]],
+    begin = lubridate::ymd_hms(paste(meta[[device$day]], meta[[device$start]]))
   )
 
   for(col in device$conc_column){
@@ -224,7 +231,7 @@ process_flux <- function(hmr_data, meta, device){
     colname <- paste(gas, "mmol", sep="")
     flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
       .id = c("day", gas, "rep", "spot"), methods =  c("robust linear"),
-      select = "RF2011"
+      select = NULL
     )
     flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=
       flux_tmp$robust.linear.f0 * 24, !!paste(gas, "flux", "p", sep = "_") :=
@@ -236,42 +243,6 @@ process_flux <- function(hmr_data, meta, device){
 
 
 
-#' Functions to modify interval between start and end of chamber deployment
-#'
-#' These functions are used to modify the measurement interval.
-#'
-#' `trim_time()` increases start of interval to the nearest minute and
-#'  decreases end of interval to the nearest minute.
-#'
-#'
-#' @param interval Intervall of chamber deployment. Created with
-#'   \code{\link[lubridate]{interval}}.
-#'
-#' @return Modified interval
-#'
-#' @examples
-#' library(lubridate)
-#' start <- ymd_hm("2018-06-25 12:13")
-#' end <- ymd_hm("2018-06-25 12:18")
-#' int <- interval(start, end)
-#'
-#' int
-#' trim_time(int)
-#' @name trimmers
-NULL
-
-#' @rdname trimmers
-#' @export
-trim_time <- function(interval){
-  if(missing(interval)){return(NA)}
-  lubridate::int_start(interval) <- lubridate::ceiling_date(lubridate::int_start(interval), "minute",
-                          change_on_boundary = TRUE
-  )
-  lubridate::int_end(interval) <- lubridate::floor_date(lubridate::int_end(interval), "minute")
-  return(interval)
-}
-
-
 chamber_diagnostic <- function(conc, meta, device){
   message("Processing ", device$name, " data.")
   if (device$duration_count & is.numeric(device$end)){
@@ -281,7 +252,7 @@ chamber_diagnostic <- function(conc, meta, device){
       message("End of interval determined by number of observations. Count = column ", device$end)
     }
   }
-  if (!is.na(device$manual_temperature)){
+  if (!is.null(device$manual_temperature)){
     message("Using temperature from meta file. Column = ", device$manual_temperature)
   }
 

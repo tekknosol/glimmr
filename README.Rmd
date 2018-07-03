@@ -27,8 +27,9 @@ The model fitting for the different gas species is done with the `gasfluxes` pac
 
 Furthermore `glimmr` contains functions to calculate gasfluxes with the 'Boundary Layer Equation' (BLE). 
 
-To calculate gasfluxes from high frequency chamber measurements, glimmr supports two devices with two `read_`, `process_` and `inspect_` functions:
+To calculate gasfluxes from high frequency chamber measurements, glimmr offers a cusomizable system of gas analyzer definitions (`gals()`), as well as two preconfigured devices with `read_`, `process_` and `inspect_` functions:
 
+* `process_chamber()` & `inspect_chamber()`: custom devices
 * `read_gasmet()`, `process_gasmet()` & `inspect_gasmet()`: GASMET
 * `read_losgatos()`, `process_losgatos()` & `inspect_losgatos()`: LosGatos
 

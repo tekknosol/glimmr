@@ -221,10 +221,9 @@ parse_var <- function(conc, meta, x){
 process_flux <- function(hmr_data, meta, device){
   start <- NULL
   flux <- tibble::tibble(
-    date = lubridate::ymd(meta$day),
-    site = hmr_data$spot,
-    begin =
-      hmr_data %>% dplyr::pull(start)
+    date = lubridate::ymd(meta[[device$day]]),
+    site = meta[[device$spot]],
+    begin = meta[[device$start]]
   )
 
   for(col in device$conc_column){
@@ -232,7 +231,7 @@ process_flux <- function(hmr_data, meta, device){
     colname <- paste(gas, "mmol", sep="")
     flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
       .id = c("day", gas, "rep", "spot"), methods =  c("robust linear"),
-      select = "RF2011"
+      select = NULL
     )
     flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=
       flux_tmp$robust.linear.f0 * 24, !!paste(gas, "flux", "p", sep = "_") :=

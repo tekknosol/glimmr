@@ -9,6 +9,7 @@
 * Added routines to read GASMET and LosGatos files from disk
 * Fix bug regarding wrong rep nr. in ids
 * Added inspect functions
+* add gals() concept
 
 # glimmr 0.1.0
 

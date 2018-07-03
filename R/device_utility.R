@@ -223,7 +223,7 @@ process_flux <- function(hmr_data, meta, device){
   flux <- tibble::tibble(
     date = lubridate::ymd(meta[[device$day]]),
     site = meta[[device$spot]],
-    begin = meta[[device$start]]
+    begin = lubridate::ymd_hms(paste(meta[[device$day]], meta[[device$start]]))
   )
 
   for(col in device$conc_column){

@@ -115,6 +115,7 @@ update.gals <- function(gal, gal2){
   return(gal)
 }
 
+#' @export
 is.gals <- function(x) inherits(x, "gals")
 
 validate <- function(x) UseMethod("validate")
@@ -126,6 +127,7 @@ validate.gals <- function(gals){
   gals
 }
 
+#' @export
 print.gals <- function(x){
   params <- vapply(x, function(x){paste0(rlang::quo_label(x), collapse = ", ")}, character(1))
   vals <- paste0(format(names(x)), " -> ", params, "\n")

@@ -6,6 +6,10 @@
 \usage{
 gals_losgatos(.default = TRUE)
 }
+\arguments{
+\item{.default}{If TRUE, default settings are used in addition to the passed
+ones. Useful to abbreviate the function call.}
+}
 \description{
 Explicitly create LosGatos setup. Usually you will not call this
 function, but will instead use the wrapper \link[=process_chamber]{process_losgatos()}.

@@ -126,12 +126,9 @@ get_losgatos_files <- function(path) {
 #' @export
 #'
 inspect_gasmet <- function(fluxdata, meta) {
-  CO2mmol <- NULL
-  CH4mmol <- NULL
-  N2Ommol <- NULL
   df <- process_gasmet(fluxdata, meta, pre = TRUE)
-  df <- df %>% tidyr::gather(key = "gas", value = "concentration", CO2mmol,
-    CH4mmol, N2Ommol)
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", .data$CO2mmol,
+    .data$CH4mmol, .data$N2Ommol)
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
@@ -140,11 +137,9 @@ inspect_gasmet <- function(fluxdata, meta) {
 #' @export
 #'
 inspect_losgatos <- function(fluxdata, meta) {
-  CO2mmol <- NULL
-  CH4mmol <- NULL
   df <- process_losgatos(fluxdata, meta, pre = TRUE)
-  df <- df %>% tidyr::gather(key = "gas", value = "concentration", CO2mmol,
-    CH4mmol)
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", .data$CO2ppm,
+    .data$CH4ppm)
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
@@ -152,7 +147,7 @@ inspect_losgatos <- function(fluxdata, meta) {
 inspect_chamber <- function(fluxdata, meta, analyzer = gals()){
 
   df <- process_chamber(fluxdata, meta, analyzer = analyzer, pre = TRUE)
-  df <- df %>% tidyr::gather(key = "gas", value = "concentration", dplyr::ends_with("mmol"))
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", dplyr::ends_with("ppm"))
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
@@ -167,6 +162,7 @@ inspect_fluxdata <- function(df) {
       ggplot2::aes(Time * 60, concentration)) +
       ggplot2::geom_point() +
       ggplot2::xlab("minutes") +
+      ggplot2::ylab("mixing ratio (ppm)") +
       ggplot2::theme_bw() +
       ggplot2::facet_grid(gas ~ spot + rep, scales = "free")
     )
@@ -189,11 +185,11 @@ chamber_offset <- function(device, df, meta){
 parse_end <- function(data, device, start, meta){
   if (device$duration_count){
     if (is.numeric(device$end)){
-      fl <- which(data %>% dplyr::pull(device$time_stamp)>start)[1] + device$end
+      fl <- which(data[[device$time_stamp]] > start)[1] + device$end
     } else {
-        fl <- which(data %>% dplyr::pull(device$time_stamp)>=start)[1] + (meta %>% dplyr::pull(device$end) - 1)
+        fl <- which(data[[device$time_stamp]] >=start)[1] + (meta[[device$end]] - 1)
       }
-    end <- data[fl,] %>% dplyr::pull(device$time_stamp)
+    end <- data[fl,][[device$time_stamp]]
   } else {
       if (grepl(":", meta$end)){
         end <- lubridate::ymd_hms(paste(lubridate::date(start), meta$end))
@@ -219,7 +215,6 @@ parse_var <- function(conc, meta, x){
 }
 
 process_flux <- function(hmr_data, meta, device){
-  start <- NULL
   flux <- tibble::tibble(
     date = lubridate::ymd(meta[[device$day]]),
     site = meta[[device$spot]],
@@ -228,7 +223,7 @@ process_flux <- function(hmr_data, meta, device){
 
   for(col in device$conc_column){
     gas <- names(device$conc_columns)[device$conc_columns == col]
-    colname <- paste(gas, "mmol", sep="")
+    colname <- paste(gas, "ppm", sep="")
     flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
       .id = c("day", gas, "spot", "rep"), methods =  c("robust linear"),
       select = NULL

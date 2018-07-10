@@ -56,6 +56,8 @@ set_gals_default <- function(x){
 #' Explicitly create LosGatos setup. Usually you will not call this
 #' function, but will instead use the wrapper \link[=process_chamber]{process_losgatos()}.
 #'
+#' @inheritParams gals
+#'
 #' @export
 #'
 #'
@@ -82,6 +84,8 @@ gals_losgatos <- function(.default = TRUE){
 #'
 #' Explicitly create LosGatos setup. Usually you will not call this
 #'   function, but will instead use the wrapper [process_gasmet()]
+#'
+#' @inheritParams gals
 #'
 #' @export
 #'
@@ -115,7 +119,6 @@ update.gals <- function(gal, gal2){
   return(gal)
 }
 
-#' @export
 is.gals <- function(x) inherits(x, "gals")
 
 validate <- function(x) UseMethod("validate")
@@ -128,7 +131,7 @@ validate.gals <- function(gals){
 }
 
 #' @export
-print.gals <- function(x){
+print.gals <- function(x, ...){
   params <- vapply(x, function(x){paste0(rlang::quo_label(x), collapse = ", ")}, character(1))
   vals <- paste0(format(names(x)), " -> ", params, "\n")
   cat(vals, sep="")

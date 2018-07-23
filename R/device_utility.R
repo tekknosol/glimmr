@@ -43,17 +43,18 @@ read_gasmet <- function(file) {
 #' Read a LosGatos file.
 #'
 #' @param path Path to a file or directory.
+#' @param format either "dmy" or "mdy".
 #' @param clean_dir If TRUE directory is cleaned
 #' @param ... additional parameters passed to read_csv()
 #'
 #' @return A data frame.
 #' @export
 #'
-read_losgatos <- function(path, clean_dir = FALSE, ...) {
+read_losgatos <- function(path, format = "dmy", clean_dir = FALSE, ...) {
   if (utils::file_test("-f", path)) {
     lg <- read_losgatos_file(path)
   } else {
-    lg <- read_losgatos_dir(path, clean_dir)
+    lg <- read_losgatos_dir(path, format, clean_dir)
   }
 
   return(lg)
@@ -66,26 +67,32 @@ read_losgatos_file <- function(path, ...) {
   return(lg)
 }
 
-read_losgatos_dir <- function(path, clean_dir = FALSE) {
+read_losgatos_dir <- function(path, format = "dmy", clean_dir = FALSE) {
 
-  Time <- NULL
-  `[CH4]_ppm` <- NULL
-  `[CO2]_ppm` <- NULL
-  GasP_torr <- NULL
-  AmbT_C <- NULL
-  . <- NULL
   files <- get_losgatos_files(path)
   date <- stringr::str_split(stringr::str_split(files[1], "micro_")[[1]][2],
     "_f")[[1]][1]
   message("read ", length(files), " files")
   suppressWarnings(
     suppressMessages(
-      complete <- lapply(files, function(x) {
-        lg <- readr::read_csv(x, skip = 1) %>%
-          dplyr::mutate(Time = lubridate::dmy_hms(Time)) %>%
-          dplyr::filter(!is.na(Time)) %>%
-          dplyr::filter_if(is.numeric, dplyr::all_vars(!is.na(.)))
-      })
+      switch(format,
+        dmy = {
+          complete <- lapply(files, function(x) {
+            lg <- readr::read_csv(x, skip = 1) %>%
+              dplyr::mutate(Time = lubridate::dmy_hms(.data$Time)) %>%
+              dplyr::filter(!is.na(.data$Time)) %>%
+              dplyr::filter_if(is.numeric, dplyr::all_vars(!is.na(.data$.)))
+          })
+        },
+        mdy ={
+          complete <- lapply(files, function(x) {
+            lg <- readr::read_csv(x, skip = 1) %>%
+              dplyr::mutate(Time = lubridate::mdy_hms(.data$Time)) %>%
+              dplyr::filter(!is.na(.data$Time)) %>%
+              dplyr::filter_if(is.numeric, dplyr::all_vars(!is.na(.data$.)))
+          })
+        }
+      )
     )
   )
 
@@ -94,8 +101,8 @@ read_losgatos_dir <- function(path, clean_dir = FALSE) {
   }
 
   complete <- dplyr::bind_rows(complete) %>%
-    dplyr::arrange(Time) %>%
-    dplyr::select(Time, `[CH4]_ppm`, `[CO2]_ppm`, GasP_torr, AmbT_C)
+    dplyr::arrange(.data$Time) %>%
+    dplyr::select(.data$Time, .data$`[CH4]_ppm`, .data$`[CO2]_ppm`, .data$GasP_torr, .data$AmbT_C)
 }
 
 clean_losgatos_dir <- function(path) {

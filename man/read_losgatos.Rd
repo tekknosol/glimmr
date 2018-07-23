@@ -4,10 +4,12 @@
 \alias{read_losgatos}
 \title{Read a LosGatos file.}
 \usage{
-read_losgatos(path, clean_dir = FALSE, ...)
+read_losgatos(path, format = "dmy", clean_dir = FALSE, ...)
 }
 \arguments{
 \item{path}{Path to a file or directory.}
+
+\item{format}{either "dmy" or "mdy".}
 
 \item{clean_dir}{If TRUE directory is cleaned}
 

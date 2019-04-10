@@ -18,7 +18,6 @@ RoxygenNote: 6.0.1.9000
 Imports:
     ggplot2,
     lubridate,
-    gasfluxes,
     dplyr,
     magrittr,
     readr,
@@ -27,6 +26,7 @@ Imports:
     tidyr,
     tibble,
     rlang,
+    broom,
     robust
 Suggests: 
     testthat,

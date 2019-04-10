@@ -23,7 +23,6 @@ Gas fLuxes and dynamIc chaMber MeasuRements
 ## Overview
 The `glimmr` package provides functions to convert high frequency concentration data
 obtained by (dynamic-) chamber measurements into gasfluxes. Data recorded with different devices can be processed automatically. The data is separated into chunks covering the single chamber applications and containing additional meta information (e.g. IDs, temperature...) provided by a metadata file.
-The model fitting for the different gas species is done with the `gasfluxes` package.
 
 Furthermore `glimmr` contains functions to calculate gasfluxes with the 'Boundary Layer Equation' (BLE). 
 

@@ -29,7 +29,7 @@ contains an ID of the spot location, time of the measurement start (and end) and
 maybe the chamber temperature.
 
 glimmr reads both datasets, slices the concentration data into chunks defined by
-the metadata and pases this to `gasfluxes::gasfluxes` for the actual flux 
+the metadata and fits linear and robust linear models (`robust::lmRob`) for the actual flux 
 calculation.
 
 The datastructure of the recorderd data can be widely defined, hence glimmr is 
@@ -98,5 +98,5 @@ process_gasmet(gasmet, meta_gasmet)
 ```
 
 While the start of single measurements is (usually) defined by a known point
-in time, the end can be defined in different ways. See `proces_chamber()` for 
+in time, the end can be defined in different ways. See `process_chamber()` for 
 details.

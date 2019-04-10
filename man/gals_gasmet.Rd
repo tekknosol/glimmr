@@ -20,7 +20,7 @@ gasmet uses the following parameters (fixed parameters are in bold):
 \preformatted{
 name = gasmet
 time_stamp = datetime
-conc_columns = CH4, CO2, N2O
+conc_columns = CO2, CH4, N2O
 preassure = Luftdruck
 preassure_factor = 1
 temperature = NA

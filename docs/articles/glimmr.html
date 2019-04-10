@@ -100,7 +100,7 @@
 <h2 class="hasAnchor">
 <a href="#approach" class="anchor"></a>Approach</h2>
 <p>During applications of dynamic chambers, typically two kinds of datasets are created: One continous dataset, provided by the gas analyzer, containing the gas mixing ratios and one metadataset with information about the single chamber applications. Typically this contains an ID of the spot location, time of the measurement start (and end) and maybe the chamber temperature.</p>
-<p>glimmr reads both datasets, slices the concentration data into chunks defined by the metadata and pases this to <code><a href="http://www.rdocumentation.org/packages/gasfluxes/topics/gasfluxes">gasfluxes::gasfluxes</a></code> for the actual flux calculation.</p>
+<p>glimmr reads both datasets, slices the concentration data into chunks defined by the metadata and fits linear and robust linear models (<code><a href="http://www.rdocumentation.org/packages/robust/topics/lmRob">robust::lmRob</a></code>) for the actual flux calculation.</p>
 <p>The datastructure of the recorderd data can be widely defined, hence glimmr is not restriced to a speceific device. Nevertheless, wrapper functions are included for GASMET and LosGatos gas analizers.</p>
 </div>
 <div id="read-data" class="section level2">
@@ -161,7 +161,7 @@ analyzer &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ga
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/process_chamber.html">process_losgatos</a></span>(losgatos, meta_losgatos)
 
 <span class="kw"><a href="../reference/process_chamber.html">process_gasmet</a></span>(gasmet, meta_gasmet)</code></pre></div>
-<p>While the start of single measurements is (usually) defined by a known point in time, the end can be defined in different ways. See <code>proces_chamber()</code> for details.</p>
+<p>While the start of single measurements is (usually) defined by a known point in time, the end can be defined in different ways. See <code><a href="../reference/process_chamber.html">process_chamber()</a></code> for details.</p>
 </div>
 </div>
   </div>

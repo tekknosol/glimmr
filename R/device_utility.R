@@ -169,7 +169,7 @@ inspect_fluxdata <- function(df) {
       ggplot2::aes(Time * 60, concentration)) +
       ggplot2::geom_point() +
       ggplot2::geom_smooth(method = robust::lmRob, se = FALSE, ggplot2::aes(linetype = "RLM"), color="black", size = .5) +
-      ggplot2::geom_smooth(method = lm, se = FALSE, ggplot2::aes(linetype = "LM"), color = "black", size = .5) +
+      ggplot2::geom_smooth(method = stats::lm, se = FALSE, ggplot2::aes(linetype = "LM"), color = "black", size = .5) +
       ggplot2::xlab("minutes") +
       ggplot2::ylab("mixing ratio (ppm)") +
       ggplot2::theme_bw() +
@@ -236,15 +236,15 @@ process_flux <- function(hmr_data, meta, device){
     flux <- flux %>%
       dplyr::left_join(
       fit_lm(hmr_data, device) %>%
-        dplyr::rename(site = spot, begin = start) %>%
-        dplyr::mutate(begin = lubridate::as_datetime(begin))
+        dplyr::rename(site = .data$spot, begin = .data$start) %>%
+        dplyr::mutate(begin = lubridate::as_datetime(.data$begin))
     ) %>%
       dplyr::left_join(
       fit_rlm(hmr_data, device) %>%
-        dplyr::rename(site = spot, begin = start) %>%
-        dplyr::mutate(begin = lubridate::as_datetime(begin))
+        dplyr::rename(site = .data$spot, begin = .data$start) %>%
+        dplyr::mutate(begin = lubridate::as_datetime(.data$begin))
     ) %>%
-      dplyr::arrange(date, gas, site)
+      dplyr::arrange(.data$date, .data$gas, .data$site)
   )
 
   # for(col in device$conc_column){
@@ -287,45 +287,45 @@ chamber_diagnostic <- function(conc, meta, device){
 fit_lm <- function(hmr_data, device){
   fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-    dplyr::group_by(gas, spot, rep)
+    dplyr::group_by(.data$gas, .data$spot, .data$rep)
 
   fit_data %>%
-    dplyr::group_map(~ broom::tidy(lm(conc~Time, data = .x), quick = T)) %>%
-    dplyr::filter(term == "Time") %>%
+    dplyr::group_map(~ broom::tidy(lm(conc ~ Time, data = .x), quick = T)) %>%
+    dplyr::filter(.data$term == "Time") %>%
     dplyr::left_join(
       fit_data %>%
-        dplyr::group_map(~ broom::glance(lm(conc~Time, data = .x), quick = T)) %>%
-        dplyr::select(LM_r2=r.squared)
+        dplyr::group_map(~ broom::glance(lm(conc ~ Time, data = .x), quick = T)) %>%
+        dplyr::select(LM_r2 = .data$r.squared)
     ) %>%
-    dplyr::mutate(estimate = estimate * device$V / device$A * 24) %>%
+    dplyr::mutate(estimate = .data$estimate * device$V / device$A * 24) %>%
     dplyr::left_join(
       fit_data %>%
-        dplyr::summarise(start = first(start)) %>%
+        dplyr::summarise(start = dplyr::first(.data$start)) %>%
         dplyr::ungroup()
     ) %>%
-    dplyr::rename(F_LM = estimate) %>%
-    dplyr::select(-term)
+    dplyr::rename(F_LM = .data$estimate) %>%
+    dplyr::select(-.data$term)
 }
 
 fit_rlm <- function(hmr_data, device){
   fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-    dplyr::group_by(gas, spot, rep) %>%
+    dplyr::group_by(.data$gas, .data$spot, .data$rep)
 
   fit_data %>%
-    dplyr::group_map(~ broom::tidy(robust::lmRob(conc~Time, data = .x), quick = T)) %>%
-    dplyr::filter(term == "Time") %>%
+    dplyr::group_map(~ broom::tidy(robust::lmRob(conc ~ Time, data = .x), quick = T)) %>%
+    dplyr::filter(.data$term == "Time") %>%
     dplyr::left_join(
       fit_data %>%
-        dplyr::group_map(~ broom::glance((robust::lmRob(conc~Time, data = .x)))) %>%
-        dplyr::select(RLM_r2 = r.squared)
+        dplyr::group_map(~ broom::glance((robust::lmRob(conc ~ Time, data = .x)))) %>%
+        dplyr::select(RLM_r2 = .data$r.squared)
     ) %>%
-    dplyr::mutate(estimate = estimate * device$V / device$A * 24) %>%
+    dplyr::mutate(estimate = .data$estimate * device$V / device$A * 24) %>%
     dplyr::left_join(
       fit_data %>%
-        dplyr::summarise(start = first(start)) %>%
+        dplyr::summarise(start = dplyr::first(.data$start)) %>%
         dplyr::ungroup()
     ) %>%
-    dplyr::rename(F_RLM = estimate) %>%
-    dplyr::select(-term)
+    dplyr::rename(F_RLM = .data$estimate) %>%
+    dplyr::select(-.data$term)
 }

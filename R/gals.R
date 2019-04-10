@@ -107,11 +107,15 @@ gals_gasmet <- function(.default = TRUE){
   if (.default){
     lg <- update(gals_default(), lg)
   }
+
   lg <- structure(lg[order(match(names(lg),.all_gals_params))], class="gals")
+
   lg
 }
 
-update.gals <- function(gal, gal2){
+#' @export
+update.gals <- function(object, gal2, ...){
+  gal <- object
   locked <- names(gal)[which(names(gal) %in% gal$fixed_params)]
   pos <- which(!names(gal2) %in% gal$fixed_params)
   gal2 <- gal2[pos]
@@ -121,8 +125,9 @@ update.gals <- function(gal, gal2){
 
 is.gals <- function(x) inherits(x, "gals")
 
-validate <- function(x) UseMethod("validate")
+validate <- function(gals) UseMethod("validate")
 
+#' @export
 validate.gals <- function(gals){
   if (is.null(gals$duration_count)) gals$duration_count <- FALSE
   if (is.null(gals$offset)) gals$offset <- 0

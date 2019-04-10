@@ -27,7 +27,8 @@ Imports:
     tibble,
     rlang,
     broom,
-    robust
+    robust,
+    stats
 Suggests: 
     testthat,
     knitr,

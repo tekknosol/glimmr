@@ -96,7 +96,7 @@ gals_gasmet <- function(.default = TRUE){
     fixed_params = c("name", "time_stamp", "conc_columns", "preassure", "temperature", "preassure_factor", "duration_count"),
     name = "gasmet",
     time_stamp = "datetime",
-    conc_columns = c(CH4 = "CH4", CO2 = "CO2", N2O = "N2O"),
+    conc_columns = c(CO2 = "CO2", CH4 = "CH4", N2O = "N2O"),
     preassure = "Luftdruck",
     temperature = NA,
     manual_temperature = "temp",

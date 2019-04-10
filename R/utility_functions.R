@@ -94,7 +94,7 @@ calc_kW <- function(ws, wt, gas = "CO2", model = "wann14") {
       })
     },
     cole98 = {
-      ifelse(is.na(ws), return(NA), n <- 0.67)
+      # ifelse(is.na(ws), return(NA), n <- 0.67)
       ifelse(ws > 3, n <- 0.5, n <- 0.67)
       kW <- switch(tolower(gas),
         co2 = {

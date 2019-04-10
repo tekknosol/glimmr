@@ -3,16 +3,10 @@
 preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
   device <- validate(device)
   chamber_diagnostic(conc, meta, device)
-  hmr_data <- dplyr::tibble(
-    spot = NA, day = NA, rep = NA, start = NA, V = NA, A = NA, Time = NA
-  )
-
-  for (col in device$conc_columns){
-    gas <- names(device$conc_columns)[device$conc_columns == col]
-    colname <- paste(gas, "ppm", sep="")
-    hmr_data <- hmr_data %>%
-      tibble::add_column(!!colname := NA, !!gas := NA)
-  }
+  # hmr_data <- dplyr::tibble(
+  #   spot = NA, day = NA, rep = NA, start = NA, V = NA, A = NA, Time = NA, Time2 = NA
+  # )
+  hmr_data <- dplyr::tibble()
 
   repcount <- data.frame(spot = unique(meta$spot), count = 0)
   for (i in 1:length(meta$spot)) {
@@ -27,7 +21,6 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
       FUN <- match.fun(device$trimmer)
       int <- FUN(int)
     }
-
 
     repcount[repcount$spot == meta[i, ][[device$spot]], ]$count <- repcount[repcount$spot == meta[i, ][[device$spot]], ]$count + 1
     a <- conc %>%
@@ -58,18 +51,19 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
     for (col in device$conc_columns){
       # colname <- paste("conc_", col, sep="")
       gas <- names(device$conc_columns)[device$conc_columns == col]
-      colname <- paste(gas, "ppm", sep="")
+      colname <- paste0(gas)
       if (inspect == TRUE){
         value <- a[[col]]
       } else {
         value <- ppm2conc(a %>% dplyr::pull(!!col), temp_value, preassure_value)
       }
       hmr_data_tmp <- hmr_data_tmp %>%
-        tibble::add_column(!!colname := value, !!gas := gas)
+        tibble::add_column(!!colname := value)
     }
     hmr_data <- rbind(hmr_data, hmr_data_tmp)
   }
-  hmr_data <- hmr_data[-1, ]
+  # hmr_data <- hmr_data[-1, ]
+  hmr_data
 }
 
 #' Calculate gasfluxes from dynamic chamber measurement

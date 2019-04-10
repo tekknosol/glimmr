@@ -134,8 +134,8 @@ get_losgatos_files <- function(path) {
 #'
 inspect_gasmet <- function(fluxdata, meta) {
   df <- process_gasmet(fluxdata, meta, pre = TRUE)
-  df <- df %>% tidyr::gather(key = "gas", value = "concentration", .data$CO2mmol,
-    .data$CH4mmol, .data$N2Ommol)
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", .data$CO2,
+    .data$CH4, .data$N2O)
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
@@ -145,8 +145,8 @@ inspect_gasmet <- function(fluxdata, meta) {
 #'
 inspect_losgatos <- function(fluxdata, meta) {
   df <- process_losgatos(fluxdata, meta, pre = TRUE)
-  df <- df %>% tidyr::gather(key = "gas", value = "concentration", .data$CO2ppm,
-    .data$CH4ppm)
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", .data$CO2,
+    .data$CH4)
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
@@ -168,10 +168,14 @@ inspect_fluxdata <- function(df) {
     print(ggplot2::ggplot(df %>% dplyr::filter(spot == i),
       ggplot2::aes(Time * 60, concentration)) +
       ggplot2::geom_point() +
+      ggplot2::geom_smooth(method = robust::lmRob, se = FALSE, ggplot2::aes(linetype = "RLM"), color="black", size = .5) +
+      ggplot2::geom_smooth(method = lm, se = FALSE, ggplot2::aes(linetype = "LM"), color = "black", size = .5) +
       ggplot2::xlab("minutes") +
       ggplot2::ylab("mixing ratio (ppm)") +
       ggplot2::theme_bw() +
-      ggplot2::facet_grid(gas ~ spot + rep, scales = "free")
+      ggplot2::facet_grid(gas ~ spot + rep, scales = "free")+
+      ggplot2::scale_linetype_manual(name="Model type", values=c(1, 4))
+
     )
   }
   grDevices::devAskNewPage(ask = FALSE)
@@ -228,17 +232,32 @@ process_flux <- function(hmr_data, meta, device){
     begin = lubridate::ymd_hms(paste(meta[[device$day]], meta[[device$start]]))
   )
 
-  for(col in device$conc_column){
-    gas <- names(device$conc_columns)[device$conc_columns == col]
-    colname <- paste(gas, "ppm", sep="")
-    flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
-      .id = c("day", gas, "spot", "rep"), methods =  c("robust linear"),
-      select = NULL
-    )
-    flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=
-      flux_tmp$robust.linear.f0 * 24, !!paste(gas, "flux", "p", sep = "_") :=
-      flux_tmp$robust.linear.f0.p)
-  }
+  suppressMessages(
+    flux <- flux %>%
+      dplyr::left_join(
+      fit_lm(hmr_data, device) %>%
+        dplyr::rename(site = spot, begin = start) %>%
+        dplyr::mutate(begin = lubridate::as_datetime(begin))
+    ) %>%
+      dplyr::left_join(
+      fit_rlm(hmr_data, device) %>%
+        dplyr::rename(site = spot, begin = start) %>%
+        dplyr::mutate(begin = lubridate::as_datetime(begin))
+    ) %>%
+      dplyr::arrange(date, gas, site)
+  )
+
+  # for(col in device$conc_column){
+  #   gas <- names(device$conc_columns)[device$conc_columns == col]
+  #   colname <- paste(gas, "ppm", sep="")
+  #   flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
+  #     .id = c("day", gas, "spot", "rep"), methods =  c("robust linear"),
+  #     select = NULL
+  #   )
+  #   flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=
+  #     flux_tmp$robust.linear.f0 * 24, !!paste(gas, "flux", "p", sep = "_") :=
+  #     flux_tmp$robust.linear.f0.p)
+  # }
 
   return(flux)
 }
@@ -262,4 +281,55 @@ chamber_diagnostic <- function(conc, meta, device){
   if (length(cols) > 0){
     stop("Column(s) ", paste(device$conc_columns[cols], collapse = " "), " not found.", call. = FALSE)
   }
+}
+
+
+fit_lm <- function(hmr_data, device){
+  hmr_data %>%
+    tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
+    dplyr::group_by(gas, spot, rep) %>%
+    dplyr::group_map(~ broom::tidy(lm(conc~Time, data = .x), quick = T)) %>%
+    dplyr::filter(term == "Time") %>%
+    dplyr::left_join(
+      hmr_data %>%
+        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
+        dplyr::group_by(spot, rep,gas) %>%
+        dplyr::group_map(~ broom::glance(lm(conc~Time, data = .x), quick = T)) %>%
+        dplyr::select(LM_r2=r.squared)
+    ) %>%
+    dplyr::mutate(estimate = estimate * device$V / device$A * 24) %>%
+    dplyr::left_join(
+      hmr_data %>%
+        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
+        dplyr::group_by(gas, spot, rep) %>%
+        dplyr::summarise(start = first(start)) %>%
+        dplyr::ungroup()
+    ) %>%
+    dplyr::rename(F_LM = estimate) %>%
+    dplyr::select(-term)
+}
+
+fit_rlm <- function(hmr_data, device){
+  hmr_data %>%
+    tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
+    dplyr::group_by(gas, spot, rep) %>%
+    dplyr::group_map(~ broom::tidy(robust::lmRob(conc~Time, data = .x), quick = T)) %>%
+    dplyr::filter(term == "Time") %>%
+    dplyr::left_join(
+      hmr_data %>%
+        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
+        dplyr::group_by(spot, rep,gas) %>%
+        dplyr::group_map(~ broom::glance((robust::lmRob(conc~Time, data = .x)))) %>%
+        dplyr::select(RLM_r2 = r.squared)
+    ) %>%
+    dplyr::mutate(estimate = estimate * device$V / device$A * 24) %>%
+    dplyr::left_join(
+      hmr_data %>%
+        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
+        dplyr::group_by(gas, spot, rep) %>%
+        dplyr::summarise(start = first(start)) %>%
+        dplyr::ungroup()
+    ) %>%
+    dplyr::rename(F_RLM = estimate) %>%
+    dplyr::select(-term)
 }

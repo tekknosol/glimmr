@@ -2,7 +2,7 @@
 title: "Compute gasfluxes from dynamic chamber measurements or BLE"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Compute gasfluxes from dynamic chamber measurements or BLE}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

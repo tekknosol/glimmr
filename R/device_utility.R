@@ -285,23 +285,21 @@ chamber_diagnostic <- function(conc, meta, device){
 
 
 fit_lm <- function(hmr_data, device){
-  hmr_data %>%
+  fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-    dplyr::group_by(gas, spot, rep) %>%
+    dplyr::group_by(gas, spot, rep)
+
+  fit_data %>%
     dplyr::group_map(~ broom::tidy(lm(conc~Time, data = .x), quick = T)) %>%
     dplyr::filter(term == "Time") %>%
     dplyr::left_join(
-      hmr_data %>%
-        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-        dplyr::group_by(spot, rep,gas) %>%
+      fit_data %>%
         dplyr::group_map(~ broom::glance(lm(conc~Time, data = .x), quick = T)) %>%
         dplyr::select(LM_r2=r.squared)
     ) %>%
     dplyr::mutate(estimate = estimate * device$V / device$A * 24) %>%
     dplyr::left_join(
-      hmr_data %>%
-        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-        dplyr::group_by(gas, spot, rep) %>%
+      fit_data %>%
         dplyr::summarise(start = first(start)) %>%
         dplyr::ungroup()
     ) %>%
@@ -310,23 +308,21 @@ fit_lm <- function(hmr_data, device){
 }
 
 fit_rlm <- function(hmr_data, device){
-  hmr_data %>%
+  fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
     dplyr::group_by(gas, spot, rep) %>%
+
+  fit_data %>%
     dplyr::group_map(~ broom::tidy(robust::lmRob(conc~Time, data = .x), quick = T)) %>%
     dplyr::filter(term == "Time") %>%
     dplyr::left_join(
-      hmr_data %>%
-        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-        dplyr::group_by(spot, rep,gas) %>%
+      fit_data %>%
         dplyr::group_map(~ broom::glance((robust::lmRob(conc~Time, data = .x)))) %>%
         dplyr::select(RLM_r2 = r.squared)
     ) %>%
     dplyr::mutate(estimate = estimate * device$V / device$A * 24) %>%
     dplyr::left_join(
-      hmr_data %>%
-        tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-        dplyr::group_by(gas, spot, rep) %>%
+      fit_data %>%
         dplyr::summarise(start = first(start)) %>%
         dplyr::ungroup()
     ) %>%

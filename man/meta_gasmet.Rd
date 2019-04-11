@@ -10,7 +10,6 @@
   \item{day}{Day of the measurement}
   \item{start}{}
   \item{temp}{}
-  \item{wndw}{}
   \item{offset}{}
 }}
 \usage{

@@ -4,7 +4,7 @@
 
 gals_default_vals <- c(name = "custom", fixed_params = c(), time_stamp = NULL,
                       conc_columns = NULL, preassure = NULL, preassure_factor = 1,
-                      temperature = NULL, manual_temperature = NULL, offset = 0, duration_count = FALSE,
+                      temperature = NULL, manual_temperature = NULL, offset = "0:0", duration_count = FALSE,
                       spot = "spot", day = "day", start = "start", end = "end",
                       trimmer = NULL, V = 0.01461, A = 0.098)
 
@@ -38,7 +38,7 @@ gals_default <- function(){
   gals(
     name = "custom", fixed_params = c(), time_stamp = NULL,
     conc_columns = NULL, preassure = NULL, preassure_factor = 1,
-    temperature = NULL, manual_temperature = NULL, offset = 0, duration_count = FALSE,
+    temperature = NULL, manual_temperature = NULL, offset = "0:0", duration_count = FALSE,
     spot = "spot", day = "day", start = "start", end = "end",
     trimmer = NULL, V = 0.01461, A = 0.098
   )
@@ -71,7 +71,8 @@ gals_losgatos <- function(.default = TRUE){
     preassure = "GasP_torr",
     preassure_factor = 1.33322,
     temperature = "AmbT_C",
-    trimmer = trim_time
+    trimmer = trim_time,
+    offset = "offset"
   )
 
   if (.default){

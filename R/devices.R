@@ -24,7 +24,8 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 
     offset <- meta[i,][[device$offset]] %>% stringr::str_split(":")
     offset <- as.numeric(offset[[1]])
-    a <- conc[(which(conc[[device$time_stamp]] == start)[1]+(offset[1])):(which(conc[[device$time_stamp]] == end)[1]-(offset[1])),]
+    datapoints <- which(conc[[device$time_stamp]] >= start & conc[[device$time_stamp]] <= end)
+    a <- conc[datapoints[(1+offset[1]):(length(datapoints)-offset[2])],]
 
     if (length(rownames(a)) == 0){
       warning(call. = FALSE, "meta entry ", i, " skipped.",

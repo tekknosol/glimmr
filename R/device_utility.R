@@ -247,18 +247,6 @@ process_flux <- function(hmr_data, meta, device){
       dplyr::arrange(.data$date, .data$gas, .data$site)
   )
 
-  # for(col in device$conc_column){
-  #   gas <- names(device$conc_columns)[device$conc_columns == col]
-  #   colname <- paste(gas, "ppm", sep="")
-  #   flux_tmp <- gasfluxes::gasfluxes(hmr_data, .times = "Time", .C = colname,
-  #     .id = c("day", gas, "spot", "rep"), methods =  c("robust linear"),
-  #     select = NULL
-  #   )
-  #   flux <- flux %>% tibble::add_column(!!paste(gas, "flux", sep = "_") :=
-  #     flux_tmp$robust.linear.f0 * 24, !!paste(gas, "flux", "p", sep = "_") :=
-  #     flux_tmp$robust.linear.f0.p)
-  # }
-
   return(flux)
 }
 

@@ -3,9 +3,7 @@
 preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
   device <- validate(device)
   chamber_diagnostic(conc, meta, device)
-  # hmr_data <- dplyr::tibble(
-  #   spot = NA, day = NA, rep = NA, start = NA, V = NA, A = NA, Time = NA, Time2 = NA
-  # )
+
   hmr_data <- dplyr::tibble()
 
   repcount <- data.frame(spot = unique(meta$spot), count = 0)
@@ -43,7 +41,9 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
       spot = meta[i, ][[device$spot]], day =
       as.character(meta[i, ][[device$day]]), rep =
       repcount[repcount$spot == meta[i, ][[device$spot]], ]$count,
-      start = as.character(lubridate::int_start(int)), V = device[["V"]], A = device[["A"]],
+      start = start,
+      # start = as.character(lubridate::int_start(int)),
+      V = device[["V"]], A = device[["A"]],
       Time = as.numeric(a[[device$time_stamp]] - a[1,][[device$time_stamp]]) / 60 / 60
     )
 

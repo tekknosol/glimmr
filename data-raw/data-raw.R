@@ -6,20 +6,11 @@ meta_gasmet <- readr::read_csv("data-raw/meta.csv")
 
 meta_gasmet <- meta_gasmet %>%
   # mutate(begin = dmy_hms(paste(day, begin))) %>%
-  select(spot, day, start=begin, temp, wndw, offset)
+  select(spot, day, start=begin, temp, offset)
 
 meta_gasmet <- meta_gasmet[1:6, ]
 meta_gasmet$day <- ymd("2017-04-12")
 meta_gasmet$start <- as.character(meta_gasmet$start)
-# mask <- which( (gasmet$datetime >= meta_gasmet$begin[1] &
-#   gasmet$datetime <= meta_gasmet$begin[3]) |
-#   (gasmet$datetime >= meta_gasmet$begin[4] &
-#   gasmet$datetime <= meta_gasmet$begin[6])
-# )
-
-# mask <- append(mask, (mask[length(mask)] + 1):(mask[length(mask)] + 15))
-
-# gasmet <- gasmet[mask, ]
 
 meta_losgatos <- readr::read_csv("data-raw/meta_losgatos.csv")
 meta_losgatos$start <- as.character(meta_losgatos$start)

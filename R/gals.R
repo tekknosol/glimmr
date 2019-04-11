@@ -101,7 +101,8 @@ gals_gasmet <- function(.default = TRUE){
     temperature = NA,
     manual_temperature = "temp",
     duration_count = TRUE,
-    end = "wndw"
+    end = 10,
+    offset = "offset"
   )
 
   if (.default){

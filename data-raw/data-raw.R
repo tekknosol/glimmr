@@ -9,7 +9,7 @@ meta_gasmet <- meta_gasmet %>%
   select(spot, day, start=begin, temp, wndw, offset)
 
 meta_gasmet <- meta_gasmet[1:6, ]
-meta_gasmet$day <- "2017-04-12"
+meta_gasmet$day <- ymd("2017-04-12")
 meta_gasmet$start <- as.character(meta_gasmet$start)
 # mask <- which( (gasmet$datetime >= meta_gasmet$begin[1] &
 #   gasmet$datetime <= meta_gasmet$begin[3]) |

@@ -113,17 +113,20 @@ losgatos &lt;-<span class="st"> </span><span class="kw"><a href="../reference/re
 losgatos &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_losgatos.html">read_losgatos</a></span>(<span class="st">"path/to/losgatos_file.txt"</span>)</code></pre></div>
 <p>Single LosGatos files, as well as directories containing zips and txt files are supported. See <code><a href="../reference/read_losgatos.html">read_losgatos()</a></code> for details.</p>
 <p>The structure of corresponding metdata is defined as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">meta_gasmet
-<span class="co">#&gt;      spot        day      start temp wndw offset</span>
-<span class="co">#&gt; 1     YT1 2017-04-12 32509 secs  6.9   10      0</span>
-<span class="co">#&gt; 2     YT1 2017-04-12 32936 secs  6.9   10      0</span>
-<span class="co">#&gt; 3     YT1 2017-04-12 33265 secs  6.9   10      0</span>
-<span class="co">#&gt; 4 YTMeteo 2017-04-12 60461 secs  6.3   10      0</span>
-<span class="co">#&gt; 5 YTMeteo 2017-04-12 60941 secs  6.3    9      0</span>
-<span class="co">#&gt; 6 YTMeteo 2017-04-12 61340 secs  6.3   10      0</span>
+<pre><code>#&gt; # A tibble: 6 x 6
+#&gt;   spot    day        start     temp  wndw offset
+#&gt;   &lt;chr&gt;   &lt;date&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+#&gt; 1 YT1     2017-04-12 09:01:49   6.9    10      0
+#&gt; 2 YT1     2017-04-12 09:08:56   6.9    10      0
+#&gt; 3 YT1     2017-04-12 09:14:25   6.9    10      0
+#&gt; 4 YTMeteo 2017-04-12 16:47:41   6.3    10      0
+#&gt; 5 YTMeteo 2017-04-12 16:55:41   6.3     9      0
+#&gt; 6 YTMeteo 2017-04-12 17:02:20   6.3    10      0
 meta_losgatos
-<span class="co">#&gt;   spot        day    start      end t_start t_end</span>
-<span class="co">#&gt; 1   A1 2018-05-23 07:08:00 07:13:00      20    22</span></code></pre></div>
+#&gt; # A tibble: 1 x 6
+#&gt;   spot  day        start    end      t_start t_end
+#&gt;   &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1 A1    2018-05-23 07:08:00 07:13:00      20    22</code></pre>
 </div>
 <div id="process-fluxes" class="section level2">
 <h2 class="hasAnchor">

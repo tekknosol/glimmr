@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(dplyr)
 library(glimmr)
 ```
 
@@ -49,7 +50,7 @@ Single LosGatos files, as well as directories containing zips and txt files are
 supported. See `read_losgatos()` for details.
 
 The structure of corresponding metdata is defined as follows:
-```{r}
+```{r echo=-1}
 meta_gasmet
 meta_losgatos
 ```

@@ -6,15 +6,12 @@ language: R
 sudo: required
 cache: packages
 r:
-  - oldrel
+#  - oldrel
   - release
   - devel
-matrix:
-  exclude:
-    - os: osx
-      r: devel
-  include:
-  - r: oldrel
-    before_cache:
-    - Rscript -e 'install_version("mvtnorm", version = "1.0-8", repos = "http://cran.us.r-project.org")'
+#matrix:
+#  exclude:
+#    - os: osx
+#      r: devel
+
 

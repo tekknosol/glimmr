@@ -9,6 +9,48 @@ gals_default_vals <- c(name = "custom", fixed_params = c(), time_stamp = NULL,
                       trimmer = NULL, V = 0.01461, A = 0.098)
 
 
+gen_analyzer <- R6::R6Class("Analyzer",
+  public = list(
+    name = "custom",
+    time_stamp = "timestamp",
+    conc_columns = NULL,
+    preassure = NULL,
+    preassure_factor = 1,
+    temperature = NULL, manual_temperature = NULL,
+    ofsett = 0,
+    duration_count = FALSE,
+    spot = "spot",
+    day = "day",
+    start = "start",
+    end = "end",
+    trimmer = NULL,
+    V = 0.01461,
+    A = 0.098,
+    initialize = function(...) {
+      exprs <- rlang::enquos(...)
+      for(x in exprs){
+        self$x <- rlang::quo_get_expr(x)
+      }
+    }
+  )
+)
+
+LosGatos <- HistoryQueue <- R6::R6Class("LosGatos",
+  inherit = gen_analyzer,
+  public = list(
+    temperature = "AmbT_C"
+  )
+)
+
+test <- function(...){
+  exprs <- rlang::enquos(...)
+  for(x in names(exprs)){
+    print(paste(x, "=", rlang::quo_get_expr(x)))
+  }
+}
+
+
+
 #' Gas analyzer setup
 #'
 #'

@@ -6,11 +6,11 @@
 \alias{process_gasmet}
 \title{Calculate gasfluxes from dynamic chamber measurement}
 \usage{
-process_chamber(data = NULL, meta = NULL, analyzer = gals(), pre = T)
+process_chamber(data = NULL, meta = NULL, analyzer, pre = FALSE)
 
-process_losgatos(data, meta, analyzer = NULL, pre = FALSE)
+process_losgatos(data, meta, ..., pre = FALSE)
 
-process_gasmet(data, meta, analyzer = NULL, pre = FALSE)
+process_gasmet(data, meta, ..., pre = FALSE)
 }
 \arguments{
 \item{data}{Data frame. Recorded data from device.}
@@ -23,12 +23,13 @@ value pairs will override default settings.}
 \item{pre}{If FALSE (the default), flux processing will be executed. If TRUE
 flux processing will be skipped and preprocessed data frame will be
 returned.}
+
+\item{...}{additional parameters.}
 }
 \value{
 A data frame.
 }
 \description{
 `process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()` with preconfigured settings. See [gals_losgatos()] and
-[gals_gasmet()] for details.
+`process_chamber()` with preconfigured settings.
 }

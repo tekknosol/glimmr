@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette summarises the options for setting up options specified with gals().
+This vignette summarises the options for setting up options specified with analyzer().
 
 ## Gas analyzer
   
@@ -35,7 +35,7 @@ This vignette summarises the options for setting up options specified with gals(
   
   * **offset** (Default = `0:0`). Colon separated value for offsetting the datasets. First value offsets the first, second value offsets the last datapoint. Positive values shrinken the dataset i.e `2:3` skips two datapoints at the beginning and truncates three datapoints at the end of the dataset. Negative values expand the dataset i.e. `-2:-3` add two datapoints at the beginning and three datapoints at the end of the dataset. 
   
-Alternatively name of column containing the value for each measurement individually (e.g. `offset`). 
+    Alternatively name of column containing the value for each measurement individually (e.g. `offset`). 
   
   * **duration_count** If TRUE, `end` is determined by the number of datapoints 
     within each measurement. If FALSE, `end` is treated as duration or point in time.  

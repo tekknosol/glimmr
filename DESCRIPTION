@@ -28,7 +28,8 @@ Imports:
     rlang,
     broom,
     robust,
-    stats
+    stats,
+    R6
 Suggests: 
     testthat,
     knitr,

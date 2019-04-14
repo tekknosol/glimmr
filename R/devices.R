@@ -1,7 +1,7 @@
 
 
 preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
-  device <- validate(device)
+  # device <- validate(device)
   chamber_diagnostic(conc, meta, device)
 
   hmr_data <- dplyr::tibble()
@@ -15,8 +15,8 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 
     int <- lubridate::interval(start, end)
 
-    if(length(device$trimmer) != 0){
-      FUN <- match.fun(device$trimmer)
+    if(!is.null(rlang::eval_tidy(device$trimmer))){
+      FUN <- match.fun(rlang::eval_tidy(device$trimmer))
       int <- FUN(int)
     }
 
@@ -72,13 +72,13 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 #' Calculate gasfluxes from dynamic chamber measurement
 #'
 #' `process_losgatos()`and `process_gasmet()` are special cases of the general
-#' `process_chamber()` with preconfigured settings. See [gals_losgatos()] and
-#' [gals_gasmet()] for details.
+#' `process_chamber()` with preconfigured settings.
 #'
 #' @param data Data frame. Recorded data from device.
 #' @param meta Data frame. Metadata containing required informations.
 #' @param analyzer Set of setup mappings created by [gals()]. The specified name
 #'   value pairs will override default settings.
+#' @param ... additional parameters.
 #' @param pre If FALSE (the default), flux processing will be executed. If TRUE
 #'   flux processing will be skipped and preprocessed data frame will be
 #'   returned.
@@ -87,37 +87,31 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 #' @aliases process_losgatos
 #' @export
 #'
-process_chamber <- function(data = NULL, meta = NULL, analyzer = gals(), pre = T){
+process_chamber <- function(data = NULL, meta = NULL, analyzer, pre = FALSE){
+  # params <- list(...)
+  # device <- do.call(analyzer,analyzer)
+  process_predefined(data, meta, analyzer, pre)
+}
 
-  if (pre == TRUE) {
-    hmr_data <- preprocess_chamber(data, meta, analyzer, inspect = TRUE)
-    return(hmr_data)
-  }
 
-  hmr_data <- preprocess_chamber(data, meta, analyzer)
-
-  flux <- process_flux(hmr_data, meta, analyzer)
-  return(flux)
+#' @rdname process_chamber
+#' @export
+process_losgatos <- function(data, meta, ..., pre = FALSE){
+  analyzer <- do.call(analyzer_LosGatos,c(list(...)))
+  process_predefined(data, meta, analyzer, pre)
 }
 
 #' @rdname process_chamber
 #' @export
-process_losgatos <- function(data, meta, analyzer = NULL, pre = FALSE){
-  device <- gals_losgatos()
-  process_predefined(data, meta, device, analyzer, pre)
+process_gasmet <- function(data, meta, ..., pre = FALSE){
+  analyzer <- do.call(analyzer_GASMET,c(list(...)))
+  process_predefined(data, meta, analyzer, pre)
 }
 
-#' @rdname process_chamber
-#' @export
-process_gasmet <- function(data, meta, analyzer = NULL, pre = FALSE){
-  device <- gals_gasmet()
-  process_predefined(data, meta, device, analyzer, pre)
-}
-
-process_predefined <- function(data, meta, device, analyzer = NULL, pre = FALSE){
-  if(is.gals(analyzer)){
-    device <- stats::update(device, analyzer)
-  }
+process_predefined <- function(data, meta, device, pre = FALSE){
+  # if(is.gals(analyzer)){
+  #   device <- stats::update(device, analyzer)
+  # }
 
   if (pre == TRUE) {
     hmr_data <- preprocess_chamber(data, meta, device, inspect = TRUE)

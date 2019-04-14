@@ -9,7 +9,7 @@ reference:
   - '`read_gasmet`'
   - '`read_losgatos`'
   - '`inspect_gasmet`'
-  - starts_with("gals")
+  - starts_with("analyzer")
 - title: BLE
   desc:  ~
   contents:

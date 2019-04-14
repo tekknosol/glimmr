@@ -43,21 +43,26 @@ devtools::install_github("tekknosol/glimmr")
 
 ## Getting started
 Calculate fluxes from device records and a meta file containing information about single measurements.
+Fluxes are reported in [mmol/m²/d] using linear model fitting and robust linear model fitting with `robust::lmRob()`
 
-```{r, eval = FALSE}
+```{r, eval = -(2:3)}
 # read data
 gasmet <- read_gasmet("path/to/gasmet_file.txt")
 meta <- read_csv("path/to/meta_file.csv")
 
-# compute fluxes
-flux <- process_gasmet(gasmet, meta)
+# compute fluxes in mmol/m²/d
+# F_LM: Liner Model
+# F_RLM: Robust Liner Model
+process_gasmet(gasmet, meta_gasmet)
 ```
 
 Calculate gas transfer coefficient used with the Boundary Layer Equation (BLE).
 
 ```{r}
-windspeed <- c(2, 4.3, 1.8)
-watertemperature <- c(18, 21, 19.3)
+# Windpseed in m/s
+windspeed <- c(2, 4.3, 1.8) 
+# Water temperature in °C
+watertemperature <- c(18, 21, 19.3) 
 
 calc_kW(windspeed, watertemperature)
 ```

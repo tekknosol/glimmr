@@ -40,6 +40,7 @@
 #'   \item{end}{}
 #'   \item{t_start}{}
 #'   \item{t_end}{}
+#'   \item{offset}{}
 #' }
 "meta_losgatos"
 
@@ -53,7 +54,6 @@
 #'   \item{day}{Day of the measurement}
 #'   \item{start}{}
 #'   \item{temp}{}
-#'   \item{wndw}{}
 #'   \item{offset}{}
 #' }
 "meta_gasmet"

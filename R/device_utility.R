@@ -186,17 +186,15 @@ ppm2conc <- function(ppm, temp, pmbar){
 }
 
 chamber_offset <- function(device, df, meta){
-  if (is.numeric(device$offset)){
-    df[(device$offset+1):length(rownames(df)),]
-  } else {
-    df[(meta[[device$offset]]+1):length(rownames(df)),]
-  }
+  offset <- meta[[device$offset]] %>% stringr::str_split(":")
+  offset <- as.numeric(offset[[1]])
+  df[(offset[1]+1):(length(rownames(df))-offset[2]),]
 }
 
 parse_end <- function(data, device, start, meta){
   if (device$duration_count){
     if (is.numeric(device$end)){
-      fl <- which(data[[device$time_stamp]] > start)[1] + device$end
+      fl <- which(data[[device$time_stamp]] >= start)[1] + (device$end - 1)
     } else {
         fl <- which(data[[device$time_stamp]] >=start)[1] + (meta[[device$end]] - 1)
       }

@@ -1,17 +1,15 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-os:
-  - linux
-  - osx
 language: R
 sudo: required
 cache: packages
-r:
-#  - oldrel
-  - release
-  - devel
-#matrix:
-#  exclude:
-#    - os: osx
-#      r: devel
-
-
+jobs:
+  include:
+  - r: devel
+  - os: osx
+  - r: release
+    before_cache:
+    - Rscript -e 'remotes::install_cran("pkgdown")'
+    deploy:
+      provider: script
+      script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+      skip_cleanup: true

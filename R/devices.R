@@ -21,9 +21,12 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
     }
 
     repcount[repcount$spot == meta[i, ][[device$spot]], ]$count <- repcount[repcount$spot == meta[i, ][[device$spot]], ]$count + 1
-    a <- conc %>%
-      dplyr::filter(!!rlang::sym(device$time_stamp) >= lubridate::int_start(int) & !!rlang::sym(device$time_stamp) <= lubridate::int_end(int))
-    a <- chamber_offset(df = a, device = device, meta = meta)
+
+    offset <- meta[i,][[device$offset]] %>% stringr::str_split(":")
+    offset <- as.numeric(offset[[1]])
+    datapoints <- which(conc[[device$time_stamp]] >= lubridate::int_start(int) & conc[[device$time_stamp]] <= lubridate::int_end(int))
+    a <- conc[datapoints[(1+offset[1]):(length(datapoints)-offset[2])],]
+
     if (length(rownames(a)) == 0){
       warning(call. = FALSE, "meta entry ", i, " skipped.",
               " No matching data.")

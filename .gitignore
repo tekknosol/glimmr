@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+docs/*
 data-raw/*.csv
 data-raw/*.csv#
 data-raw/2018-05-23/

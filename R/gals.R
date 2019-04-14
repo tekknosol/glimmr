@@ -35,20 +35,6 @@ gen_analyzer <- R6::R6Class("Analyzer",
   )
 )
 
-LosGatos <- HistoryQueue <- R6::R6Class("LosGatos",
-  inherit = gen_analyzer,
-  public = list(
-    temperature = "AmbT_C"
-  )
-)
-
-test <- function(...){
-  exprs <- rlang::enquos(...)
-  for(x in names(exprs)){
-    print(paste(x, "=", rlang::quo_get_expr(x)))
-  }
-}
-
 
 
 #' Gas analyzer setup

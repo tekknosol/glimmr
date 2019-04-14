@@ -1,7 +1,7 @@
 
 
 preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
-  device <- validate(device)
+  # device <- validate(device)
   chamber_diagnostic(conc, meta, device)
 
   hmr_data <- dplyr::tibble()
@@ -112,9 +112,9 @@ process_gasmet <- function(data, meta, analyzer = NULL, pre = FALSE){
 }
 
 process_predefined <- function(data, meta, device, analyzer = NULL, pre = FALSE){
-  if(is.gals(analyzer)){
-    device <- stats::update(device, analyzer)
-  }
+  # if(is.gals(analyzer)){
+  #   device <- stats::update(device, analyzer)
+  # }
 
   if (pre == TRUE) {
     hmr_data <- preprocess_chamber(data, meta, device, inspect = TRUE)

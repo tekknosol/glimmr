@@ -14,7 +14,7 @@ The `glimmr` package provides functions to convert high frequency concentration 
 
 Furthermore `glimmr` contains functions to calculate gasfluxes with the 'Boundary Layer Equation' (BLE).
 
-To calculate gasfluxes from high frequency chamber measurements, glimmr offers a cusomizable system of gas analyzer definitions (`gals()`), as well as two preconfigured devices with `read_`, `process_` and `inspect_` functions:
+To calculate gasfluxes from high frequency chamber measurements, glimmr offers a cusomizable system of gas analyzer definitions (`analyzer()`), as well as two preconfigured devices with `read_`, `process_` and `inspect_` functions:
 
 -   `process_chamber()` & `inspect_chamber()`: custom devices
 -   `read_gasmet()`, `process_gasmet()` & `inspect_gasmet()`: GASMET
@@ -41,10 +41,9 @@ Calculate fluxes from device records and a meta file containing information abou
 ## meta <- read_csv("path/to/meta_file.csv")
 
 # compute fluxes in mmol/m²/d
-#F_LM: Liner Model
-#F_RLM: Robust Liner Model
+# F_LM: Liner Model
+# F_RLM: Robust Liner Model
 process_gasmet(gasmet, meta_gasmet)
-#> Processing gasmet data.
 #> End of interval determined by number of observations. Count = 10
 #> Using temperature from meta file. Column = temp
 #> Warning in test.lmRob(object): Denominator smaller than tl= 1e-06 in test

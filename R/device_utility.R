@@ -151,10 +151,10 @@ inspect_losgatos <- function(fluxdata, meta) {
   invisible(fluxdata)
 }
 
-inspect_chamber <- function(fluxdata, meta, analyzer = gals()){
+inspect_chamber <- function(fluxdata, meta, analyzer){
 
-  df <- process_chamber(fluxdata, meta, analyzer = analyzer, pre = TRUE)
-  df <- df %>% tidyr::gather(key = "gas", value = "concentration", dplyr::ends_with("ppm"))
+  df <- process_chamber(fluxdata, meta, analyzer, pre = TRUE)
+  df <- df %>% tidyr::gather(key = "gas", value = "concentration", names(analyzer$conc_columns))
   inspect_fluxdata(df)
   invisible(fluxdata)
 }
@@ -200,10 +200,10 @@ parse_end <- function(data, device, start, meta){
       }
     end <- data[fl,][[device$time_stamp]]
   } else {
-      if (grepl(":", meta$end)){
-        end <- lubridate::ymd_hms(paste(lubridate::date(start), meta$end))
+      if (grepl(":", meta[[device$end]])){
+        end <- lubridate::ymd_hms(paste(lubridate::date(start), meta[[device$end]]))
       } else {
-          end <- start + end * 60
+          end <- start + meta[[device$end]] * 60
         }
     }
   return(end)
@@ -251,7 +251,7 @@ process_flux <- function(hmr_data, meta, device){
 
 
 chamber_diagnostic <- function(conc, meta, device){
-  message("Processing ", device$name, " data.")
+  # message("Processing ", device$name, " data.")
   if (device$duration_count & is.numeric(device$end)){
     message("End of interval determined by number of observations. Count = ", device$end)
   } else{

@@ -33,8 +33,7 @@
 <meta property="og:title" content="Calculate gasfluxes from dynamic chamber measurement — process_chamber" />
 
 <meta property="og:description" content="`process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()` with preconfigured settings. See [gals_losgatos()] and
-[gals_gasmet()] for details." />
+`process_chamber()` with preconfigured settings." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,7 +90,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/gals.html">Gas analyzer setup</a>
+      <a href="../articles/lyzr.html">Gas analyzer setup</a>
     </li>
   </ul>
 </li>
@@ -127,16 +126,15 @@
     <div class="ref-description">
     
     <p>`process_losgatos()`and `process_gasmet()` are special cases of the general
-`process_chamber()` with preconfigured settings. See [gals_losgatos()] and
-[gals_gasmet()] for details.</p>
+`process_chamber()` with preconfigured settings.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>process_chamber</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>analyzer</span> <span class='kw'>=</span> <span class='fu'><a href='gals.html'>gals</a></span>(), <span class='kw'>pre</span> <span class='kw'>=</span> <span class='no'>T</span>)
+    <pre class="usage"><span class='fu'>process_chamber</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>analyzer</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>process_losgatos</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='kw'>analyzer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>process_losgatos</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='no'>...</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>process_gasmet</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='kw'>analyzer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>process_gasmet</span>(<span class='no'>data</span>, <span class='no'>meta</span>, <span class='no'>...</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +157,10 @@ value pairs will override default settings.</p></td>
       <td><p>If FALSE (the default), flux processing will be executed. If TRUE
 flux processing will be skipped and preprocessed data frame will be
 returned.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional parameters.</p></td>
     </tr>
     </table>
     

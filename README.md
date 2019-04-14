@@ -80,6 +80,7 @@ windspeed <- c(2, 4.3, 1.8)
 # Water temperature in °C
 watertemperature <- c(18, 21, 19.3) 
 
+# Calculate gas transfer coefficient
 calc_kW(windspeed, watertemperature)
 #> [1] 1.488888 7.426978 1.246858
 ```

@@ -14,6 +14,8 @@ test_that("Unsupportet gas throws error", {
 test_that("Schmidt numbers match literature values at 20°C", {
   expect_equal(round(calc_SN(20)), 600)
   expect_equal(round(calc_SN(20, "ch4")), 617)
+  expect_equal(round(calc.SN(20)), 600)
+  expect_equal(round(calc.SN(20, "ch4")), 617)
 })
 
 test_that("Time for ylab is supported", {

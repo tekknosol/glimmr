@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
 )
 library(dplyr)
 library(glimmr)
+
+TRAVIS <- !identical(tolower(Sys.getenv("TRAVIS")), "true")
+knitr::opts_chunk$set(purl = TRAVIS)
 ```
 
 glimmr is an R package that makes it easier to process and handle data from 
@@ -59,7 +62,7 @@ meta_losgatos
 ## Process fluxes
 To use any arbitrary device all columns containing used information need to be
 defined.
-```{r, eval=TRUE}
+```{r, eval=TRAVIS}
 
 # setup analyzer
 custom_analyzer <- analyzer(

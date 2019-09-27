@@ -6,6 +6,8 @@
 \alias{glimmr-package}
 \title{glimmr: Gas fLuxes and dynamIc chaMber MeasuRements}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 The glimmr package provides functions to convert high frequency concentration data
 obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
 processed automatically.

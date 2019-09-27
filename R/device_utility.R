@@ -276,11 +276,11 @@ fit_lm <- function(hmr_data, device){
     dplyr::group_by(.data$gas, .data$spot, .data$rep)
 
   fit_data %>%
-    dplyr::group_map(~ broom::tidy(lm(conc ~ Time, data = .x), quick = T)) %>%
+    dplyr::group_modify(~ broom::tidy(lm(conc ~ Time, data = .x), quick = T)) %>%
     dplyr::filter(.data$term == "Time") %>%
     dplyr::left_join(
       fit_data %>%
-        dplyr::group_map(~ broom::glance(lm(conc ~ Time, data = .x), quick = T)) %>%
+        dplyr::group_modify(~ broom::glance(lm(conc ~ Time, data = .x), quick = T)) %>%
         dplyr::select(LM_r2 = .data$r.squared)
     ) %>%
     dplyr::mutate(estimate = .data$estimate * device$V / device$A * 24) %>%
@@ -299,11 +299,11 @@ fit_rlm <- function(hmr_data, device){
     dplyr::group_by(.data$gas, .data$spot, .data$rep)
 
   fit_data %>%
-    dplyr::group_map(~ broom::tidy(robust::lmRob(conc ~ Time, data = .x), quick = T)) %>%
+    dplyr::group_modify(~ broom::tidy(robust::lmRob(conc ~ Time, data = .x), quick = T)) %>%
     dplyr::filter(.data$term == "Time") %>%
     dplyr::left_join(
       fit_data %>%
-        dplyr::group_map(~ broom::glance((robust::lmRob(conc ~ Time, data = .x)))) %>%
+        dplyr::group_modify(~ broom::glance((robust::lmRob(conc ~ Time, data = .x)))) %>%
         dplyr::select(RLM_r2 = .data$r.squared)
     ) %>%
     dplyr::mutate(estimate = .data$estimate * device$V / device$A * 24) %>%

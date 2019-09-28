@@ -1,4 +1,3 @@
-context("Devices")
 library(glimmr)
 library(dplyr)
 

@@ -8,10 +8,20 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 
   repcount <- data.frame(spot = unique(meta$spot), count = 0)
   for (i in 1:length(meta$spot)) {
-    suppressWarnings(
-      start <- lubridate::ymd_hms(paste(meta[i, ][[device$day]], meta[i, ][[device$start]]))
-    )
-      end <- parse_end(conc, device, start, meta[i, ])
+      start <- tryCatch({
+          lubridate::ymd_hms(paste(meta[i, ][[device$day]], meta[i, ][[device$start]]))
+        }, warning = function(w){
+          # print(w)
+          if("All formats failed to parse. No formats found." %in% w){
+            warning("Meta entry ", i, ": cannot parse start or end timestamp", call. = FALSE, immediate. = TRUE)
+            return(NA)
+          }
+        },error = function(e){
+          stop("cannot parse start or end timestamp")
+        }
+
+      )
+      end <- try(parse_end(conc, device, start, meta[i, ]), silent = T)
 
     int <- lubridate::interval(start, end)
 
@@ -25,10 +35,11 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
     offset <- meta[i,][[device$offset]] %>% stringr::str_split(":")
     offset <- as.numeric(offset[[1]])
     datapoints <- which(conc[[device$time_stamp]] >= lubridate::int_start(int) & conc[[device$time_stamp]] <= lubridate::int_end(int))
-    a <- conc[datapoints[(1+offset[1]):(length(datapoints)-offset[2])],]
 
-    if (length(rownames(a)) == 0){
-      warning(call. = FALSE, "meta entry ", i, " skipped.",
+    a <- try(conc[datapoints[(1+offset[1]):(length(datapoints)-offset[2])],], silent = T)
+
+    if (length(datapoints) == 0){
+      warning(call. = FALSE, immediate. = T, "meta entry ", i, " skipped.",
               " No matching data.")
       next
     }
@@ -66,6 +77,9 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
     hmr_data <- rbind(hmr_data, hmr_data_tmp)
   }
   # hmr_data <- hmr_data[-1, ]
+  if (length(rownames(hmr_data)) == 0){
+    stop(call. = F, "No data for flux calculation. Do dates in meta and data file match?")
+  }
   hmr_data
 }
 

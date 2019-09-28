@@ -297,7 +297,7 @@ fit_rlm <- function(hmr_data, device){
   fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
     dplyr::group_by(.data$gas, .data$spot, .data$rep)
-
+  suppressWarnings(
   fit_data %>%
     dplyr::group_modify(~ broom::tidy(robust::lmRob(conc ~ Time, data = .x), quick = T)) %>%
     dplyr::filter(.data$term == "Time") %>%
@@ -314,4 +314,5 @@ fit_rlm <- function(hmr_data, device){
     ) %>%
     dplyr::rename(F_RLM = .data$estimate) %>%
     dplyr::select(-.data$term)
+  )
 }

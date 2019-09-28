@@ -7,7 +7,7 @@ Authors@R: person("Philipp S.", "Keller", email = "phlipp.keller@ufz.de",
 Description: The glimmr package provides functions to convert high frequency concentration data
     obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
     processed automatically.
-Date: 2018
+Date: 2019
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 Depends: R (>= 2.10)
@@ -28,8 +28,7 @@ Imports:
     rlang,
     broom,
     robust,
-    stats,
-    R6
+    stats
 Suggests: 
     testthat (>= 2.1.0),
     knitr,

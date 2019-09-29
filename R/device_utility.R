@@ -6,7 +6,7 @@
 #' @export
 #'
 read_gasmet <- function(file) {
-  x <- readr::read_lines(file)
+  x <- suppressWarnings(readr::read_lines(file))
   y <- stringr::str_split(x, "\t")
   switch(y[[1]][2], Datum = lang <- "de", Date = lang <- "en")
   lines <- c()
@@ -22,16 +22,16 @@ read_gasmet <- function(file) {
   tmp <- tempfile(fileext = ".csv")
   readr::write_lines(x1, tmp)
   if (lang == "en") {
-    y <- readr::read_tsv(tmp, col_types = readr::cols_only(
+    y <- suppressWarnings(readr::read_tsv(tmp, col_types = readr::cols_only(
       Date = "D", Time = "t", CO2 = "n",
       CH4 = "n", N2O = "n", Luftdruck = "n"
-    ))
+    )))
     y$datetime <- lubridate::ymd_hms(paste(y$Date, y$Time))
   } else {
-    y <- readr::read_tsv(tmp, col_types = readr::cols_only(
+    y <- suppressWarnings(readr::read_tsv(tmp, col_types = readr::cols_only(
       Datum = "D", Zeit = "t", CO2 = "n",
       CH4 = "n", N2O = "n", Luftdruck = "n"
-    ))
+    )))
     y$datetime <- lubridate::ymd_hms(paste(y$Datum, y$Zeit))
   }
 

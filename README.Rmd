@@ -46,16 +46,25 @@ devtools::install_github("tekknosol/glimmr")
 Calculate fluxes from device records and a meta file containing information about single measurements.
 Fluxes are reported in [mmol/m²/d] using linear model fitting and robust linear model fitting with `robust::lmRob()`
 
-```{r, eval = -(2:3)}
+```{r, eval = FALSE}
 # read data
 gasmet <- read_gasmet("path/to/gasmet_file.txt")
 meta <- read_csv("path/to/meta_file.csv")
 
+# create diagnostic plot(s)
+inspect_gasmet(gasmet, meta_gasmet)
+```
+
+![Diagnosis plot](man/figures/diag.png)
+
+```{r, cache=FALSE}
 # compute fluxes in mmol/m²/d
 # F_LM: Liner Model
 # F_RLM: Robust Liner Model
 process_gasmet(gasmet, meta_gasmet)
 ```
+
+
 
 Calculate gas transfer coefficient used with the Boundary Layer Equation (BLE).
 

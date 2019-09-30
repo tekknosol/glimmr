@@ -76,11 +76,11 @@ analyzer <- function(
   obj
 }
 
-lyzr_settings <- function(...){
-  exprs <- rlang::enquos(...)
-  new_set(exprs)
-}
-
+# lyzr_settings <- function(...){
+#   exprs <- rlang::enquos(...)
+#   new_set(exprs)
+# }
+#
 new_setting <- function(x, env = globalenv()) {
   if (rlang::is_quosure(x)) {
     if (!rlang::quo_is_symbolic(x)) {
@@ -96,12 +96,12 @@ new_setting <- function(x, env = globalenv()) {
 
   x
 }
-
-new_set <- function(x, env = globalenv()) {
-  stopifnot(is.list(x))
-  x <- lapply(x, new_setting, env = env)
-  structure(x, class = "gals")
-}
+#
+# new_set <- function(x, env = globalenv()) {
+#   stopifnot(is.list(x))
+#   x <- lapply(x, new_setting, env = env)
+#   structure(x, class = "gals")
+# }
 
 is.lyzr <- function(x) inherits(x, "lyzr")
 
@@ -117,7 +117,7 @@ print.lyzr <- function(x, ...){
 #' @export
 validate.lyzr <- function(lyzr){
   if (is.null(lyzr$duration_count)) lyzr$duration_count <- FALSE
-  if (is.null(lyzr$offset)) lyzr$offset <- 0
+  if (is.null(lyzr$offset)) lyzr$offset <- "0:0"
   if (is.null(lyzr$preassure_factor)) lyzr$preassure_factor <- 1
   lyzr
 }

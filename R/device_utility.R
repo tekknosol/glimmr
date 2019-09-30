@@ -9,6 +9,7 @@ read_gasmet <- function(file) {
   x <- suppressWarnings(readr::read_lines(file))
   y <- stringr::str_split(x, "\t")
   switch(y[[1]][2], Datum = lang <- "de", Date = lang <- "en")
+  tryCatch({lang}, error = function(e){stop("File doesn't seem to be a supported GASMET file", call. = FALSE)})
   lines <- c()
   for (l in 1:length(x)) {
     if ( (y[[l]][1] == "Messstelle" | y[[l]][1] == "Line") & l > 1) {

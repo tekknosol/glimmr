@@ -20,3 +20,15 @@ test_that("kH for 25°C is matching literature", {
   expect_equal(calc_kH(25), 0.034)
   expect_equal(calc_kH(25, "ch4"), 0.0013)
 })
+
+test_that("kW matching expected values", {
+  expect_equal(calc_kW(2,18),1.488888, tolerance=1e-3)
+  expect_equal(calc_kW(2,18, "ch4"),1.471282, tolerance=1e-3)
+  expect_equal(calc.kW(2,18),1.488888, tolerance=1e-3)
+  expect_equal(calc.kW(2,18, "ch4"),1.471282, tolerance=1e-3)
+
+  expect_equal(calc_kW(2,18, model = "cole98"),2.846832, tolerance=1e-3)
+  expect_equal(calc_kW(2,18, "ch4", model = "cole98"),2.801816, tolerance=1e-3)
+  expect_equal(calc.kW(2,18, model = "cole98"),2.846832, tolerance=1e-3)
+  expect_equal(calc.kW(2,18, "ch4", model = "cole98"),2.801816, tolerance=1e-3)
+})

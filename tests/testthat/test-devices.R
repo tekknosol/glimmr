@@ -8,6 +8,8 @@ test_that("LosGatos", {
   expect_equal(Flux_a1_1 %>% filter(gas == "CO2") %>% pull("F_RLM"), 20.22194, tolerance=1e-3)
   expect_equal(Flux_a1_1 %>% filter(gas == "CH4") %>% pull("F_LM"), 0.007639924, tolerance=1e-3)
   expect_equal(Flux_a1_1 %>% filter(gas == "CH4") %>% pull("F_RLM"), 0.007568566, tolerance=1e-3)
+
+  # expect_output(str(as.data.frame(read_losgatos("../../data-raw/2018-05-23/"))), "1682 obs")
 })
 
 # test fluxcalculation with gasmet
@@ -17,6 +19,9 @@ test_that("GASMET", {
   expect_equal(Flux_a1_1 %>% filter(gas == "CO2") %>% pull("F_RLM"), 25.90705, tolerance=1e-3)
   expect_equal(Flux_a1_1 %>% filter(gas == "CH4") %>% pull("F_LM"), 0.0150685, tolerance=1e-3)
   expect_equal(Flux_a1_1 %>% filter(gas == "CH4") %>% pull("F_RLM"), 0.0150685, tolerance=1e-3)
+
+  # expect_output(str(as.data.frame(read_gasmet("../../data-raw/gasmet.csv"))), "399 obs")
+  expect_error(read_gasmet("dummy.csv"), "File doesn't seem to be a supported GASMET file")
 })
 
 test_that("Chamber", {
@@ -37,6 +42,8 @@ test_that("Chamber", {
     V = 0.01461,
     A = 0.098
   )
+  expect_true(is.lyzr(lg))
+  expect_true(is.lyzr(validate(lg)))
   Flux_a1_1 <- process_chamber(losgatos, meta_losgatos, lg) %>% filter(site == "plotA", rep == 1)
   expect_equal(Flux_a1_1 %>% filter(gas == "CO2") %>% pull("F_LM"), 20.12128, tolerance=1e-3)
   expect_equal(Flux_a1_1 %>% filter(gas == "CO2") %>% pull("F_RLM"), 20.22194, tolerance=1e-3)

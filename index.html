@@ -98,7 +98,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#glimmr" class="anchor"></a>glimmr <a href="https://tekknosol.github.io/glimmr/"><img src="reference/figures/logo.png" align="right" height="139"></a>
 </h1></div>
-<p>Gas fLuxes and dynamIc chaMber MeasuRements</p>
+<p><strong>G</strong>as F<strong>l</strong>uxes and Dynam<strong>i</strong>c Cha<strong>m</strong>ber <strong>M</strong>easu<strong>R</strong>ements</p>
 <!-- badges: start -->
 
 <div id="overview" class="section level2">
@@ -130,7 +130,7 @@
 <p>Calculate fluxes from device records and a meta file containing information about single measurements. Fluxes are reported in [mmol/m²/d] using linear model fitting and robust linear model fitting with <code><a href="https://rdrr.io/pkg/robust/man/lmRob.html">robust::lmRob()</a></code></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># read data</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">gasmet &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_gasmet.html">read_gasmet</a></span>(<span class="st">"path/to/gasmet_file.txt"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">meta &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"path/to/meta_file.csv"</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">meta_gasmet &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"path/to/meta_file.csv"</span>)</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># create diagnostic plot(s)</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="reference/inspect_gasmet.html">inspect_gasmet</a></span>(gasmet, meta_gasmet)</a></code></pre></div>

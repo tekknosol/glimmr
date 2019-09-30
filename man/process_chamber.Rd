@@ -17,7 +17,7 @@ process_gasmet(data, meta, ..., pre = FALSE)
 
 \item{meta}{Data frame. Metadata containing required informations.}
 
-\item{analyzer}{Set of setup mappings created by [analyzer()]. The specified name
+\item{analyzer}{Set of setup mappings created by \code{\link{analyzer()}}. The specified name
 value pairs will override default settings.}
 
 \item{pre}{If FALSE (the default), flux processing will be executed. If TRUE
@@ -30,6 +30,6 @@ returned.}
 A data frame.
 }
 \description{
-\code{\link{process_losgatos}} and `process_gasmet()` are special cases of the general
+\code{\link{process_losgatos}} and \code{\link{process_gasmet()}} are special cases of the general
 `process_chamber()` with preconfigured settings.
 }

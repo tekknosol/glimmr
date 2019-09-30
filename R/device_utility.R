@@ -249,9 +249,20 @@ process_flux <- function(hmr_data, meta, device){
   return(flux)
 }
 
-
+validate_meta_colnames <- function(meta, device){
+  if(!device$plot %in% colnames(meta)){
+    stop("Column defined for plot ('", device$plot, "') not found in meta file", call. = FALSE)
+  }
+  if(!device$start %in% colnames(meta)){
+    stop("Column defined for start ('", device$start, "') not found in meta file", call. = FALSE)
+  }
+  if(!device$duration_count & is.character(device$end) & !device$end %in% colnames(meta)){
+    stop("Column defined for end ('", device$end, "') not found in meta file", call. = FALSE)
+  }
+}
 
 chamber_diagnostic <- function(conc, meta, device){
+  validate_meta_colnames(meta, device)
   # message("Processing ", device$name, " data.")
   if (device$duration_count & is.numeric(device$end)){
     message("End of interval determined by number of observations. Count = ", device$end)

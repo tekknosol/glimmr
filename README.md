@@ -3,8 +3,8 @@
 
 # glimmr <a href='https://tekknosol.github.io/glimmr/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
-Gas fLuxes and dynamIc chaMber
-MeasuRements
+**G**as F**l**uxes and Dynam**i**c Cha**m**ber
+**M**easu**R**ements
 
 <!-- badges: start -->
 
@@ -54,7 +54,7 @@ fitting with `robust::lmRob()`
 ``` r
 # read data
 gasmet <- read_gasmet("path/to/gasmet_file.txt")
-meta <- read_csv("path/to/meta_file.csv")
+meta_gasmet <- read_csv("path/to/meta_file.csv")
 
 # create diagnostic plot(s)
 inspect_gasmet(gasmet, meta_gasmet)

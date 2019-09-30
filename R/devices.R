@@ -85,12 +85,12 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 
 #' Calculate gasfluxes from dynamic chamber measurement
 #'
-#' `process_losgatos()`and `process_gasmet()` are special cases of the general
+#' \code{\link{process_losgatos}} and \code{\link{process_gasmet()}} are special cases of the general
 #' `process_chamber()` with preconfigured settings.
 #'
 #' @param data Data frame. Recorded data from device.
 #' @param meta Data frame. Metadata containing required informations.
-#' @param analyzer Set of setup mappings created by [gals()]. The specified name
+#' @param analyzer Set of setup mappings created by \code{\link{analyzer()}}. The specified name
 #'   value pairs will override default settings.
 #' @param ... additional parameters.
 #' @param pre If FALSE (the default), flux processing will be executed. If TRUE

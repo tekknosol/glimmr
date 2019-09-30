@@ -1,16 +1,16 @@
 Package: glimmr
 Type: Package
-Title: Gas fLuxes and dynamIc chaMber MeasuRements
+Title: Gas Fluxes and Dynamic Chamber Measurements
 Version: 0.1.0.9000
 Authors@R: person("Philipp S.", "Keller", email = "phlipp.keller@ufz.de",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3565-4413"))
-Description: The glimmr package provides functions to convert high frequency concentration data
+Description: provides functions to convert high frequency concentration data
     obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
-    processed automatically.
+    processed automatically. Furthermore, functions for flux calculation using BLE are included.
 Date: 2019
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
-Depends: R (>= 2.10)
+Depends: R (>= 3.44)
 URL: https://tekknosol.github.io/glimmr/, https://github.com/tekknosol/glimmr
 BugReports: https://github.com/tekknosol/glimmr/issues
 LazyData: true
@@ -28,7 +28,7 @@ Imports:
     rlang,
     broom,
     robust,
-    stats
+    stats 
 Suggests: 
     testthat (>= 2.1.0),
     knitr,

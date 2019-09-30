@@ -4,7 +4,7 @@
 # glimmr <a href='https://tekknosol.github.io/glimmr/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 **G**as F**l**uxes and Dynam**i**c Cha**m**ber
-**M**easu**R**ements
+**M**easu**r**ements
 
 <!-- badges: start -->
 

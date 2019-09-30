@@ -5,9 +5,10 @@ Version: 0.1.0.9000
 Authors@R: person("Philipp S.", "Keller", email = "phlipp.keller@ufz.de",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3565-4413"))
 Description: provides functions to convert high frequency concentration data
-    obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
-    processed automatically. Furthermore, functions for flux calculation using BLE are included.
-Date: 2019
+    obtained by chamber measurements into gasfluxes. Data recorded with GASMET
+    and LosGatos devices can be processed automatically. Furthermore, functions
+    for flux calculation using BLE are included.
+Date: 2019-01-01
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 Depends: R (>= 3.4.4)

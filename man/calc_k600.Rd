@@ -11,7 +11,7 @@ calc_k600(ws)
 }
 \value{
 Numeric value of gas exchange velocity (k600). Should be converted to
-desired gas with \code{\link{calc_kw}}
+desired gas with \code{\link{calc_kW}}
 }
 \description{
 Returns the gas transfer velocity (k600)

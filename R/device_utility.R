@@ -226,24 +226,24 @@ parse_var <- function(conc, meta, x){
 
 process_flux <- function(hmr_data, meta, device){
   flux <- tibble::tibble(
-    date = lubridate::ymd(meta[[device$day]]),
-    site = meta[[device$spot]],
-    begin = lubridate::ymd_hms(paste(meta[[device$day]], meta[[device$start]]))
+    date = lubridate::ymd(meta[[device$date]]),
+    plot = meta[[device$plot]],
+    start = lubridate::ymd_hms(paste(meta[[device$date]], meta[[device$start]]))
   )
 
   suppressMessages(
     flux <- flux %>%
       dplyr::left_join(
       fit_lm(hmr_data, device) %>%
-        dplyr::rename(site = .data$spot, begin = .data$start) %>%
-        dplyr::mutate(begin = lubridate::as_datetime(.data$begin))
+        # dplyr::rename(plot = .data$plot, start = .data$start) %>%
+        dplyr::mutate(start = lubridate::as_datetime(.data$start))
     ) %>%
       dplyr::left_join(
       fit_rlm(hmr_data, device) %>%
-        dplyr::rename(site = .data$spot, begin = .data$start) %>%
-        dplyr::mutate(begin = lubridate::as_datetime(.data$begin))
+        # dplyr::rename(plot = .data$plot, begin = .data$start) %>%
+        dplyr::mutate(start = lubridate::as_datetime(.data$start))
     ) %>%
-      dplyr::arrange(.data$date, .data$gas, .data$site)
+      dplyr::arrange(.data$date, .data$gas, .data$plot)
   )
 
   return(flux)
@@ -274,7 +274,7 @@ chamber_diagnostic <- function(conc, meta, device){
 fit_lm <- function(hmr_data, device){
   fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-    dplyr::group_by(.data$gas, .data$spot, .data$rep)
+    dplyr::group_by(.data$gas, .data$plot, .data$rep)
 
   fit_data %>%
     dplyr::group_modify(~ broom::tidy(lm(conc ~ Time, data = .x), quick = T)) %>%
@@ -297,7 +297,7 @@ fit_lm <- function(hmr_data, device){
 fit_rlm <- function(hmr_data, device){
   fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-    dplyr::group_by(.data$gas, .data$spot, .data$rep)
+    dplyr::group_by(.data$gas, .data$plot, .data$rep)
   suppressWarnings(
   fit_data %>%
     dplyr::group_modify(~ broom::tidy(robust::lmRob(conc ~ Time, data = .x), quick = T)) %>%

@@ -49,7 +49,7 @@ calc.u10 <- function(ws) {
 #' @param ws numeric; Windspeed in m/s
 #'
 #' @return Numeric value of gas exchange velocity (k600). Should be converted to
-#' desired gas with \code{\link{calc_kw}}
+#' desired gas with \code{\link{calc_kW}}
 calc_k600 <- function(ws) {
   # cole98
   k600 <- 0.215 * calc_u10(ws)^1.7 + 2.07

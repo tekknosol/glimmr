@@ -6,10 +6,10 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 
   hmr_data <- dplyr::tibble()
 
-  repcount <- data.frame(spot = unique(meta$spot), count = 0)
-  for (i in 1:length(meta$spot)) {
+  repcount <- data.frame(plot = unique(meta$plot), count = 0)
+  for (i in 1:length(meta$plot)) {
       start <- tryCatch({
-          lubridate::ymd_hms(paste(meta[i, ][[device$day]], meta[i, ][[device$start]]))
+          lubridate::ymd_hms(paste(meta[i, ][[device$date]], meta[i, ][[device$start]]))
         }, warning = function(w){
           # print(w)
           if("All formats failed to parse. No formats found." %in% w){
@@ -30,7 +30,7 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
       int <- FUN(int)
     }
 
-    repcount[repcount$spot == meta[i, ][[device$spot]], ]$count <- repcount[repcount$spot == meta[i, ][[device$spot]], ]$count + 1
+    repcount[repcount$plot == meta[i, ][[device$plot]], ]$count <- repcount[repcount$plot == meta[i, ][[device$plot]], ]$count + 1
 
     offset <- meta[i,][[device$offset]] %>% stringr::str_split(":")
     offset <- as.numeric(offset[[1]])
@@ -52,9 +52,9 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
     preassure_value <- parse_var(a, meta[i, ], device$preassure) * device$preassure_factor
 
     hmr_data_tmp <- tibble::tibble(
-      spot = meta[i, ][[device$spot]], day =
-      as.character(meta[i, ][[device$day]]), rep =
-      repcount[repcount$spot == meta[i, ][[device$spot]], ]$count,
+      plot = meta[i, ][[device$plot]], date =
+      as.character(meta[i, ][[device$date]]), rep =
+      repcount[repcount$plot == meta[i, ][[device$plot]], ]$count,
       start = start,
       # start = as.character(lubridate::int_start(int)),
       V = device[["V"]], A = device[["A"]],

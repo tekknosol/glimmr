@@ -19,8 +19,8 @@
 #'   datapoints at the beginning and three datapoints at the end of the dataset.
 #' @param duration_count If TRUE, `end` is determined by the number of datapoints
 #'   within each measurement. If FALSE, `end` is treated as duration or point in time.
-#' @param spot (Default = "spot"). Column containing the ID of the measurement location.
-#' @param day (Default = "day"). Column containing the day of measurement. Format: "YYYY-MM-DD".
+#' @param plot (Default = "plot"). Column containing the ID of the measurement location.
+#' @param date (Default = "date"). Column containing the day of measurement. Format: "YYYY-MM-DD".
 #' @param start (Default = "start"). Column containing the start of measurement. Format: "HH:MM" or "HH:MM:SS".
 #' @param end (Default = "end"). Column containing the end of measurement. There are several options:
 #'
@@ -47,8 +47,8 @@ analyzer <- function(
   manual_temperature = NULL,
   offset = "offset",
   duration_count = FALSE,
-  spot = "spot",
-  day = "day",
+  plot = "plot",
+  date = "date",
   start = "start",
   end = "end",
   trimmer = NULL,
@@ -64,8 +64,8 @@ analyzer <- function(
     manual_temperature = manual_temperature,
     offset = offset,
     duration_count = duration_count,
-    spot = spot,
-    day = day,
+    plot = plot,
+    date = date,
     start = start,
     end = end,
     trimmer = new_setting(rlang::enquo(trimmer)),

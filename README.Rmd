@@ -51,7 +51,7 @@ Fluxes are reported in [mmol/m²/d] using linear model fitting and robust linear
 ```{r, eval = FALSE}
 # read data
 gasmet <- read_gasmet("path/to/gasmet_file.txt")
-meta <- read_csv("path/to/meta_file.csv")
+meta_gasmet <- read_csv("path/to/meta_file.csv")
 
 # create diagnostic plot(s)
 inspect_gasmet(gasmet, meta_gasmet)

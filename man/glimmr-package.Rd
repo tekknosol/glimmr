@@ -4,13 +4,14 @@
 \name{glimmr-package}
 \alias{glimmr}
 \alias{glimmr-package}
-\title{glimmr: Gas fLuxes and dynamIc chaMber MeasuRements}
+\title{glimmr: Gas Fluxes and Dynamic Chamber Measurements}
 \description{
 \if{html}{\figure{logo.png}{options: align='right'}}
 
-The glimmr package provides functions to convert high frequency concentration data
-obtained by chamber measurements into gasfluxes. Data recorded with GASMET and LosGatos devices can be
-processed automatically.
+provides functions to convert high frequency concentration data
+    obtained by chamber measurements into gasfluxes. Data recorded with GASMET
+    and LosGatos devices can be processed automatically. Furthermore, functions
+    for flux calculation using BLE are included.
 }
 \seealso{
 Useful links:

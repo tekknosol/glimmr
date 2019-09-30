@@ -5,8 +5,9 @@
 \title{LosGatos setup}
 \usage{
 analyzer_LosGatos(manual_temperature = NULL, offset = "offset",
-  duration_count = FALSE, spot = "spot", day = "day", start = "start",
-  end = "end", trimmer = trim_time, V = 0.01461, A = 0.098)
+  duration_count = FALSE, spot = "spot", day = "day",
+  start = "start", end = "end", trimmer = trim_time, V = 0.01461,
+  A = 0.098)
 }
 \arguments{
 \item{manual_temperature}{Column conatining an additional measured temperature.

@@ -5,8 +5,9 @@
 \title{GASMET setup}
 \usage{
 analyzer_GASMET(manual_temperature = "temp", offset = "offset",
-  duration_count = TRUE, spot = "spot", day = "day", start = "start",
-  end = 10, trimmer = NULL, V = 0.01461, A = 0.098)
+  duration_count = TRUE, spot = "spot", day = "day",
+  start = "start", end = 10, trimmer = NULL, V = 0.01461,
+  A = 0.098)
 }
 \arguments{
 \item{manual_temperature}{Column conatining an additional measured temperature.

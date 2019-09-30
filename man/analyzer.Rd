@@ -4,9 +4,10 @@
 \alias{analyzer}
 \title{Gas analyzer setup}
 \usage{
-analyzer(time_stamp = "timestamp", conc_columns = NULL, preassure = NULL,
-  preassure_factor = 1, temperature = NULL, manual_temperature = NULL,
-  offset = "offset", duration_count = FALSE, spot = "spot", day = "day",
+analyzer(time_stamp = "timestamp", conc_columns = NULL,
+  preassure = NULL, preassure_factor = 1, temperature = NULL,
+  manual_temperature = NULL, offset = "offset",
+  duration_count = FALSE, spot = "spot", day = "day",
   start = "start", end = "end", trimmer = NULL, V = 0.01461,
   A = 0.098)
 }

@@ -2,16 +2,17 @@
 % Please edit documentation in R/utility_functions.R
 \name{calc_k600}
 \alias{calc_k600}
-\title{Calculate k600}
+\title{Returns the gas transfer velocity (k600)}
 \usage{
 calc_k600(ws)
 }
 \arguments{
-\item{ws}{numeric; Windspeed m/s}
+\item{ws}{numeric; Windspeed in m/s}
 }
 \value{
-k600 based on windspeed
+Numeric value of gas exchange velocity (k600). Should be converted to
+desired gas with \code{\link{calc_kw}}
 }
 \description{
-Calculate k600
+Returns the gas transfer velocity (k600)
 }

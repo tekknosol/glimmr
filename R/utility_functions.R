@@ -44,11 +44,12 @@ calc.u10 <- function(ws) {
   return(u10)
 }
 
-#' Calculate k600
+#' Returns the gas transfer velocity (k600)
 #'
-#' @param ws numeric; Windspeed m/s
+#' @param ws numeric; Windspeed in m/s
 #'
-#' @return k600 based on windspeed
+#' @return Numeric value of gas exchange velocity (k600). Should be converted to
+#' desired gas with \code{\link{calc_kw}}
 calc_k600 <- function(ws) {
   # cole98
   k600 <- 0.215 * calc_u10(ws)^1.7 + 2.07
@@ -56,7 +57,8 @@ calc_k600 <- function(ws) {
   return(k600)
 }
 
-#' Calculate Gas transfer coefficient
+#' Returns the gas transfer coefficient for gas of interest based on different
+#' models.
 #'
 #' @param ws numeric; windspeed m/s
 #' @param wt numeric; water temperature °C
@@ -71,10 +73,14 @@ calc_k600 <- function(ws) {
 #'  }
 #'
 #'
-#' @return kW for the given parameters
-#' @references Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351
+#' @return Numeric value of gas transfer coefficient for the given parameters
+#' @references Wanninkhof, R., 2014. Relationship between wind speed and gas
+#' exchange over the ocean revisited. Limnology and Oceanography: Methods 12,
+#' 351–362. https://doi.org/10.4319/lom.2014.12.351
 #'
-#'   Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in a low-wind oligotrophic lake measured by the addition of SF6. Limnology and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
+#'   Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in
+#'   a low-wind oligotrophic lake measured by the addition of SF6. Limnology
+#'   and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
 #' @export
 #'
 calc_kW <- function(ws, wt, gas = "CO2", model = "wann14") {
@@ -127,7 +133,7 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
   return(kW)
 }
 
-#' Calculate Henry's constant
+#' Returns Henry's constant for gas of interest
 #'
 #' @param t numeric; temperature in °C
 #' @param gas character; Gas to calculate kH for. See 'Details'.
@@ -139,7 +145,7 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
 #'    \item CH4
 #'  }
 #'
-#' @return Henry's constant
+#' @return Numeric value of Henry's constant \out{H<sup>cp</sup>} (mol/(L*atm))
 #' @export
 #'
 calc_kH <- function(t, gas = "CO2") {
@@ -150,11 +156,11 @@ calc_kH <- function(t, gas = "CO2") {
   return(kH)
 }
 
-#' Convert flux units
+#' Performs unit conversion for gas fluxes
 #'
 #' @param flux numeric; Flux value in mmol/sqm/d or µMol/sqm/d
 #'
-#' @return Flux
+#' @return Numeric value of converted flux.
 #' @export
 #'
 day2sec <- function(flux) {

@@ -3,7 +3,7 @@
 \name{day2sec}
 \alias{day2sec}
 \alias{sec2day}
-\title{Convert flux units}
+\title{Performs unit conversion for gas fluxes}
 \usage{
 day2sec(flux)
 
@@ -13,8 +13,8 @@ sec2day(flux)
 \item{flux}{numeric; Flux value in mmol/sqm/d or µMol/sqm/d}
 }
 \value{
-Flux
+Numeric value of converted flux.
 }
 \description{
-Convert flux units
+Performs unit conversion for gas fluxes
 }

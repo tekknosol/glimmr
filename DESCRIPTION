@@ -11,7 +11,7 @@ Description: provides functions to convert high frequency concentration data
 Date: 2019-01-01
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
-Depends: R (>= 3.4.4)
+Depends: R (>= 3.4.0)
 URL: https://tekknosol.github.io/glimmr/, https://github.com/tekknosol/glimmr
 BugReports: https://github.com/tekknosol/glimmr/issues
 LazyData: true

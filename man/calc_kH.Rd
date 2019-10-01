@@ -2,7 +2,7 @@
 % Please edit documentation in R/utility_functions.R
 \name{calc_kH}
 \alias{calc_kH}
-\title{Calculate Henry's constant}
+\title{Returns Henry's constant for gas of interest}
 \usage{
 calc_kH(t, gas = "CO2")
 }
@@ -12,10 +12,10 @@ calc_kH(t, gas = "CO2")
 \item{gas}{character; Gas to calculate kH for. See 'Details'.}
 }
 \value{
-Henry's constant
+Numeric value of Henry's constant \out{H<sup>cp</sup>} (mol/(L*atm))
 }
 \description{
-Calculate Henry's constant
+Returns Henry's constant for gas of interest
 }
 \details{
 Currently supported gases:

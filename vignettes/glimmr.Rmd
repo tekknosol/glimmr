@@ -74,8 +74,8 @@ custom_analyzer <- analyzer(
   temperature = "AmbT_C",
   trimmer = trim_time,
   # define metadata structure
-  spot = "spot",
-  day = "day",
+  plot = "plot",
+  date = "date",
   start = "start",
   end = "end",
   #define chamber dimensions

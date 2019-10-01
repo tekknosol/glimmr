@@ -1,9 +1,27 @@
-#' Label axis for CO2 according to flux scale.
+#' Label ggplot2 axis according to temporal scale of gasflux
 #'
-#' @param time character; Timescale. See 'Details'.
 #'
-#' @return ggplot ylab object.
+#'
+#' @param time character; Either "sec" oder "day". See 'Details'.
+#'
+#' @return Returns \code{\link[ggplot2]{ylab}} object
+#' @details "sec" returns expression(## ~ flux ~ ("µ" ~ mol ~ m^-2 ~ s^-1))),
+#'
+#'     "day" returns expression(## ~ flux ~ (mmol ~ m^-2 ~ d^-1))),
+#'
+#'     where ## is either "Gas", "\out{CO<sub>2</sub>}", or "\out{CH<sub>4</sub>}"
 #' @export
+#' @examples
+#' library(ggplot2)
+#'
+#' df <- data.frame(
+#'     plot = rep(c("A", "B", "C"), each = 20),
+#'     flux = c(rnorm(20), rnorm(20), rnorm(20))
+#' )
+#'
+#' ggplot(df, aes(plot, flux))+
+#' geom_boxplot()+
+#' axis.flux.gas("day")
 #'
 axis.flux.co2 <- function(time) {
   time <- tolower(time)
@@ -12,13 +30,11 @@ axis.flux.co2 <- function(time) {
     stop("Time not supported")
   }
   axis <- switch(time,
-    sec = ggplot2::ylab(expression(CO[2] ~ Flux ~ "\u00B5" ~ mol ~ m^-2 ~ s^-1)),
-    day = ggplot2::ylab(expression(CO[2] ~ Flux ~ mmol ~ m^-2 ~ d^-1))
+    sec = ggplot2::ylab(expression(CO[2] ~ flux ~ ("\u00B5" ~ mol ~ m^-2 ~ s^-1))),
+    day = ggplot2::ylab(expression(CO[2] ~ flux ~ (mmol ~ m^-2 ~ d^-1)))
   )
 }
 
-#' Label axis for arbitrary gases according to flux scale.
-#'
 #' @rdname axis.flux.co2
 #' @export
 axis.flux.gas <- function(time) {
@@ -28,14 +44,12 @@ axis.flux.gas <- function(time) {
     stop("Time not supported")
   }
   axis <- switch(time,
-    sec = ggplot2::ylab(expression(Gas ~ Flux ~ "\u00B5" ~ mol ~ m^-2 ~ s^-1)),
-    day = ggplot2::ylab(expression(Gas ~ Flux ~ mmol ~ m^-2 ~ d^-1))
+    sec = ggplot2::ylab(expression(Gas ~ flux ~ ("\u00B5" ~ mol ~ m^-2 ~ s^-1))),
+    day = ggplot2::ylab(expression(Gas ~ flux ~ (mmol ~ m^-2 ~ d^-1)))
   )
 }
 
 
-#' Label axis for CH4 according to flux scale.
-#'
 #' @rdname axis.flux.co2
 #' @export
 axis.flux.ch4 <- function(time) {
@@ -44,7 +58,8 @@ axis.flux.ch4 <- function(time) {
   if (!time %in% supported_times) {
     stop("Time not supported")
   }
-  axis <- switch(time, sec = ggplot2::ylab(expression(CH[4] ~ Flux ~ "\u00B5" ~ mol ~ m^-2 ~ s^-1)),
-  day = ggplot2::ylab(expression(CH[4] ~ Flux ~ mmol ~ m^-2 ~ d^-1))
+  axis <- switch(time,
+    sec = ggplot2::ylab(expression(CH[4] ~ flux ~ ("\u00B5" ~ mol ~ m^-2 ~ s^-1))),
+    day = ggplot2::ylab(expression(CH[4] ~ flux ~ (mmol ~ m^-2 ~ d^-1)))
   )
 }

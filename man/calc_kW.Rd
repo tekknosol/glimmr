@@ -2,7 +2,8 @@
 % Please edit documentation in R/utility_functions.R
 \name{calc_kW}
 \alias{calc_kW}
-\title{Calculate Gas transfer coefficient}
+\title{Returns the gas transfer coefficient for gas of interest based on different
+models.}
 \usage{
 calc_kW(ws, wt, gas = "CO2", model = "wann14")
 }
@@ -16,10 +17,11 @@ calc_kW(ws, wt, gas = "CO2", model = "wann14")
 \item{model}{character; model to calculate kW. See 'Details'}
 }
 \value{
-kW for the given parameters
+Numeric value of gas transfer coefficient for the given parameters
 }
 \description{
-Calculate Gas transfer coefficient
+Returns the gas transfer coefficient for gas of interest based on different
+models.
 }
 \details{
 Currently these models are supported:
@@ -30,7 +32,11 @@ Currently these models are supported:
  }
 }
 \references{
-Wanninkhof, R., 2014. Relationship between wind speed and gas exchange over the ocean revisited. Limnology and Oceanography: Methods 12, 351–362. https://doi.org/10.4319/lom.2014.12.351
+Wanninkhof, R., 2014. Relationship between wind speed and gas
+exchange over the ocean revisited. Limnology and Oceanography: Methods 12,
+351–362. https://doi.org/10.4319/lom.2014.12.351
 
-  Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in a low-wind oligotrophic lake measured by the addition of SF6. Limnology and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
+  Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in
+  a low-wind oligotrophic lake measured by the addition of SF6. Limnology
+  and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
 }

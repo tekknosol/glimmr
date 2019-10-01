@@ -7,7 +7,7 @@
 analyzer(time_stamp = "timestamp", conc_columns = NULL,
   preassure = NULL, preassure_factor = 1, temperature = NULL,
   manual_temperature = NULL, offset = "offset",
-  duration_count = FALSE, spot = "spot", day = "day",
+  duration_count = FALSE, plot = "plot", date = "date",
   start = "start", end = "end", trimmer = NULL, V = 0.01461,
   A = 0.098)
 }
@@ -37,9 +37,9 @@ datapoints at the beginning and three datapoints at the end of the dataset.}
 \item{duration_count}{If TRUE, `end` is determined by the number of datapoints
 within each measurement. If FALSE, `end` is treated as duration or point in time.}
 
-\item{spot}{(Default = "spot"). Column containing the ID of the measurement location.}
+\item{plot}{(Default = "plot"). Column containing the ID of the measurement location.}
 
-\item{day}{(Default = "day"). Column containing the day of measurement. Format: "YYYY-MM-DD".}
+\item{date}{(Default = "date"). Column containing the day of measurement. Format: "YYYY-MM-DD".}
 
 \item{start}{(Default = "start"). Column containing the start of measurement. Format: "HH:MM" or "HH:MM:SS".}
 
@@ -64,5 +64,6 @@ within each measurement. If FALSE, `end` is treated as duration or point in time
 An object of clas lyzr.
 }
 \description{
-Gas analyzer setup
+Analyzer mappings describe how columns of meta file are mapped to properties
+of the gas analyzer
 }

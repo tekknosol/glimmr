@@ -34,8 +34,8 @@
 #'
 #' @format A data frame with 1 rows and 19 variables:
 #' \describe{
-#'   \item{spot}{ID of the measurement spot}
-#'   \item{day}{Day of the measurement}
+#'   \item{plot}{ID of the measurement spot}
+#'   \item{date}{Day of the measurement}
 #'   \item{start}{}
 #'   \item{end}{}
 #'   \item{t_start}{}
@@ -50,8 +50,8 @@
 #'
 #' @format A data frame with 3 rows and 19 variables:
 #' \describe{
-#'   \item{spot}{ID of the measurement spot}
-#'   \item{day}{Day of the measurement}
+#'   \item{plot}{ID of the measurement spot}
+#'   \item{date}{Day of the measurement}
 #'   \item{start}{}
 #'   \item{temp}{}
 #'   \item{offset}{}

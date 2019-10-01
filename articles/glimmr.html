@@ -18,7 +18,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Compute gasfluxes from dynamic chamber measurements or BLE">
 <meta property="og:description" content="">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://tekknosol.github.io/glimmr/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -125,7 +125,7 @@
 <p>The structure of corresponding metdata is defined as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">meta_gasmet</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 5</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt;   spot  day        start     temp offset</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt;   plot  date       start     temp offset</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; </span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; 1 plotA 2017-04-12 09:01:49   6.9 0:0   </span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; 2 plotA 2017-04-12 09:08:56   6.9 0:0   </span></a>
@@ -136,7 +136,7 @@
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">meta_losgatos</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; # A tibble: 1 x 7</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;   spot  day        start    end      t_start t_end offset</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;   plot  date       start    end      t_start t_end offset</span></a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;   &lt;chr&gt; &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; </span></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 1 plotA 2018-05-23 07:08:00 07:13:00      20    22 0:0</span></a></code></pre></div>
 </div>
@@ -155,8 +155,8 @@
 <a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="dt">temperature =</span> <span class="st">"AmbT_C"</span>,</a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">  <span class="dt">trimmer =</span> trim_time,</a>
 <a class="sourceLine" id="cb3-11" data-line-number="11">  <span class="co"># define metadata structure</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">  <span class="dt">spot =</span> <span class="st">"spot"</span>,</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">  <span class="dt">day =</span> <span class="st">"day"</span>,</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">  <span class="dt">plot =</span> <span class="st">"plot"</span>,</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">  <span class="dt">date =</span> <span class="st">"date"</span>,</a>
 <a class="sourceLine" id="cb3-14" data-line-number="14">  <span class="dt">start =</span> <span class="st">"start"</span>,</a>
 <a class="sourceLine" id="cb3-15" data-line-number="15">  <span class="dt">end =</span> <span class="st">"end"</span>,</a>
 <a class="sourceLine" id="cb3-16" data-line-number="16">  <span class="co">#define chamber dimensions</span></a>

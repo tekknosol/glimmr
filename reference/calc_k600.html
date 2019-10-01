@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate k600 — calc_k600 • glimmr</title>
+<title>Returns the gas transfer velocity (k600) — calc_k600 • glimmr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,9 +42,9 @@
 
 
 
-<meta property="og:title" content="Calculate k600 — calc_k600" />
-<meta property="og:description" content="Calculate k600" />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:title" content="Returns the gas transfer velocity (k600) — calc_k600" />
+<meta property="og:description" content="Returns the gas transfer velocity (k600)" />
+<meta property="og:image" content="https://tekknosol.github.io/glimmr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -131,13 +131,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate k600</h1>
+    <h1>Returns the gas transfer velocity (k600)</h1>
     <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/utility_functions.R'><code>R/utility_functions.R</code></a></small>
     <div class="hidden name"><code>calc_k600.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate k600</p>
+    <p>Returns the gas transfer velocity (k600)</p>
     </div>
 
     <pre class="usage"><span class='fu'>calc_k600</span>(<span class='no'>ws</span>)</pre>
@@ -147,13 +147,14 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ws</th>
-      <td><p>numeric; Windspeed m/s</p></td>
+      <td><p>numeric; Windspeed in m/s</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>k600 based on windspeed</p>
+    <p>Numeric value of gas exchange velocity (k600). Should be converted to
+desired gas with <code><a href='calc_kW.html'>calc_kW</a></code></p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

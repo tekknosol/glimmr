@@ -45,7 +45,7 @@
 <meta property="og:title" content="LosGatos setup — analyzer_LosGatos" />
 <meta property="og:description" content="Explicitly create LosGatos setup. Usually you will not call this
 function, but will instead use the wrapper process_losgatos()." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://tekknosol.github.io/glimmr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -143,7 +143,7 @@ function, but will instead use the wrapper <a href='process_chamber.html'>proces
     </div>
 
     <pre class="usage"><span class='fu'>analyzer_LosGatos</span>(<span class='kw'>manual_temperature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>offset</span> <span class='kw'>=</span> <span class='st'>"offset"</span>,
-  <span class='kw'>duration_count</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>spot</span> <span class='kw'>=</span> <span class='st'>"spot"</span>, <span class='kw'>day</span> <span class='kw'>=</span> <span class='st'>"day"</span>,
+  <span class='kw'>duration_count</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='st'>"plot"</span>, <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
   <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"start"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"end"</span>, <span class='kw'>trimmer</span> <span class='kw'>=</span> <span class='no'>trim_time</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='fl'>0.01461</span>,
   <span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>0.098</span>)</pre>
 
@@ -170,12 +170,12 @@ datapoints at the beginning and three datapoints at the end of the dataset.</p><
 within each measurement. If FALSE, `end` is treated as duration or point in time.</p></td>
     </tr>
     <tr>
-      <th>spot</th>
-      <td><p>(Default = "spot"). Column containing the ID of the measurement location.</p></td>
+      <th>plot</th>
+      <td><p>(Default = "plot"). Column containing the ID of the measurement location.</p></td>
     </tr>
     <tr>
-      <th>day</th>
-      <td><p>(Default = "day"). Column containing the day of measurement. Format: "YYYY-MM-DD".</p></td>
+      <th>date</th>
+      <td><p>(Default = "date"). Column containing the day of measurement. Format: "YYYY-MM-DD".</p></td>
     </tr>
     <tr>
       <th>start</th>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Label axis for CO2 according to flux scale. — axis.flux.co2 • glimmr</title>
+<title>Label ggplot2 axis according to temporal scale of gasflux — axis.flux.co2 • glimmr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,11 +42,9 @@
 
 
 
-<meta property="og:title" content="Label axis for CO2 according to flux scale. — axis.flux.co2" />
-<meta property="og:description" content="Label axis for CO2 according to flux scale.
-Label axis for arbitrary gases according to flux scale.
-Label axis for CH4 according to flux scale." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:title" content="Label ggplot2 axis according to temporal scale of gasflux — axis.flux.co2" />
+<meta property="og:description" content="Label ggplot2 axis according to temporal scale of gasflux" />
+<meta property="og:image" content="https://tekknosol.github.io/glimmr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,15 +131,13 @@ Label axis for CH4 according to flux scale." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Label axis for CO2 according to flux scale.</h1>
+    <h1>Label ggplot2 axis according to temporal scale of gasflux</h1>
     <small class="dont-index">Source: <a href='https://github.com/tekknosol/glimmr/blob/master/R/ggplot_shortcuts.R'><code>R/ggplot_shortcuts.R</code></a></small>
     <div class="hidden name"><code>axis.flux.co2.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Label axis for CO2 according to flux scale.</p>
-<p>Label axis for arbitrary gases according to flux scale.</p>
-<p>Label axis for CH4 according to flux scale.</p>
+    <p>Label ggplot2 axis according to temporal scale of gasflux</p>
     </div>
 
     <pre class="usage"><span class='fu'>axis.flux.co2</span>(<span class='no'>time</span>)
@@ -155,20 +151,39 @@ Label axis for CH4 according to flux scale." />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>time</th>
-      <td><p>character; Timescale. See 'Details'.</p></td>
+      <td><p>character; Either "sec" oder "day". See 'Details'.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>ggplot ylab object.</p>
+    <p>Returns <code><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></code> object</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>"sec" returns expression(## ~ flux ~ ("µ" ~ mol ~ m^-2 ~ s^-1))),</p>
+<p>"day" returns expression(## ~ flux ~ (mmol ~ m^-2 ~ d^-1))),</p>
+<p>where ## is either "Gas", "CO<sub>2</sub>", or "CH<sub>4</sub>"</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+    <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>20</span>),
+    <span class='kw'>flux</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>20</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>20</span>), <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>20</span>))
+)
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>df</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='no'>plot</span>, <span class='no'>flux</span>))+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span>()+
+<span class='fu'>axis.flux.gas</span>(<span class='st'>"day"</span>)</div><div class='img'><img src='axis.flux.co2-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

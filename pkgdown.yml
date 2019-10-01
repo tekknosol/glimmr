@@ -4,4 +4,7 @@ pkgdown_sha: ~
 articles:
   glimmr: glimmr.html
   lyzr: lyzr.html
+urls:
+  reference: https://tekknosol.github.io/glimmr//reference
+  article: https://tekknosol.github.io/glimmr//articles
 

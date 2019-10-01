@@ -38,6 +38,25 @@
 #' @param A Area of the chamber.
 #'
 #' @return An object of clas lyzr.
+#' @examples
+#' # setup analyzer
+#' custom_analyzer <- analyzer(
+#'   #define datastructure
+#'   time_stamp = "Time",
+#'   conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
+#'   preassure = "GasP_torr",
+#'   preassure_factor = 1.33322,
+#'   temperature = "AmbT_C",
+#'   trimmer = trim_time,
+#'   # define metadata structure
+#'   plot = "plot",
+#'   date = "date",
+#'   start = "start",
+#'   end = "end",
+#'   #define chamber dimensions
+#'   V = 0.01461,
+#'   A = 0.098
+#' )
 #' @export
 analyzer <- function(
   time_stamp = "timestamp",

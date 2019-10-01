@@ -21,3 +21,9 @@ A data frame.
 \description{
 Read a LosGatos file.
 }
+\examples{
+\dontrun{
+ losgatos <- read_losgatos("path/to/losgatos/dir")
+ losgatos <- read_losgatos("path/to/losgatos_file.txt")
+}
+}

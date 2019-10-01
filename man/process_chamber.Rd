@@ -33,3 +33,39 @@ A data frame.
 \code{\link{process_losgatos}} and \code{\link{process_gasmet}} are special cases of the general
 \code{\link{process_chamber}} with preconfigured settings.
 }
+\examples{
+# Process custom analyzer
+custom_analyzer <- analyzer(
+  #define datastructure
+  time_stamp = "Time",
+  conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
+  preassure = "GasP_torr",
+  preassure_factor = 1.33322,
+  temperature = "AmbT_C",
+  trimmer = trim_time,
+  # define metadata structure
+  plot = "plot",
+  date = "date",
+  start = "start",
+  end = "end",
+  #define chamber dimensions
+  V = 0.01461,
+  A = 0.098
+)
+
+# Compute fluxes
+cc_flux <- process_chamber(
+  # specify data
+  data = losgatos,
+  meta = meta_losgatos,
+  #specify analyzer
+  analyzer = custom_analyzer
+)
+
+# Process LosGatos
+lg_flux <- process_losgatos(losgatos, meta_losgatos)
+
+# Process GASMET
+gm_flux <- process_gasmet(gasmet, meta_gasmet)
+
+}

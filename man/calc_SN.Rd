@@ -17,3 +17,10 @@ test
 \description{
 Calculate Schmidt Number
 }
+\examples{
+watertemperature <- rnorm(5, mean = 20)
+
+calc_SN(watertemperature)
+
+calc_SN(watertemperature, "ch4")
+}

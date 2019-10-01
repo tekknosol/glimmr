@@ -5,6 +5,12 @@
 #' @param gas character; Gas to calculate SN for. See 'Details'.
 #'
 #' @return test
+#' @examples
+#' watertemperature <- rnorm(5, mean = 20)
+#'
+#' calc_SN(watertemperature)
+#'
+#' calc_SN(watertemperature, "ch4")
 #' @export
 #'
 calc_SN <- function(wt, gas = "CO2") {
@@ -81,6 +87,15 @@ calc_k600 <- function(ws) {
 #'   Cole, J.J., Caraco, N.F., 1998. Atmospheric exchange of carbon dioxide in
 #'   a low-wind oligotrophic lake measured by the addition of SF6. Limnology
 #'   and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647
+#' @examples
+#' # Windpseed in m/s
+#' windspeed <- c(2, 4.3, 1.8)
+#' # Water temperature in °C
+#' watertemperature <- c(18, 21, 19.3)
+#'
+#' # Calculate gas transfer coefficient
+#' calc_kW(windspeed, watertemperature)
+#'
 #' @export
 #'
 calc_kW <- function(ws, wt, gas = "CO2", model = "wann14") {
@@ -146,6 +161,14 @@ calc.kW <- function(ws, wt, gas = "co2", model = "wann14") {
 #'  }
 #'
 #' @return Numeric value of Henry's constant \out{H<sup>cp</sup>} (mol/(L*atm))
+#'
+#' @examples
+#' watertemperature <- rnorm(5, mean = 20)
+#'
+#' calc_kH(watertemperature)
+#'
+#' calc_kH(watertemperature, "ch4")
+#'
 #' @export
 #'
 calc_kH <- function(t, gas = "CO2") {

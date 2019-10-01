@@ -188,6 +188,15 @@ exchange over the ocean revisited. Limnology and Oceanography: Methods 12,
   a low-wind oligotrophic lake measured by the addition of SF6. Limnology
   and Oceanography 43, 647–656. https://doi.org/10.4319/lo.1998.43.4.0647</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Windpseed in m/s</span>
+<span class='no'>windspeed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4.3</span>, <span class='fl'>1.8</span>)
+<span class='co'># Water temperature in °C</span>
+<span class='no'>watertemperature</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>18</span>, <span class='fl'>21</span>, <span class='fl'>19.3</span>)
+
+<span class='co'># Calculate gas transfer coefficient</span>
+<span class='fu'>calc_kW</span>(<span class='no'>windspeed</span>, <span class='no'>watertemperature</span>)</div><div class='output co'>#&gt; [1] 1.488888 7.426978 1.246858</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,6 +205,7 @@ exchange over the ocean revisited. Limnology and Oceanography: Methods 12,
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

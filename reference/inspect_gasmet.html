@@ -142,7 +142,9 @@
 
     <pre class="usage"><span class='fu'>inspect_gasmet</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>)
 
-<span class='fu'>inspect_losgatos</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>)</pre>
+<span class='fu'>inspect_losgatos</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>)
+
+<span class='fu'>inspect_chamber</span>(<span class='no'>fluxdata</span>, <span class='no'>meta</span>, <span class='no'>analyzer</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,6 +157,11 @@
     <tr>
       <th>meta</th>
       <td><p>Data frame. Metadata containing required informations.</p></td>
+    </tr>
+    <tr>
+      <th>analyzer</th>
+      <td><p>Set of setup mappings created by <code><a href='analyzer.html'>analyzer</a></code>. The specified name
+value pairs will override default settings.</p></td>
     </tr>
     </table>
 

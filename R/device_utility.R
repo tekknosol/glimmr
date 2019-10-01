@@ -251,13 +251,13 @@ process_flux <- function(hmr_data, meta, device){
 
 validate_meta_colnames <- function(meta, device){
   if(!device$plot %in% colnames(meta)){
-    stop("Column defined for plot ('", device$plot, "') not found in meta file", call. = FALSE)
+    stop("Column defined for plot ID ('", device$plot, "') not found in meta file", call. = FALSE)
   }
   if(!device$start %in% colnames(meta)){
-    stop("Column defined for start ('", device$start, "') not found in meta file", call. = FALSE)
+    stop("Column defined for start of measurement ('", device$start, "') not found in meta file", call. = FALSE)
   }
   if(!device$duration_count & is.character(device$end) & !device$end %in% colnames(meta)){
-    stop("Column defined for end ('", device$end, "') not found in meta file", call. = FALSE)
+    stop("Column defined for end of measurement ('", device$end, "') not found in meta file", call. = FALSE)
   }
 }
 

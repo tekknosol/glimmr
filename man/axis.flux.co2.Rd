@@ -4,7 +4,7 @@
 \alias{axis.flux.co2}
 \alias{axis.flux.gas}
 \alias{axis.flux.ch4}
-\title{Label axis for CO2 according to flux scale.}
+\title{Label ggplot2 axis according to temporal scale of gasflux}
 \usage{
 axis.flux.co2(time)
 
@@ -13,15 +13,31 @@ axis.flux.gas(time)
 axis.flux.ch4(time)
 }
 \arguments{
-\item{time}{character; Timescale. See 'Details'.}
+\item{time}{character; Either "sec" oder "day". See 'Details'.}
 }
 \value{
-ggplot ylab object.
+Returns \code{\link[ggplot2]{ylab}} object
 }
 \description{
-Label axis for CO2 according to flux scale.
+Label ggplot2 axis according to temporal scale of gasflux
+}
+\details{
+"sec" returns expression(## ~ flux ~ ("µ" ~ mol ~ m^-2 ~ s^-1))),
 
-Label axis for arbitrary gases according to flux scale.
+    "day" returns expression(## ~ flux ~ (mmol ~ m^-2 ~ d^-1))),
 
-Label axis for CH4 according to flux scale.
+    where ## is either "Gas", "\out{CO<sub>2</sub>}", or "\out{CH<sub>4</sub>}"
+}
+\examples{
+library(ggplot2)
+
+df <- data.frame(
+    plot = rep(c("A", "B", "C"), each = 20),
+    flux = c(rnorm(20), rnorm(20), rnorm(20))
+)
+
+ggplot(df, aes(plot, flux))+
+geom_boxplot()+
+axis.flux.gas("day")
+
 }

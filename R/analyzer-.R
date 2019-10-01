@@ -1,6 +1,7 @@
 #' Gas analyzer setup
 #'
-#'
+#' Analyzer mappings describe how columns of meta file are mapped to properties
+#' of the gas analyzer
 #'
 #' @param time_stamp Timestamp
 #' @param conc_columns A named vector declaring the columns containing the

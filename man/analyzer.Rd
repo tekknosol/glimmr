@@ -64,5 +64,6 @@ within each measurement. If FALSE, `end` is treated as duration or point in time
 An object of clas lyzr.
 }
 \description{
-Gas analyzer setup
+Analyzer mappings describe how columns of meta file are mapped to properties
+of the gas analyzer
 }

@@ -31,6 +31,16 @@ Currently these models are supported:
    \item COLE98: Cole and Caraco (1998)
  }
 }
+\examples{
+# Windpseed in m/s
+windspeed <- c(2, 4.3, 1.8)
+# Water temperature in °C
+watertemperature <- c(18, 21, 19.3)
+
+# Calculate gas transfer coefficient
+calc_kW(windspeed, watertemperature)
+
+}
 \references{
 Wanninkhof, R., 2014. Relationship between wind speed and gas
 exchange over the ocean revisited. Limnology and Oceanography: Methods 12,

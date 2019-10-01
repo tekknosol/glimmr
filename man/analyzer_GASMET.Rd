@@ -48,5 +48,5 @@ within each measurement. If FALSE, `end` is treated as duration or point in time
 }
 \description{
 Explicitly create GASMET setup. Usually you will not call this
-  function, but will instead use the wrapper [process_gasmet()]
+  function, but will instead use the wrapper \code{\link{process_gasmet}}
 }

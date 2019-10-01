@@ -15,3 +15,9 @@ A data frame.
 \description{
 Read a GASMET file.
 }
+\examples{
+\dontrun{
+ gasmet <- read_gasmet("path/to/gasmet.txt")
+}
+
+}

@@ -25,3 +25,11 @@ Currently supported gases:
    \item CH4
  }
 }
+\examples{
+watertemperature <- rnorm(5, mean = 20)
+
+calc_kH(watertemperature)
+
+calc_kH(watertemperature, "ch4")
+
+}

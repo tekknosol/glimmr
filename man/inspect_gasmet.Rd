@@ -3,17 +3,23 @@
 \name{inspect_gasmet}
 \alias{inspect_gasmet}
 \alias{inspect_losgatos}
+\alias{inspect_chamber}
 \title{Show plots for every measurement}
 \usage{
 inspect_gasmet(fluxdata, meta)
 
 inspect_losgatos(fluxdata, meta)
+
+inspect_chamber(fluxdata, meta, analyzer)
 }
 \arguments{
 \item{fluxdata}{A data frame with recorded data. Either loaded with
 \code{\link{read_gasmet}} or \code{\link{read_losgatos}}.}
 
 \item{meta}{Data frame. Metadata containing required informations.}
+
+\item{analyzer}{Set of setup mappings created by \code{\link{analyzer}}. The specified name
+value pairs will override default settings.}
 }
 \value{
 A series of plots

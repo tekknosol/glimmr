@@ -3,6 +3,12 @@
 #' @param file Path to a file
 #'
 #' @return A data frame.
+#'
+#' @examples
+#' \dontrun{
+#'  gasmet <- read_gasmet("path/to/gasmet.txt")
+#' }
+#'
 #' @export
 #'
 read_gasmet <- function(file) {
@@ -49,6 +55,11 @@ read_gasmet <- function(file) {
 #' @param ... additional parameters passed to read_csv()
 #'
 #' @return A data frame.
+#' @examples
+#' \dontrun{
+#'  losgatos <- read_losgatos("path/to/losgatos/dir")
+#'  losgatos <- read_losgatos("path/to/losgatos_file.txt")
+#' }
 #' @export
 #'
 read_losgatos <- function(path, format = "dmy", clean_dir = FALSE, ...) {
@@ -126,8 +137,7 @@ get_losgatos_files <- function(path) {
 
 #' Show plots for every measurement
 #'
-#' @param fluxdata A data frame with recorded data. Either loaded with
-#'   \code{\link{read_gasmet}} or \code{\link{read_losgatos}}.
+#' @param fluxdata A data frame with recorded data
 #' @inheritParams process_chamber
 #'
 #' @return A series of plots
@@ -152,6 +162,9 @@ inspect_losgatos <- function(fluxdata, meta) {
   invisible(fluxdata)
 }
 
+#' @rdname inspect_gasmet
+#' @export
+#'
 inspect_chamber <- function(fluxdata, meta, analyzer){
 
   df <- process_chamber(fluxdata, meta, analyzer, pre = TRUE)

@@ -48,5 +48,5 @@ within each measurement. If FALSE, `end` is treated as duration or point in time
 }
 \description{
 Explicitly create LosGatos setup. Usually you will not call this
-function, but will instead use the wrapper \link[=process_chamber]{process_losgatos()}.
+function, but will instead use the wrapper \code{\link{process_losgatos}}.
 }

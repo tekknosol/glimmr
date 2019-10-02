@@ -49,7 +49,7 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
     } else{
       temp_value <- parse_var(a, meta[i, ], device$manual_temperature)
     }
-    preassure_value <- parse_var(a, meta[i, ], device$preassure) * device$preassure_factor
+    pressure_value <- parse_var(a, meta[i, ], device$pressure) * device$pressure_factor
 
     hmr_data_tmp <- tibble::tibble(
       plot = meta[i, ][[device$plot]], date =
@@ -69,7 +69,7 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
       if (inspect == TRUE){
         value <- a[[col]]
       } else {
-        value <- ppm2conc(a %>% dplyr::pull(!!col), temp_value, preassure_value)
+        value <- ppm2conc(a %>% dplyr::pull(!!col), temp_value, pressure_value)
       }
       hmr_data_tmp <- hmr_data_tmp %>%
         tibble::add_column(!!colname := value)
@@ -85,8 +85,14 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 
 #' Calculate gasfluxes from dynamic chamber measurement
 #'
-#' \code{\link{process_losgatos}} and \code{\link{process_gasmet}} are special cases of the general
-#' \code{\link{process_chamber}} with preconfigured settings.
+#' \code{\link{process_losgatos}} and \code{\link{process_gasmet}} are special
+#' cases of the general \code{\link{process_chamber}} with preconfigured
+#' settings.
+#'
+#' Data from gas analyzer is split into chunks according to entries in meta
+#' files.
+#' For each chunk, flux is calculated by fitting linear models and robust
+#' linear models (\code{\link[robust]{lmRob}}).
 #'
 #' @param data Data frame. Recorded data from device.
 #' @param meta Data frame. Metadata containing required informations.
@@ -97,16 +103,23 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 #'   flux processing will be skipped and preprocessed data frame will be
 #'   returned.
 #'
-#' @return A data frame.
+#' @return A tibble
+#' \itemize{
+#'   \item F_LM: Flux (linear model)
+#'   \item LM_r2: R² of linear model fit
+#'   \item F_RLM: Flux (robust linear model)
+#'   \item RLM_r2: R² of robust linear model fit
+#' }
 #' @aliases process_losgatos
 #' @examples
 #' # Process custom analyzer
+#' # see `vignette("lyzr")` for more details about the options
 #' custom_analyzer <- analyzer(
 #'   #define datastructure
 #'   time_stamp = "Time",
 #'   conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
-#'   preassure = "GasP_torr",
-#'   preassure_factor = 1.33322,
+#'   pressure = "GasP_torr",
+#'   pressure_factor = 1.33322,
 #'   temperature = "AmbT_C",
 #'   trimmer = trim_time,
 #'   # define metadata structure
@@ -130,6 +143,8 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
 #'
 #' # Process LosGatos
 #' lg_flux <- process_losgatos(losgatos, meta_losgatos)
+#' # Process LosGatos with custom chamber dimensions
+#' lg_flux <- process_losgatos(losgatos, meta_losgatos, V = 2, A = 3)
 #'
 #' # Process GASMET
 #' gm_flux <- process_gasmet(gasmet, meta_gasmet)

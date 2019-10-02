@@ -185,9 +185,8 @@ inspect_chamber <- function(fluxdata, meta, analyzer){
 inspect_fluxdata <- function(df) {
   Time <- NULL
   concentration <- NULL
-  spot <- NULL
   for (i in unique(df$plot)) {
-    print(ggplot2::ggplot(df %>% dplyr::filter(plot == i),
+    print(ggplot2::ggplot(df %>% dplyr::filter(.data$plot == i),
       ggplot2::aes(Time * 60, concentration)) +
       ggplot2::geom_point() +
       ggplot2::geom_smooth(method = robust::lmRob, se = FALSE, ggplot2::aes(linetype = "RLM"), color="black", size = .5) +

@@ -6,8 +6,8 @@
 #' @param time_stamp Timestamp
 #' @param conc_columns A named vector declaring the columns containing the
 #'   actual mixing rations. E.g. `c(CO2  = "CO2")`.
-#' @param preassure Column containing the atmospheric preasure in mbar.
-#' @param preassure_factor If preasure is provided in a different unit than
+#' @param pressure Column containing the atmospheric preasure in mbar.
+#' @param pressure_factor If preasure is provided in a different unit than
 #'   mbar, a conversion factor can be specified.
 #' @param temperature Column containing the temperature in °C.
 #' @param manual_temperature Column conatining an additional measured temperature.
@@ -44,8 +44,8 @@
 #'   #define datastructure
 #'   time_stamp = "Time",
 #'   conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
-#'   preassure = "GasP_torr",
-#'   preassure_factor = 1.33322,
+#'   pressure = "GasP_torr",
+#'   pressure_factor = 1.33322,
 #'   temperature = "AmbT_C",
 #'   trimmer = trim_time,
 #'   # define metadata structure
@@ -61,8 +61,8 @@
 analyzer <- function(
   time_stamp = "timestamp",
   conc_columns = NULL,
-  preassure = NULL,
-  preassure_factor = 1,
+  pressure = NULL,
+  pressure_factor = 1,
   temperature = NULL,
   manual_temperature = NULL,
   offset = "offset",
@@ -78,8 +78,8 @@ analyzer <- function(
   obj <- list(
     time_stamp = time_stamp,
     conc_columns = conc_columns,
-    preassure = preassure,
-    preassure_factor = preassure_factor,
+    pressure = pressure,
+    pressure_factor = pressure_factor,
     temperature = temperature,
     manual_temperature = manual_temperature,
     offset = offset,
@@ -138,6 +138,6 @@ print.lyzr <- function(x, ...){
 validate.lyzr <- function(lyzr){
   if (is.null(lyzr$duration_count)) lyzr$duration_count <- FALSE
   if (is.null(lyzr$offset)) lyzr$offset <- "0:0"
-  if (is.null(lyzr$preassure_factor)) lyzr$preassure_factor <- 1
+  if (is.null(lyzr$pressure_factor)) lyzr$pressure_factor <- 1
   lyzr
 }

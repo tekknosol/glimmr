@@ -29,8 +29,8 @@ test_that("Chamber", {
     #define datastructure
     time_stamp = "Time",
     conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
-    preassure = "GasP_torr",
-    preassure_factor = 1.33322,
+    pressure = "GasP_torr",
+    pressure_factor = 1.33322,
     temperature = "AmbT_C",
     trimmer = trim_time,
     # define metadata structure

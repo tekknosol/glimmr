@@ -27,20 +27,34 @@ returned.}
 \item{...}{additional parameters.}
 }
 \value{
-A data frame.
+A tibble
+\itemize{
+  \item F_LM: Flux (linear model)
+  \item LM_r2: R² of linear model fit
+  \item F_RLM: Flux (robust linear model)
+  \item RLM_r2: R² of robust linear model fit
+}
 }
 \description{
-\code{\link{process_losgatos}} and \code{\link{process_gasmet}} are special cases of the general
-\code{\link{process_chamber}} with preconfigured settings.
+\code{\link{process_losgatos}} and \code{\link{process_gasmet}} are special
+cases of the general \code{\link{process_chamber}} with preconfigured
+settings.
+}
+\details{
+Data from gas analyzer is split into chunks according to entries in meta
+files.
+For each chunk, flux is calculated by fitting linear models and robust
+linear models (\code{\link[robust]{lmRob}}).
 }
 \examples{
 # Process custom analyzer
+# see `vignette("lyzr")` for more details about the options
 custom_analyzer <- analyzer(
   #define datastructure
   time_stamp = "Time",
   conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
-  preassure = "GasP_torr",
-  preassure_factor = 1.33322,
+  pressure = "GasP_torr",
+  pressure_factor = 1.33322,
   temperature = "AmbT_C",
   trimmer = trim_time,
   # define metadata structure
@@ -64,6 +78,8 @@ cc_flux <- process_chamber(
 
 # Process LosGatos
 lg_flux <- process_losgatos(losgatos, meta_losgatos)
+# Process LosGatos with custom chamber dimensions
+lg_flux <- process_losgatos(losgatos, meta_losgatos, V = 2, A = 3)
 
 # Process GASMET
 gm_flux <- process_gasmet(gasmet, meta_gasmet)

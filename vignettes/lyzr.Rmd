@@ -22,9 +22,9 @@ This vignette summarises the options for setting up options specified with analy
   
   * **conc_columns** A named vector declaring the columns containing the actal mixing rations. E.g. `c(CO2  = "CO2")`.
   
-  * **preassure** Column containing the atmospheric preasure in mbar. 
+  * **pressure** Column containing the atmospheric preasure in mbar. 
   
-  * **preassure_factor** If preasure is provided in a different unit than mbar, a conversion factor can be specified. 
+  * **pressure_factor** If preasure is provided in a different unit than mbar, a conversion factor can be specified. 
   
   * **temperature** Column containing the temperature in °C
 

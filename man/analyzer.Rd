@@ -5,7 +5,7 @@
 \title{Gas analyzer setup}
 \usage{
 analyzer(time_stamp = "timestamp", conc_columns = NULL,
-  preassure = NULL, preassure_factor = 1, temperature = NULL,
+  pressure = NULL, pressure_factor = 1, temperature = NULL,
   manual_temperature = NULL, offset = "offset",
   duration_count = FALSE, plot = "plot", date = "date",
   start = "start", end = "end", trimmer = NULL, V = 0.01461,
@@ -17,9 +17,9 @@ analyzer(time_stamp = "timestamp", conc_columns = NULL,
 \item{conc_columns}{A named vector declaring the columns containing the
 actual mixing rations. E.g. `c(CO2  = "CO2")`.}
 
-\item{preassure}{Column containing the atmospheric preasure in mbar.}
+\item{pressure}{Column containing the atmospheric preasure in mbar.}
 
-\item{preassure_factor}{If preasure is provided in a different unit than
+\item{pressure_factor}{If preasure is provided in a different unit than
 mbar, a conversion factor can be specified.}
 
 \item{temperature}{Column containing the temperature in °C.}
@@ -73,8 +73,8 @@ custom_analyzer <- analyzer(
   #define datastructure
   time_stamp = "Time",
   conc_columns = c(CH4 = "[CH4]_ppm", CO2 = "[CO2]_ppm"),
-  preassure = "GasP_torr",
-  preassure_factor = 1.33322,
+  pressure = "GasP_torr",
+  pressure_factor = 1.33322,
   temperature = "AmbT_C",
   trimmer = trim_time,
   # define metadata structure

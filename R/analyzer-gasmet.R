@@ -23,7 +23,7 @@ analyzer_GASMET <- function(
   me <- analyzer(
     time_stamp = "datetime",
     conc_columns = c(CO2 = "CO2", CH4 = "CH4", N2O = "N2O"),
-    preassure = "Luftdruck",
+    pressure = "Luftdruck",
     temperature = NA,
     manual_temperature = manual_temperature,
     offset = offset,

@@ -143,7 +143,7 @@ of the gas analyzer</p>
     </div>
 
     <pre class="usage"><span class='fu'>analyzer</span>(<span class='kw'>time_stamp</span> <span class='kw'>=</span> <span class='st'>"timestamp"</span>, <span class='kw'>conc_columns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>preassure</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>preassure_factor</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>pressure</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>pressure_factor</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>manual_temperature</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>offset</span> <span class='kw'>=</span> <span class='st'>"offset"</span>,
   <span class='kw'>duration_count</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='st'>"plot"</span>, <span class='kw'>date</span> <span class='kw'>=</span> <span class='st'>"date"</span>,
   <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"start"</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='st'>"end"</span>, <span class='kw'>trimmer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='fl'>0.01461</span>,
@@ -162,11 +162,11 @@ of the gas analyzer</p>
 actual mixing rations. E.g. `c(CO2  = "CO2")`.</p></td>
     </tr>
     <tr>
-      <th>preassure</th>
+      <th>pressure</th>
       <td><p>Column containing the atmospheric preasure in mbar.</p></td>
     </tr>
     <tr>
-      <th>preassure_factor</th>
+      <th>pressure_factor</th>
       <td><p>If preasure is provided in a different unit than
 mbar, a conversion factor can be specified.</p></td>
     </tr>
@@ -238,8 +238,8 @@ within each measurement. If FALSE, `end` is treated as duration or point in time
   <span class='co'>#define datastructure</span>
   <span class='kw'>time_stamp</span> <span class='kw'>=</span> <span class='st'>"Time"</span>,
   <span class='kw'>conc_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>CH4</span> <span class='kw'>=</span> <span class='st'>"[CH4]_ppm"</span>, <span class='kw'>CO2</span> <span class='kw'>=</span> <span class='st'>"[CO2]_ppm"</span>),
-  <span class='kw'>preassure</span> <span class='kw'>=</span> <span class='st'>"GasP_torr"</span>,
-  <span class='kw'>preassure_factor</span> <span class='kw'>=</span> <span class='fl'>1.33322</span>,
+  <span class='kw'>pressure</span> <span class='kw'>=</span> <span class='st'>"GasP_torr"</span>,
+  <span class='kw'>pressure_factor</span> <span class='kw'>=</span> <span class='fl'>1.33322</span>,
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='st'>"AmbT_C"</span>,
   <span class='kw'>trimmer</span> <span class='kw'>=</span> <span class='no'>trim_time</span>,
   <span class='co'># define metadata structure</span>

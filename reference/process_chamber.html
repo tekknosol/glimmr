@@ -43,8 +43,9 @@
 
 
 <meta property="og:title" content="Calculate gasfluxes from dynamic chamber measurement — process_chamber" />
-<meta property="og:description" content="process_losgatos and process_gasmet are special cases of the general
-process_chamber with preconfigured settings." />
+<meta property="og:description" content="process_losgatos and process_gasmet are special
+cases of the general process_chamber with preconfigured
+settings." />
 <meta property="og:image" content="https://tekknosol.github.io/glimmr/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -138,8 +139,9 @@ process_chamber with preconfigured settings." />
     </div>
 
     <div class="ref-description">
-    <p><code>process_losgatos</code> and <code>process_gasmet</code> are special cases of the general
-<code>process_chamber</code> with preconfigured settings.</p>
+    <p><code>process_losgatos</code> and <code>process_gasmet</code> are special
+cases of the general <code>process_chamber</code> with preconfigured
+settings.</p>
     </div>
 
     <pre class="usage"><span class='fu'>process_chamber</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>meta</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>analyzer</span>, <span class='kw'>pre</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -178,16 +180,29 @@ returned.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame.</p>
+    <p>A tibble</p><ul>
+<li><p>F_LM: Flux (linear model)</p></li>
+<li><p>LM_r2: R² of linear model fit</p></li>
+<li><p>F_RLM: Flux (robust linear model)</p></li>
+<li><p>RLM_r2: R² of robust linear model fit</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Data from gas analyzer is split into chunks according to entries in meta
+files.
+For each chunk, flux is calculated by fitting linear models and robust
+linear models (<code><a href='https://rdrr.io/pkg/robust/man/lmRob.html'>lmRob</a></code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Process custom analyzer</span>
+<span class='co'># see `vignette("lyzr")` for more details about the options</span>
 <span class='no'>custom_analyzer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='analyzer.html'>analyzer</a></span>(
   <span class='co'>#define datastructure</span>
   <span class='kw'>time_stamp</span> <span class='kw'>=</span> <span class='st'>"Time"</span>,
   <span class='kw'>conc_columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>CH4</span> <span class='kw'>=</span> <span class='st'>"[CH4]_ppm"</span>, <span class='kw'>CO2</span> <span class='kw'>=</span> <span class='st'>"[CO2]_ppm"</span>),
-  <span class='kw'>preassure</span> <span class='kw'>=</span> <span class='st'>"GasP_torr"</span>,
-  <span class='kw'>preassure_factor</span> <span class='kw'>=</span> <span class='fl'>1.33322</span>,
+  <span class='kw'>pressure</span> <span class='kw'>=</span> <span class='st'>"GasP_torr"</span>,
+  <span class='kw'>pressure_factor</span> <span class='kw'>=</span> <span class='fl'>1.33322</span>,
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='st'>"AmbT_C"</span>,
   <span class='kw'>trimmer</span> <span class='kw'>=</span> <span class='no'>trim_time</span>,
   <span class='co'># define metadata structure</span>
@@ -211,6 +226,8 @@ returned.</p></td>
 
 <span class='co'># Process LosGatos</span>
 <span class='no'>lg_flux</span> <span class='kw'>&lt;-</span> <span class='fu'>process_losgatos</span>(<span class='no'>losgatos</span>, <span class='no'>meta_losgatos</span>)
+<span class='co'># Process LosGatos with custom chamber dimensions</span>
+<span class='no'>lg_flux</span> <span class='kw'>&lt;-</span> <span class='fu'>process_losgatos</span>(<span class='no'>losgatos</span>, <span class='no'>meta_losgatos</span>, <span class='kw'>V</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>A</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 
 <span class='co'># Process GASMET</span>
 <span class='no'>gm_flux</span> <span class='kw'>&lt;-</span> <span class='fu'>process_gasmet</span>(<span class='no'>gasmet</span>, <span class='no'>meta_gasmet</span>)</div><div class='output co'>#&gt; <span class='message'>End of interval determined by number of observations. Count = 10</span></div><div class='output co'>#&gt; <span class='message'>Using temperature from meta file. Column = temp</span></div><div class='input'>
@@ -221,6 +238,7 @@ returned.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

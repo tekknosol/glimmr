@@ -4,7 +4,7 @@
 \alias{inspect_gasmet}
 \alias{inspect_losgatos}
 \alias{inspect_chamber}
-\title{Show plots for every measurement}
+\title{Show diagnostic plots for every chamber measurement}
 \usage{
 inspect_gasmet(fluxdata, meta)
 
@@ -13,8 +13,7 @@ inspect_losgatos(fluxdata, meta)
 inspect_chamber(fluxdata, meta, analyzer)
 }
 \arguments{
-\item{fluxdata}{A data frame with recorded data. Either loaded with
-\code{\link{read_gasmet}} or \code{\link{read_losgatos}}.}
+\item{fluxdata}{A data frame with recorded data}
 
 \item{meta}{Data frame. Metadata containing required informations.}
 
@@ -25,5 +24,11 @@ value pairs will override default settings.}
 A series of plots
 }
 \description{
-Show plots for every measurement
+Show diagnostic plots for every chamber measurement
+}
+\details{
+Figures are shown interactively, grouped by plot. Hit <return> to see next
+plot.
+
+\if{html}{\figure{diag.png}{options: width="80\%"}}
 }

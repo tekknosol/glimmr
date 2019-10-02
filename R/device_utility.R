@@ -135,12 +135,21 @@ get_losgatos_files <- function(path) {
   return(append(zips, txt))
 }
 
-#' Show plots for every measurement
+#' Show diagnostic plots for every chamber measurement
 #'
 #' @param fluxdata A data frame with recorded data
 #' @inheritParams process_chamber
 #'
+#' @details
+#' Figures are shown interactively, grouped by plot. Hit <return> to see next
+#' plot.
+#'
+#' \if{html}{\figure{diag.png}{options: width="80\%"}}
+#'
 #' @return A series of plots
+#'
+#'
+#'
 #' @export
 #'
 inspect_gasmet <- function(fluxdata, meta) {
@@ -177,9 +186,8 @@ inspect_fluxdata <- function(df) {
   Time <- NULL
   concentration <- NULL
   spot <- NULL
-  grDevices::devAskNewPage(ask = TRUE)
-  for (i in unique(df$spot)) {
-    print(ggplot2::ggplot(df %>% dplyr::filter(spot == i),
+  for (i in unique(df$plot)) {
+    print(ggplot2::ggplot(df %>% dplyr::filter(plot == i),
       ggplot2::aes(Time * 60, concentration)) +
       ggplot2::geom_point() +
       ggplot2::geom_smooth(method = robust::lmRob, se = FALSE, ggplot2::aes(linetype = "RLM"), color="black", size = .5) +
@@ -187,10 +195,10 @@ inspect_fluxdata <- function(df) {
       ggplot2::xlab("minutes") +
       ggplot2::ylab("mixing ratio (ppm)") +
       ggplot2::theme_bw() +
-      ggplot2::facet_grid(gas ~ spot + rep, scales = "free")+
+      ggplot2::facet_grid(gas ~ plot + rep, scales = "free")+
       ggplot2::scale_linetype_manual(name="Model type", values=c(1, 4))
-
     )
+    if(i == unique(df$plot)[1]){grDevices::devAskNewPage(ask = TRUE)}
   }
   grDevices::devAskNewPage(ask = FALSE)
 }

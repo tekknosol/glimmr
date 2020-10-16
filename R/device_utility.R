@@ -310,7 +310,7 @@ fit_lm <- function(hmr_data, device){
 
   fit_data %>%
     dplyr::group_modify(~ broom::tidy(lm(conc ~ Time, data = .x), quick = T)) %>%
-    select(term, estimate) %>%
+    dplyr::select(.data$term, .data$estimate) %>%
     dplyr::filter(.data$term == "Time") %>%
     dplyr::left_join(
       fit_data %>%
@@ -345,7 +345,7 @@ fit_rlm <- function(hmr_data, device){
           })
 
       }) %>%
-    select(term, estimate) %>%
+    dplyr::select(.data$term, .data$estimate) %>%
     dplyr::filter(.data$term == "Time") %>%
     dplyr::left_join(
       fit_data %>%

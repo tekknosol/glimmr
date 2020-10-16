@@ -8,8 +8,8 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right'}}
 
-provides functions to convert high frequency concentration data
-    obtained by chamber measurements into gasfluxes. Data recorded with GASMET
+Provides functions to convert high frequency concentration data
+    obtained by chamber measurements into gas hfluxes. Data recorded with GASMET
     and LosGatos devices can be processed automatically. Furthermore, functions
     for flux calculation using BLE are included.
 }
@@ -23,7 +23,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Philipp S. Keller \email{phlipp.keller@ufz.de} (0000-0002-3565-4413)
+\strong{Maintainer}: Philipp S. Keller \email{philipp.keller@ufz.de} (0000-0002-3565-4413)
 
 }
 \keyword{internal}

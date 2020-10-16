@@ -51,13 +51,25 @@ preprocess_chamber <- function(conc, meta, device, inspect = FALSE){
     }
     pressure_value <- parse_var(a, meta[i, ], device$pressure) * device$pressure_factor
 
+    if(is.numeric(device[["V"]])){
+      V = device[["V"]]
+    } else {
+      V = meta[i, ][[device$V]]
+    }
+
+    if(is.numeric(device[["A"]])){
+      A = device[["A"]]
+    } else {
+      A = meta[i, ][[device$A]]
+    }
+
     hmr_data_tmp <- tibble::tibble(
       plot = meta[i, ][[device$plot]], date =
       as.character(meta[i, ][[device$date]]), rep =
       repcount[repcount$plot == meta[i, ][[device$plot]], ]$count,
       start = start,
       # start = as.character(lubridate::int_start(int)),
-      V = device[["V"]], A = device[["A"]],
+      V = V, A = A,
       Time = as.numeric(a[[device$time_stamp]] - a[1,][[device$time_stamp]]) / 60 / 60
     )
 

@@ -305,6 +305,7 @@ chamber_diagnostic <- function(conc, meta, device){
 fit_lm <- function(hmr_data, device){
   fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
+    dplyr::mutate(conc = .data$conc * .data$V / .data$A * 24) %>%
     dplyr::group_by(.data$gas, .data$plot, .data$rep)
 
   fit_data %>%
@@ -315,7 +316,7 @@ fit_lm <- function(hmr_data, device){
         dplyr::group_modify(~ broom::glance(lm(conc ~ Time, data = .x), quick = T)) %>%
         dplyr::select(LM_r2 = .data$r.squared)
     ) %>%
-    dplyr::mutate(estimate = .data$estimate * device$V / device$A * 24) %>%
+    # dplyr::mutate(estimate = .data$estimate * device$V / device$A * 24) %>%
     dplyr::left_join(
       fit_data %>%
         dplyr::summarise(start = dplyr::first(.data$start)) %>%
@@ -328,17 +329,36 @@ fit_lm <- function(hmr_data, device){
 fit_rlm <- function(hmr_data, device){
   fit_data <- hmr_data %>%
     tidyr::gather(key="gas", val = "conc", paste0(names(device$conc_columns))) %>%
-    dplyr::group_by(.data$gas, .data$plot, .data$rep)
+    dplyr::group_by(.data$gas, .data$plot, .data$rep)%>%
+    dplyr::mutate(conc = .data$conc * .data$V / .data$A * 24)
+
   suppressWarnings(
   fit_data %>%
-    dplyr::group_modify(~ broom::tidy(robust::lmRob(conc ~ Time, data = .x), quick = T)) %>%
+    dplyr::group_modify(
+      ~ {
+        tryCatch({
+          fit <- robust::lmRob(conc ~ Time, data = .x, control = robust::lmRob.control(trace = F))
+          broom::tidy(fit, quick = T)
+        }, error = function(e){
+            return(tibble(term = "Time", estimate = NA))
+          })
+
+      }) %>%
     dplyr::filter(.data$term == "Time") %>%
     dplyr::left_join(
       fit_data %>%
-        dplyr::group_modify(~ broom::glance((robust::lmRob(conc ~ Time, data = .x)))) %>%
+        dplyr::group_modify(
+          ~ {
+            tryCatch({
+              broom::glance((robust::lmRob(conc ~ Time, data = .x, control = robust::lmRob.control(trace = F))))
+            }, error = function(e){
+              return(tibble(r.squared = NA))
+            })
+
+          }) %>%
         dplyr::select(RLM_r2 = .data$r.squared)
     ) %>%
-    dplyr::mutate(estimate = .data$estimate * device$V / device$A * 24) %>%
+    # dplyr::mutate(estimate = .data$estimate * .data$V / .data$A * 24) %>%
     dplyr::left_join(
       fit_data %>%
         dplyr::summarise(start = dplyr::first(.data$start)) %>%

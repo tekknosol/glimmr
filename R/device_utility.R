@@ -185,21 +185,40 @@ inspect_chamber <- function(fluxdata, meta, analyzer){
 inspect_fluxdata <- function(df) {
   Time <- NULL
   concentration <- NULL
-  for (i in unique(df$plot)) {
-    print(ggplot2::ggplot(df %>% dplyr::filter(.data$plot == i),
-      ggplot2::aes(Time * 60, concentration)) +
-      ggplot2::geom_point() +
-      ggplot2::geom_smooth(method = robust::lmRob, se = FALSE, ggplot2::aes(linetype = "RLM"), color="black", size = .5) +
-      ggplot2::geom_smooth(method = stats::lm, se = FALSE, ggplot2::aes(linetype = "LM"), color = "black", size = .5) +
-      ggplot2::xlab("minutes") +
-      ggplot2::ylab("mixing ratio (ppm)") +
-      ggplot2::theme_bw() +
-      ggplot2::facet_grid(gas ~ plot + rep, scales = "free")+
-      ggplot2::scale_linetype_manual(name="Model type", values=c(1, 4))
-    )
-    if(i == unique(df$plot)[1]){grDevices::devAskNewPage(ask = TRUE)}
-  }
-  grDevices::devAskNewPage(ask = FALSE)
+  df %>%
+    # dplyr::group_by(grp = rep(dplyr::row_number(), length.out = dplyr::n(), each = 5)) %>%
+    dplyr::group_by(plot, grp = (rep-1) %/% 5) %>%
+    dplyr::group_walk(~{
+      plot <- ggplot2::ggplot(.x,
+                              ggplot2::aes(Time * 60, concentration)) +
+        ggplot2::geom_point() +
+        ggplot2::geom_smooth(method = robust::lmRob, se = FALSE, ggplot2::aes(linetype = "RLM"), color="black", size = .5) +
+        ggplot2::geom_smooth(method = stats::lm, se = FALSE, ggplot2::aes(linetype = "LM"), color = "black", size = .5) +
+        ggplot2::xlab("minutes") +
+        ggplot2::ylab("mixing ratio (ppm)") +
+        ggplot2::theme_bw() +
+        ggplot2::facet_grid(gas ~ plot + rep, scales = "free")+
+        ggplot2::scale_linetype_manual(name="Model type", values=c(1, 4))
+
+      dir.create("glimmr_plots", showWarnings = F)
+      ggplot2::ggsave(plot = plot, filename = paste0(.x$plot,"_",.x$grp,".png"), path = "glimmr_plots", dpi = 100, device = "png", width = 12, height = 3)
+    }, .keep = T)
+
+  # for (i in unique(df$plot)) {
+  #   print(ggplot2::ggplot(df %>% dplyr::filter(.data$plot == i),
+  #     ggplot2::aes(Time * 60, concentration)) +
+  #     ggplot2::geom_point() +
+  #     ggplot2::geom_smooth(method = robust::lmRob, se = FALSE, ggplot2::aes(linetype = "RLM"), color="black", size = .5) +
+  #     ggplot2::geom_smooth(method = stats::lm, se = FALSE, ggplot2::aes(linetype = "LM"), color = "black", size = .5) +
+  #     ggplot2::xlab("minutes") +
+  #     ggplot2::ylab("mixing ratio (ppm)") +
+  #     ggplot2::theme_bw() +
+  #     ggplot2::facet_grid(gas ~ plot + rep, scales = "free")+
+  #     ggplot2::scale_linetype_manual(name="Model type", values=c(1, 4))
+  #   )
+  #   if(i == unique(df$plot)[1]){grDevices::devAskNewPage(ask = TRUE)}
+  # }
+  # grDevices::devAskNewPage(ask = FALSE)
 }
 
 ppm2conc <- function(ppm, temp, pmbar){
